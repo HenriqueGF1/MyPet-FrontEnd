@@ -13,11 +13,13 @@ import Select from "../../components/Form/Select";
 
 function UpdateAnimais() {
 
-    const [erros, setErros] = useState([])
-    const [animal, setAnimal] = useState({})
-    const [categorias, setCategorias] = useState();
-    const { loading, setLoading } = useContext(Context);
     let navigate = useNavigate();
+
+    const [animal, setAnimal] = useState({})
+    const [categorias, setCategorias] = useState([])
+    const [porte, setPorte] = useState([])
+    const [erros, setErros] = useState([])
+    const { loading, setLoading } = useContext(Context);
 
     const {
         register,
@@ -32,14 +34,14 @@ function UpdateAnimais() {
 
         // setLoading(true);
 
-        async function getData() {
+        async function getAnimal() {
 
             await api
                 .get("animais/37")
                 .then(function (response) {
-                    // setLoading(false);
-                    reset();
                     setAnimal(response.data.data);
+                    setLoading(false);
+                    reset();
                 })
                 .catch(function (error) {
                     setErros(error);
@@ -47,14 +49,15 @@ function UpdateAnimais() {
                 });
         }
 
-        getData();
+        getAnimal();
 
-        async function getDataCa() {
+        async function getCategorias() {
             await api
                 .get("categoriasAnimal")
                 .then(function (response) {
                     setCategorias(response.data.data);
                     setLoading(false);
+                    reset()
                 })
                 .catch(function (error) {
                     setErros(error);
@@ -62,13 +65,34 @@ function UpdateAnimais() {
                 });
         }
 
-        getDataCa();
+        async function getPorte() {
+            await api
+                .get("porteAnimais")
+                .then(function (response) {
+                    setPorte(response.data.data);
+                    setLoading(false);
+                    reset()
+                })
+                .catch(function (error) {
+                    setErros(error);
+                    setLoading(false);
+                });
+        }
+
+        getCategorias();
+
+        getPorte();
 
     }, []);
 
-    const edit = async (data) => {
 
-        console.log("🚀 ~ file: EditAnimais.jsx:31 ~ edit ~ data:", data)
+
+    const edit = async (data) => {
+        console.log("🚀 ~ file: UpdateAnimais.jsx:91 ~ edit ~ data:", data)
+
+        let animalData = new FormData(document.getElementById("editAnimal"));
+
+        console.log(animalData.get('id_categoria'));
 
         // return
 
@@ -77,15 +101,13 @@ function UpdateAnimais() {
                 data
             )
             .then(function (response) {
-
                 console.log("🚀 ~ file: UpdateAnimais.jsx:78 ~ response:", response)
-
                 if (response.status == 200) {
                     navigate("/animais");
                 } else {
                     setErros(response.data.errors);
                 }
-                
+
             })
             .catch(function (error) {
                 console.log("🚀 ~ file: UpdateAnimais.jsx:90 ~ edit ~ error:", error)
@@ -96,11 +118,6 @@ function UpdateAnimais() {
         return
     }
 
-    const handleChange = event => {
-        console.log('Label 👉️', event.target.selectedOptions[0].label);
-        console.log(event.target.value);
-    };
-
     return (
         <>
 
@@ -110,7 +127,7 @@ function UpdateAnimais() {
 
             {loading ? <h1>Carregando****</h1> : (
 
-                <form onSubmit={handleSubmit(edit)}>
+                <form onSubmit={handleSubmit(edit)} id="editAnimal">
 
                     <Input
                         label='Nome'
@@ -126,10 +143,9 @@ function UpdateAnimais() {
                             nome: e.target.value
                         })}
                         apiErros={erros}
-
                     />
 
-                    <Input
+                    {/* <Input
                         label='Descrição'
                         typeInput='text'
                         placeholder='Preencha sua Descrição'
@@ -143,32 +159,87 @@ function UpdateAnimais() {
                             descricao: e.target.value
                         })}
                         apiErros={erros}
+                    /> */}
+
+                    {/* <Input
+                        label='Idade'
+                        typeInput='date'
+                        placeholder='Preencha sua Idade'
+                        name='idade'
+                        register={register}
+                        validation={{ required: true }}
+                        value={animal.idade}
+                        errors={errors}
+                        onChange={e => setAnimal({
+                            ...animal,
+                            idade: e.target.value
+                        })}
+                        apiErros={erros}
                     />
+
+                    <Input
+                        label='Sexo'
+                        typeInput='text'
+                        placeholder='Preencha seu Sexo'
+                        name='sexo'
+                        register={register}
+                        validation={{ required: true }}
+                        value={animal.sexo}
+                        errors={errors}
+                        onChange={e => setAnimal({
+                            ...animal,
+                            sexo: e.target.value
+                        })}
+                        apiErros={erros}
+                    /> */}
 
                     {loading ? <h1>Carregando****</h1> : (
 
-                        // <Categoria
-                        //     label="Categoria"
-                        //     register={register("id_categoria", { value: 1 })}
-                        //     name="id_categoria"
-                        //     erros={erros}
-                        // />
+                        <>
+                            <Select
+                                label='Categoria'
+                                name='id_categoria'
+                                register={register}
+                                arrayValues={categorias}
+                                valueId='id_categoria'
+                                valueText='descricao'
+                                valorDefinido={animal.id_categoria}
+                                apiErros={erros}
+                                onChange={e => setAnimal({
+                                    ...animal,
+                                    id_categoria: e.target.value
+                                })}
+                            />
 
-                        <Select
-                            label='Categoria'
-                            name='id_categoria'
-                            register={register}
-                            arrayValues={categorias}
-                            valueId='id_categoria'
-                            valueText='descricao'
-                            valorDefinido={animal.id_categoria}
-                            apiErros={erros}
-                            onChange={e => setAnimal({
-                                ...animal,
-                                id_categoria: e.target.value
-                            })}
-                        />
+                            {/* <Select
+                                label='Porte'
+                                name='id_porte'
+                                register={register}
+                                arrayValues={porte}
+                                valueId='id_porte'
+                                valueText='descricao'
+                                valorDefinido={animal.id_porte}
+                                apiErros={erros}
+                                onChange={e => setAnimal({
+                                    ...animal,
+                                    id_porte: e.target.value
+                                })}
+                            /> */}
+
+                        </>
+
+
                     )}
+
+                    {/* <Input
+                        label='Imagens'
+                        typeInput='file'
+                        name='imagens[]'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={erros}
+                    /> */}
 
                     <br /><br />
                     <button type="submit">Enviar</button>

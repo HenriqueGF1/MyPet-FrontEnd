@@ -67,8 +67,6 @@ function CreateAnimal() {
 
     const create = async (data) => {
 
-        console.log("🚀 ~ file: CreateAnimal.jsx:24 ~ create ~ data:", data)
-
         let animalData = new FormData(document.getElementById("createAnimal"));
 
         await api
@@ -76,8 +74,6 @@ function CreateAnimal() {
                 animalData
             )
             .then(function (response) {
-
-                console.log("🚀 ~ file: CreateAnimal.jsx:74 ~ response:", response)
 
                 if (response.status == 201) {
                     navigate("/animais");
