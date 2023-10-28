@@ -85,20 +85,14 @@ function UpdateAnimais() {
 
     }, []);
 
-
-
     const edit = async (data) => {
-        console.log("🚀 ~ file: UpdateAnimais.jsx:91 ~ edit ~ data:", data)
 
         let animalData = new FormData(document.getElementById("editAnimal"));
-
-        console.log(animalData.get('id_categoria'));
-
-        // return
+        animalData.append('_method', 'PATCH');
 
         await api
-            .patch(`animais/${animal.id_animal}`,
-                data
+            .post(`animais/${animal.id_animal}`,
+                animalData,
             )
             .then(function (response) {
                 console.log("🚀 ~ file: UpdateAnimais.jsx:78 ~ response:", response)
@@ -125,128 +119,127 @@ function UpdateAnimais() {
 
             <NavBar />
 
-            {loading ? <h1>Carregando****</h1> : (
+            <form onSubmit={handleSubmit(edit)} id="editAnimal">
 
-                <form onSubmit={handleSubmit(edit)} id="editAnimal">
+                <Input
+                    label='Nome'
+                    typeInput='text'
+                    placeholder='Preencha seu nome'
+                    name='nome'
+                    register={register}
+                    validation={{ required: false }}
+                    value={animal.nome}
+                    errors={errors}
+                    onChange={e => setAnimal({
+                        ...animal,
+                        nome: e.target.value
+                    })}
+                    apiErros={erros}
+                />
 
-                    <Input
-                        label='Nome'
-                        typeInput='text'
-                        placeholder='Preencha seu nome'
-                        name='nome'
-                        register={register}
-                        validation={{ required: true }}
-                        value={animal.nome}
-                        errors={errors}
-                        onChange={e => setAnimal({
-                            ...animal,
-                            nome: e.target.value
-                        })}
-                        apiErros={erros}
-                    />
+                <Input
+                    label='Descrição'
+                    typeInput='text'
+                    placeholder='Preencha sua Descrição'
+                    name='descricao'
+                    register={register}
+                    validation={{ required: true }}
+                    value={animal.descricao}
+                    errors={errors}
+                    onChange={e => setAnimal({
+                        ...animal,
+                        descricao: e.target.value
+                    })}
+                    apiErros={erros}
+                />
 
-                    {/* <Input
-                        label='Descrição'
-                        typeInput='text'
-                        placeholder='Preencha sua Descrição'
-                        name='descricao'
-                        register={register}
-                        validation={{ required: true }}
-                        value={animal.descricao}
-                        errors={errors}
-                        onChange={e => setAnimal({
-                            ...animal,
-                            descricao: e.target.value
-                        })}
-                        apiErros={erros}
-                    /> */}
+                <Input
+                    label='Idade'
+                    typeInput='date'
+                    placeholder='Preencha sua Idade'
+                    name='idade'
+                    register={register}
+                    validation={{ required: false }}
+                    // value={animal.idade}
+                    value='2000-07-12'
+                    errors={errors}
+                    onChange={e => setAnimal({
+                        ...animal,
+                        idade: e.target.value
+                    })}
+                    apiErros={erros}
+                />
 
-                    {/* <Input
-                        label='Idade'
-                        typeInput='date'
-                        placeholder='Preencha sua Idade'
-                        name='idade'
-                        register={register}
-                        validation={{ required: true }}
-                        value={animal.idade}
-                        errors={errors}
-                        onChange={e => setAnimal({
-                            ...animal,
-                            idade: e.target.value
-                        })}
-                        apiErros={erros}
-                    />
+                <Input
+                    label='Sexo'
+                    typeInput='text'
+                    placeholder='Preencha seu Sexo'
+                    name='sexo'
+                    register={register}
+                    validation={{ required: true }}
+                    value={animal.sexo}
+                    errors={errors}
+                    onChange={e => setAnimal({
+                        ...animal,
+                        sexo: e.target.value
+                    })}
+                    apiErros={erros}
+                />
 
-                    <Input
-                        label='Sexo'
-                        typeInput='text'
-                        placeholder='Preencha seu Sexo'
-                        name='sexo'
-                        register={register}
-                        validation={{ required: true }}
-                        value={animal.sexo}
-                        errors={errors}
-                        onChange={e => setAnimal({
-                            ...animal,
-                            sexo: e.target.value
-                        })}
-                        apiErros={erros}
-                    /> */}
+                {loading ? <h1>Carregando****</h1> : (
 
-                    {loading ? <h1>Carregando****</h1> : (
+                    <>
+                        <Select
+                            label='Categoria'
+                            name='id_categoria'
+                            register={register}
+                            arrayValues={categorias}
+                            valueId='id_categoria'
+                            valueText='descricao'
+                            valorDefinido={animal.id_categoria}
+                            apiErros={erros}
+                            onChange={e => setAnimal({
+                                ...animal,
+                                id_categoria: e.target.value
+                            })}
+                        />
 
-                        <>
-                            <Select
-                                label='Categoria'
-                                name='id_categoria'
-                                register={register}
-                                arrayValues={categorias}
-                                valueId='id_categoria'
-                                valueText='descricao'
-                                valorDefinido={animal.id_categoria}
-                                apiErros={erros}
-                                onChange={e => setAnimal({
-                                    ...animal,
-                                    id_categoria: e.target.value
-                                })}
-                            />
+                        <Select
+                            label='Porte'
+                            name='id_porte'
+                            register={register}
+                            arrayValues={porte}
+                            valueId='id_porte'
+                            valueText='descricao'
+                            valorDefinido={animal.id_porte}
+                            apiErros={erros}
+                            onChange={e => setAnimal({
+                                ...animal,
+                                id_porte: e.target.value
+                            })}
+                        />
 
-                            {/* <Select
-                                label='Porte'
-                                name='id_porte'
-                                register={register}
-                                arrayValues={porte}
-                                valueId='id_porte'
-                                valueText='descricao'
-                                valorDefinido={animal.id_porte}
-                                apiErros={erros}
-                                onChange={e => setAnimal({
-                                    ...animal,
-                                    id_porte: e.target.value
-                                })}
-                            /> */}
-
-                        </>
+                    </>
 
 
-                    )}
+                )}
 
-                    {/* <Input
-                        label='Imagens'
-                        typeInput='file'
-                        name='imagens[]'
-                        register={register}
-                        validation={{ required: true }}
-                        errors={errors}
-                        apiErros={erros}
-                    /> */}
+                {/* <Input
+                    label='Imagens'
+                    typeInput='file'
+                    name='imagens[]'
+                    register={register}
+                    validation={{ required: true }}
+                    errors={errors}
+                    apiErros={erros}
+                /> */}
 
-                    <br /><br />
-                    <button type="submit">Enviar</button>
-                </form>
+                <br />
+                <button type="submit">Enviar</button>
 
-            )}
+            </form>
 
+            <br /><br />
         </>
     );
 }

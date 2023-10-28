@@ -1,11 +1,13 @@
 function Input({ label, typeInput, placeholder, name, register, value, validation, errors, onChange, apiErros }) {
 
-    let erro = errors[name] != undefined ? errors[name].type : undefined;
+    let inputName = name.replaceAll("[]", "");
+
+    let erro = errors[inputName] != undefined ? errors[inputName].type : undefined;
     let msgErro = '';
 
     switch (erro) {
         case 'required':
-            msgErro = `Esse campo ${name} e obrigatório`
+            msgErro = `Esse campo ${inputName} e obrigatório`
             break;
         default:
             break;
