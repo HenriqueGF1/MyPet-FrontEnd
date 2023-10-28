@@ -28,6 +28,9 @@ function NavBar() {
                     <Link to='/animais/editar'>Editar Animais</Link>
                 </li>
                 <li>
+                    <Link to='/animais/usuario'>Meus Animais</Link>
+                </li>
+                <li>
                     <Link to='/teste'>Teste</Link>
                 </li>
             </ul>

@@ -22,6 +22,7 @@ import CreateAnimal from "../pages/Animais/CreateAnimal";
 import Categoria from "../components/Categorias/Categorias";
 import Porte from "../components/Porte/Porte";
 import UpdateAnimais from "../pages/Animais/UpdateAnimais";
+import MeusAnimais from "../pages/Animais/MeusAnimais";
 
 export default function AppRoutes() {
   return (
@@ -54,6 +55,14 @@ export default function AppRoutes() {
           element={
             <PrivateRoute>
               <UpdateAnimais />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/animais/usuario"
+          element={
+            <PrivateRoute>
+              <MeusAnimais />
             </PrivateRoute>
           }
         />
