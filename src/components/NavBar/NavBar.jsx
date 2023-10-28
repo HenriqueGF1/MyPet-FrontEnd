@@ -1,10 +1,8 @@
-import { useContext } from "react";
-
+import { useContext, memo } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/apiContext";
 
-function NavBar() {
-
+const NavBar = memo(function NavBar() {
     const { authenticated } = useContext(Context);
 
     return (
@@ -37,7 +35,6 @@ function NavBar() {
             <br /><br />
         </>
     )
-}
+});
 
-
-export default NavBar
+export default NavBar;

@@ -20,7 +20,7 @@ function Select({ label, name, register, arrayValues, valueId, valueText, valida
             </select>
             <br />
             {
-                apiErros != '' ? <p>{apiErros[name]}</p> : <></>
+                // apiErros != '' ? <p>{apiErros[name]}</p> : <></>
             }
             <br />
         </>

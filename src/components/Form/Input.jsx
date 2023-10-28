@@ -1,16 +1,31 @@
-function Input({ label, typeInput, placeholder, name, register, value, validation, errors, onChange, apiErros }) {
+function Input({ label, typeInput, placeholder, name, register, validation, errors, apiErros }) {
+
+    console.log("Input")
 
     let inputName = name.replaceAll("[]", "");
 
-    let erro = errors[inputName] != undefined ? errors[inputName].type : undefined;
-    let msgErro = '';
+    let erroApiMsg = '';
+    let erroMsg = '';
 
-    switch (erro) {
-        case 'required':
-            msgErro = `Esse campo ${inputName} e obrigatório`
-            break;
-        default:
-            break;
+    if (apiErros != undefined) {
+        erroApiMsg = apiErros[inputName]
+    }
+
+
+    if (Object.keys(errors).length > 0) {
+
+        console.log("🚀 ~ file: Input.jsx:2 ~ Input ~ errors:", errors)
+
+        let erro = errors[inputName].type;
+
+        switch (erro) {
+            case 'required':
+                erroMsg = `Esse campo ${inputName} e obrigatório`
+                break;
+            default:
+                break;
+        }
+        console.log("🚀 ~ file: Input.jsx:23 ~ Input ~ erroMsg:", erroMsg)
     }
 
     return (
@@ -22,15 +37,13 @@ function Input({ label, typeInput, placeholder, name, register, value, validatio
                 placeholder={placeholder}
                 name={name}
                 {...register(name, validation)}
-                defaultValue={value}
-                onChange={onChange}
             />
             <br />
             {
-                msgErro != '' ? <p>{msgErro}</p> : <></>
+                erroApiMsg != '' ? <p>{erroApiMsg}</p> : <></>
             }
             {
-                apiErros != '' ? <p>{apiErros[name]}</p> : <></>
+                erroMsg != '' ? <p>{erroMsg}</p> : <></>
             }
             <br />
         </>

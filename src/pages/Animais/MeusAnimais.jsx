@@ -28,8 +28,7 @@ function MeusAnimais() {
             .delete(`animais/${id_animal}`)
             .then(function (response) {
                 console.log("🚀 ~ file: MeusAnimais.jsx:33 ~ response:", response)
-                // setAnimais(response.data.data);
-                setAnimais(animais.filter((animal) => animal.id_animal != id_animal));
+                setAnimais((prev) => prev.filter((animal) => animal.id_animal != id_animal))
             })
             .catch(function (error) {
                 setErros(error);
