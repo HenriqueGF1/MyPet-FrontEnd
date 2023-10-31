@@ -11,7 +11,7 @@ function AnimaisList({ id_animal, nome, usuario, sexo, descricao, categoria, ida
                 <li><b>Idade:</b> {idade}</li>
                 <li><b>Porte:</b> {porte}</li>
                 <li>
-                    <b>Fotos:</b>
+                    {/* <b>Fotos:</b>
                     {fotos.map((foto) => {
                         return (
                             <img
@@ -20,7 +20,7 @@ function AnimaisList({ id_animal, nome, usuario, sexo, descricao, categoria, ida
                                 width={'100px'}
                             />
                         )
-                    })}
+                    })} */}
                 </li>
                 <br />
                 <li onClick={() => handleDelete(id_animal)}>DELETAR: - {id_animal}</li>

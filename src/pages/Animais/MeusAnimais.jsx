@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { Context } from "../../context/apiContext";
 import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";
 import AnimaisList from "../../components/Animais/AnimaisList";
@@ -7,32 +8,50 @@ function MeusAnimais() {
 
     const [animais, setAnimais] = useState([]);
     const [erros, setErros] = useState([]);
+    const { loadingApi, apiFetch } = useContext(Context);
 
     useEffect(() => {
-        async function getData() {
-            await api
-                .get("animais")
-                .then(function (response) {
-                    setAnimais(response.data.data);
-                })
-                .catch(function (error) {
-                    setErros(error);
-                });
+
+        async function getAnimais() {
+            let response = await apiFetch("animais", "get")
+            setAnimais(response.data);
         }
-        getData();
+
+        getAnimais();
+
     }, []);
 
     const handleDelete = async (id_animal) => {
-        console.log("🚀 ~ file: MeusAnimais.jsx:29 ~ handleDelete ~ id_animal:", id_animal)
-        await api
-            .delete(`animais/${id_animal}`)
-            .then(function (response) {
-                console.log("🚀 ~ file: MeusAnimais.jsx:33 ~ response:", response)
-                setAnimais((prev) => prev.filter((animal) => animal.id_animal != id_animal))
-            })
-            .catch(function (error) {
-                setErros(error);
-            });
+        // console.log("🚀 ~ file: MeusAnimais.jsx:29 ~ handleDelete ~ id_animal:", id_animal)
+        // await api
+        //     .delete(`animais/${id_animal}`)
+        //     .then(function (response) {
+        //         console.log("🚀 ~ file: MeusAnimais.jsx:33 ~ response:", response)
+        //         setAnimais((prev) => prev.filter((animal) => animal.id_animal != id_animal))
+        //     })
+        //     .catch(function (error) {
+        //         setErros(error);
+        //     });
+
+        let response = await apiFetch(`animais/${id_animal}`, "delete")
+
+        console.log("🚀 ~ file: MeusAnimais.jsx:37 ~ handleDelete ~ response:", response)
+
+        if (response.data.message != undefined) {
+            alert(response.data.message)
+        }
+
+        if (response.data === 1) {
+            alert('Excluído com Sucesso !!')
+            setAnimais((prev) => prev.filter((animal) => animal.id_animal != id_animal))
+        }
+
+
+    }
+    console.log("🚀 ~ file: MeusAnimais.jsx:51 ~ MeusAnimais ~ loadingApi:", loadingApi)
+
+    if (loadingApi) {
+        return <h1>Carregando........</h1>
     }
 
     return (

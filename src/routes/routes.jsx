@@ -19,8 +19,6 @@ import Teste from "../pages/Teste";
 import CriarConta from "../pages/CriarConta";
 import Animais from "../pages/Animais/Animais";
 import CreateAnimal from "../pages/Animais/CreateAnimal";
-import Categoria from "../components/Categorias/Categorias";
-import Porte from "../components/Porte/Porte";
 import UpdateAnimais from "../pages/Animais/UpdateAnimais";
 import MeusAnimais from "../pages/Animais/MeusAnimais";
 
@@ -48,8 +46,6 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
-        <Route path="/categoria" element={<Categoria />} />
-        <Route path="/porte" element={<Porte />} />
         <Route
           path="/animais/editar"
           element={
