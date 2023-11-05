@@ -68,9 +68,9 @@ export default function AppRoutes() {
         <Route
           path="/teste"
           element={
-            <PrivateRoute>
+            // <PrivateRoute>
               <Teste />
-            </PrivateRoute>
+            // </PrivateRoute>
           }
         />
       </Routes>

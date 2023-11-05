@@ -6,61 +6,21 @@ import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
 import Select from "../../components/Form/Select";
+import Categorias from "../../components/Categorias/Categorias";
+import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
 
 
 function CreateAnimal() {
 
     let navigate = useNavigate();
 
-    const [categorias, setCategorias] = useState([])
-    const [porte, setPorte] = useState([])
     const [erros, setErros] = useState([])
-    const { loading, setLoading } = useContext(Context)
 
     const {
         register,
         handleSubmit,
-        reset,
         formState: { errors },
     } = useForm();
-
-    useEffect(() => {
-
-        // setLoading(true);
-
-        async function getCategorias() {
-            await api
-                .get("categoriasAnimal")
-                .then(function (response) {
-                    setCategorias(response.data.data);
-                    setLoading(false);
-                    reset()
-                })
-                .catch(function (error) {
-                    setErros(error);
-                    setLoading(false);
-                });
-        }
-
-        async function getPorte() {
-            await api
-                .get("porteAnimais")
-                .then(function (response) {
-                    setPorte(response.data.data);
-                    setLoading(false);
-                    reset()
-                })
-                .catch(function (error) {
-                    setErros(error);
-                    setLoading(false);
-                });
-        }
-
-        getCategorias();
-
-        getPorte();
-
-    }, []);
 
     const create = async (data) => {
 
@@ -119,6 +79,20 @@ function CreateAnimal() {
                     apiErros={erros}
                 />
 
+                <PorteAnimal
+                    label="Porte Animal"
+                    name="id_porte"
+                    register={register}
+                    erros={erros}
+                />
+
+                <Categorias
+                    label="Categorias"
+                    name="id_categoria"
+                    register={register}
+                    erros={erros}
+                />
+
                 <Input
                     label='Idade'
                     typeInput='date'
@@ -141,7 +115,7 @@ function CreateAnimal() {
                     apiErros={erros}
                 />
 
-                {loading ? <h1>Carregando****</h1> : (
+                {/* {loading ? <h1>Carregando****</h1> : (
 
                     <>
 
@@ -166,7 +140,7 @@ function CreateAnimal() {
                         />
 
                     </>
-                )}
+                )} */}
 
                 <Input
                     label='Imagens'

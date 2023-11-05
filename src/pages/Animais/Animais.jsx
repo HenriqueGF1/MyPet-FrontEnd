@@ -36,36 +36,37 @@ function Animais() {
     return (
         <>
             <h1>Animais</h1>
-
             <NavBar />
-
             {/* <pre>{JSON.stringify(animais, null, 2)}</pre> */}
-            {animais.map((animal) => {
-                return (
-                    <ul key={animal.id_animal}>
-                        <li><b>Nome:</b> {animal.nome}</li>
-                        <li><b>Dono:</b> {animal.usuario.nome}</li>
-                        <li><b>Sexo:</b> {animal.sexo}</li>
-                        <li><b>Descricao:</b> {animal.descricao}</li>
-                        <li><b>Categoria:</b> {animal.categoria.descricao}</li>
-                        <li><b>Idade:</b> {animal.idade}</li>
-                        <li><b>Porte:</b> {animal.porte.descricao}</li>
-                        <li>
-                            <b>Fotos:</b>
-                            {animal.fotos.map((foto) => {
-                                return (
-                                    <img
-                                        key={foto.nome_arquivo}
-                                        src={`http://localhost:8000/${foto.url}`} alt={foto.nome_arquivo_original}
-                                        width={'100px'}
-                                    />
-                                )
-                            })}
-                        </li>
-                        <br />
-                    </ul>
-                )
-            })}
+            {
+                animais.length == 0 ? "Sem Animais" :
+                    animais.map((animal) => {
+                        return (
+                            <ul key={animal.id_animal}>
+                                <li><b>Nome:</b> {animal.nome}</li>
+                                <li><b>Dono:</b> {animal.usuario.nome}</li>
+                                <li><b>Sexo:</b> {animal.sexo}</li>
+                                <li><b>Descricao:</b> {animal.descricao}</li>
+                                <li><b>Categoria:</b> {animal.categoria.descricao}</li>
+                                <li><b>Idade:</b> {animal.idade}</li>
+                                <li><b>Porte:</b> {animal.porte.descricao}</li>
+                                <li>
+                                    <b>Fotos:</b>
+                                    {animal.fotos.map((foto) => {
+                                        return (
+                                            <img
+                                                key={foto.nome_arquivo}
+                                                src={`http://localhost:8000/${foto.url}`} alt={foto.nome_arquivo_original}
+                                                width={'100px'}
+                                            />
+                                        )
+                                    })}
+                                </li>
+                                <br />
+                            </ul>
+                        )
+                    })
+            }
         </>
     )
 

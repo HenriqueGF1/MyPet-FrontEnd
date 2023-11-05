@@ -5,102 +5,64 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
-import Select from "../../components/Form/Select";
+import Categorias from "../../components/Categorias/Categorias";
+import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
 
 function UpdateAnimais() {
+
     let navigate = useNavigate();
 
-    const [animal, setAnimal] = useState({});
-    const [categorias, setCategorias] = useState([]);
-    const [porte, setPorte] = useState([]);
     const [errosApi, setErrosApi] = useState([]);
-    const { loading, setLoading } = useContext(Context);
+    const { loadingApi, apiFetch } = useContext(Context);
 
     const {
         register,
         handleSubmit,
         formState: { errors },
-        reset,
     } = useForm({
-        defaultValues: async () =>
-            await api
-                .get("animais/52")
-                .then(function (response) {
-                    // console.log("🚀 ~ file: UpdateAnimais.jsx:43 ~ response:", response);
-                    // setAnimal(response.data.data);
-                    // reset(animal);
-
-                    // reset();
-                    return {
-                        id_animal: response.data.data.id_animal,
-                        nome: response.data.data.nome,
-                        descricao: response.data.data.descricao,
-                        idade: response.data.data.idade,
-                        sexo: response.data.data.sexo,
-                        id_categoria: response.data.data.id_categoria,
-                        id_porte: response.data.data.id_porte,
-                    }
-
-                })
-                .catch(function (error) {
-                    setErrosApi(error);
-                })
+        defaultValues: async () => {
+            let response = await apiFetch(`animais/71`, "get")
+            return {
+                id_animal: response.data.id_animal,
+                nome: response.data.nome,
+                descricao: response.data.descricao,
+                idade: response.data.idade,
+                sexo: response.data.sexo,
+                id_categoria: response.data.id_categoria,
+                id_porte: response.data.id_porte,
+            }
+        }
     });
-
-    useEffect(() => {
-        // setLoading(true);
-
-        async function getCategorias() {
-            await api
-                .get("categoriasAnimal")
-                .then(function (response) {
-                    setCategorias(response.data.data);
-                })
-                .catch(function (error) {
-                    setErrosApi(error);
-                });
-        }
-
-        async function getPorte() {
-            await api
-                .get("porteAnimais")
-                .then(function (response) {
-                    setPorte(response.data.data);
-                })
-                .catch(function (error) {
-                    setErrosApi(error);
-                });
-        }
-
-        getCategorias();
-
-        getPorte();
-
-    }, []);
 
     const edit = async (data) => {
 
-        console.log("🚀 ~ file: UpdateAnimais.jsx:91 ~ edit ~ data:", data)
+        // await api
+        //     .patch(`animais/${data.id_animal}`, data)
+        //     .then(function (response) {
+        //         if (response.status == 200) {
+        //             navigate("/animais");
+        //         } else {
+        //             setErrosApi(response.data.errors);
+        //         }
+        //     })
+        //     .catch(function (error) {
+        //         console.log("🚀 ~ file: UpdateAnimais.jsx:62 ~ edit ~ error:", error)
+        //         setErrosApi(error.response.data)
+        //     });
 
-        await api
-            .patch(`animais/${data.id_animal}`, data)
-            .then(function (response) {
-                console.log("🚀 ~ file: UpdateAnimais.jsx:78 ~ response:", response);
-                // if (response.status == 200) {
-                //     navigate("/animais");
-                // } else {
-                //     setErros(response.data.errors);
-                // }
-            })
-            .catch(function (error) {
-                console.log("🚀 ~ file: UpdateAnimais.jsx:100 ~ edit ~ error:", error.response.data)
-                setErrosApi(error.response.data)
-            });
+        let response = await apiFetch(`animais/${data.id_animal}`, "patch", data)
 
-        return;
+        if (response.code == 200) {
+            navigate("/animais");
+        } else {
+            setErrosApi(response.data.errors);
+        }
+
     };
 
-    console.log("Editar")
+    if (loadingApi) {
+        return <h1>Carregando.......</h1>
+    }
 
     return (
         <>
@@ -118,7 +80,7 @@ function UpdateAnimais() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={errosApi.errors}
+                    apiErros={errosApi.nome}
                 />
 
                 <Input
@@ -129,7 +91,7 @@ function UpdateAnimais() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={errosApi.errors}
+                    apiErros={errosApi.descricao}
                 />
 
                 <Input
@@ -140,7 +102,7 @@ function UpdateAnimais() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={errosApi.errors}
+                    apiErros={errosApi.idade}
                 />
 
                 <Input
@@ -151,37 +113,22 @@ function UpdateAnimais() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={errosApi.errors}
+                    apiErros={errosApi.sexo}
                 />
 
-                {loading ? <h1>Carregando****</h1> : (
+                <PorteAnimal
+                    label="Porte Animal"
+                    name="id_porte"
+                    register={register}
+                // valorDefinido={id_porte}
+                />
 
-                    <>
-                        <Select
-                            label='Categoria'
-                            name='id_categoria'
-                            register={register}
-                            arrayValues={categorias}
-                            valueId='id_categoria'
-                            valueText='descricao'
-                            valorDefinido={animal.id_categoria}
-                            apiErros={errosApi.errors}
-                        />
-
-                        <Select
-                            label='Porte'
-                            name='id_porte'
-                            register={register}
-                            arrayValues={porte}
-                            valueId='id_porte'
-                            valueText='descricao'
-                            valorDefinido={animal.id_porte}
-                            apiErros={errosApi.errors}
-                        />
-                    </>
-
-
-                )}
+                <Categorias
+                    label="Categorias"
+                    name="id_categoria"
+                    register={register}
+                // valorDefinido={id_categoria}
+                />
 
                 {/* <Input
                     label='Imagens'
@@ -190,7 +137,7 @@ function UpdateAnimais() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={erros}
+                   apiErros={errosApi}
                 /> */}
 
                 <br />

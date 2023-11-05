@@ -4,11 +4,13 @@ import "./reset.css";
 import Routes from "./routes/routes";
 
 import { AuthProvider } from "../src/context/apiContext";
+import Teste from "./pages/Teste";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AuthProvider>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <Routes />
-    </React.StrictMode>
+      {/* <Teste/> */}
+    {/* </React.StrictMode> */}
   </AuthProvider>
 );

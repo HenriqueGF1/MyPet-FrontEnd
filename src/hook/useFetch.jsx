@@ -25,12 +25,13 @@ export default function useFetch() {
                 }
             }
         }).catch(function (error) {
+            console.log("🚀 ~ file: useFetch.jsx:28 ~ apiFetch ~ error:", error)
             setLoadingApi(false)
             return {
                 code: error.response.status,
                 data: error.response.data,
             }
-        });
+        })
 
     }
 

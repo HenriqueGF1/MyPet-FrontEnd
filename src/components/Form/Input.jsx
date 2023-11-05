@@ -1,53 +1,45 @@
-function Input({ label, typeInput, placeholder, name, register, validation, errors, apiErros }) {
+import { memo } from "react";
 
-    console.log("Input")
+const Input = memo(
+    function Input({ label, typeInput, placeholder, name, register, validation, errors, apiErros }) {
 
-    let inputName = name.replaceAll("[]", "");
+        let inputName = name.replaceAll("[]", "");
+        let erroMsg = '';
 
-    let erroApiMsg = '';
-    let erroMsg = '';
+        if (Object.keys(errors).length > 0) {
 
-    if (apiErros != undefined) {
-        erroApiMsg = apiErros[inputName]
-    }
+            let erro = errors[inputName]?.type;
 
+            switch (erro) {
+                case 'required':
+                    erroMsg = `Esse campo ${inputName} e obrigatório`
+                    break;
+                default:
+                    break;
+            }
 
-    if (Object.keys(errors).length > 0) {
-
-        console.log("🚀 ~ file: Input.jsx:2 ~ Input ~ errors:", errors)
-
-        let erro = errors[inputName].type;
-
-        switch (erro) {
-            case 'required':
-                erroMsg = `Esse campo ${inputName} e obrigatório`
-                break;
-            default:
-                break;
         }
-        console.log("🚀 ~ file: Input.jsx:23 ~ Input ~ erroMsg:", erroMsg)
-    }
 
-    return (
-        <>
-            <label>{label}</label>
-            <br />
-            <input
-                type={typeInput}
-                placeholder={placeholder}
-                name={name}
-                {...register(name, validation)}
-            />
-            <br />
-            {
-                erroApiMsg != '' ? <p>{erroApiMsg}</p> : <></>
-            }
-            {
-                erroMsg != '' ? <p>{erroMsg}</p> : <></>
-            }
-            <br />
-        </>
-    )
-}
+        return (
+            <>
+                <label>{label}</label>
+                <br />
+                <input
+                    type={typeInput}
+                    placeholder={placeholder}
+                    name={name}
+                    {...register(name, validation)}
+                />
+                <br /><br />
+                {
+                    erroMsg != '' ? <><p>{erroMsg}</p><br /></> : <></>
+                }
+                {
+                    apiErros != undefined ? <><p>{apiErros}</p><br /></> : <></>
+                }
+            </>
+        )
+    }
+)
 
 export default Input;

@@ -60,26 +60,27 @@ function MeusAnimais() {
 
             <NavBar />
 
-            {animais.length == 0 ? <h1>Sem Animais...</h1> : animais.map((animal) => {
-                return (
+            {animais.length == 0 ? "Sem animais" :
+                animais.length == 0 ? <h1>Sem Animais...</h1> : animais.map((animal) => {
+                    return (
 
-                    <div key={animal.id_animal}>
-                        <AnimaisList
-                            id_animal={animal.id_animal}
-                            nome={animal.nome}
-                            usuario={animal.usuario.nome}
-                            sexo={animal.sexo}
-                            descricao={animal.descricao}
-                            categoria={animal.categoria.descricao}
-                            idade={animal.idade}
-                            porte={animal.porte.descricao}
-                            fotos={animal.fotos}
-                            handleDelete={handleDelete}
-                        />
-                    </div>
+                        <div key={animal.id_animal}>
+                            <AnimaisList
+                                id_animal={animal.id_animal}
+                                nome={animal.nome}
+                                usuario={animal.usuario.nome}
+                                sexo={animal.sexo}
+                                descricao={animal.descricao}
+                                categoria={animal.categoria.descricao}
+                                idade={animal.idade}
+                                porte={animal.porte.descricao}
+                                fotos={animal.fotos}
+                                handleDelete={handleDelete}
+                            />
+                        </div>
 
-                )
-            })}
+                    )
+                })}
         </>
     )
 
