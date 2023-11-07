@@ -27,7 +27,7 @@ function UpdateAnimais() {
                 id_animal: response.data.id_animal,
                 nome: response.data.nome,
                 descricao: response.data.descricao,
-                idade: response.data.idade,
+                idade: response.data.idadeEUA,
                 sexo: response.data.sexo,
                 id_categoria: response.data.id_categoria,
                 id_porte: response.data.id_porte,
@@ -36,6 +36,7 @@ function UpdateAnimais() {
     });
 
     const edit = async (data) => {
+        console.log("🚀 ~ file: UpdateAnimais.jsx:39 ~ edit ~ data:", data)
 
         let response = await apiFetch(`animais/${data.id_animal}`, "patch", data)
 
@@ -92,10 +93,24 @@ function UpdateAnimais() {
                     apiErros={errosApi.idade}
                 />
 
+                <label htmlFor="">Sexo</label>
+                <br /><br />
+
                 <Input
-                    label='Sexo'
-                    typeInput='text'
-                    placeholder='Preencha seu Sexo'
+                    label='M'
+                    typeInput='radio'
+                    value="M"
+                    name='sexo'
+                    register={register}
+                    validation={{ required: true }}
+                    errors={errors}
+                    apiErros={errosApi.sexo}
+                />
+
+                <Input
+                    label='F'
+                    typeInput='radio'
+                    value="F"
                     name='sexo'
                     register={register}
                     validation={{ required: true }}
@@ -107,25 +122,13 @@ function UpdateAnimais() {
                     label="Porte Animal"
                     name="id_porte"
                     register={register}
-                // valorDefinido={id_porte}
                 />
 
                 <Categorias
                     label="Categorias"
                     name="id_categoria"
                     register={register}
-                // valorDefinido={id_categoria}
                 />
-
-                {/* <Input
-                    label='Imagens'
-                    typeInput='file'
-                    name='imagens[]'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                   apiErros={errosApi}
-                /> */}
 
                 <br />
                 <button type="submit">Enviar</button>

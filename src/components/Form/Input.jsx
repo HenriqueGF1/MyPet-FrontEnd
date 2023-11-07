@@ -1,10 +1,17 @@
 import { memo } from "react";
 
 const Input = memo(
-    function Input({ label, typeInput, placeholder, name, register, validation, errors, apiErros }) {
-
-        console.log("🚀 ~ file: Input.jsx:5 ~ Input ~ errors:", errors)
-        console.log("🚀 ~ file: Input.jsx:5 ~ Input ~ apiErros:", apiErros)
+    function Input({
+        label,
+        typeInput,
+        value,
+        placeholder,
+        name,
+        register,
+        validation,
+        errors,
+        apiErros
+    }) {
 
         let inputName = name.replaceAll("[]", "");
         let erroMsg = '';
@@ -32,6 +39,7 @@ const Input = memo(
                     placeholder={placeholder}
                     name={name}
                     {...register(name, validation)}
+                    value={value}
                 />
                 <br /><br />
                 {

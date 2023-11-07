@@ -46,15 +46,15 @@ function AnimaisList({
                 </li>
                 <br />
                 <li>
-                    <Link to={`/animais/editar/${id_animal}`}>EDITAR: - {id_animal}</Link>
+                    {dt_inativacao ? "" : <Link to={`/animais/editar/${id_animal}`}>EDITAR: - {id_animal}</Link>}
                 </li>
                 <br />
                 <li onClick={() => handleDelete(id_animal)}>DELETAR: - {id_animal}</li>
                 <br />
-                <li onClick={() => handleAdotado(id_animal, adotado)}>
+                {dt_inativacao ? "" : <li onClick={() => handleAdotado(id_animal, adotado)}>
                     {adotado == 0 ? "ADOTAR " : "REMOVER ADOÇÃO "}
                     - {id_animal}
-                </li>
+                </li>}
                 <br />
                 {dt_inativacao ? "" : <li onClick={() => handleDesativar(id_animal)}>DESATIVAR: - {id_animal}</li>}
                 <br />

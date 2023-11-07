@@ -22,27 +22,9 @@ function CreateAnimal() {
 
     const create = async (data) => {
 
+        console.log("🚀 ~ file: CreateAnimal.jsx:24 ~ create ~ data:", data)
+
         let animalData = new FormData(document.getElementById("createAnimal"));
-
-        // await api
-        //     .post(`animais`,
-        //         animalData
-        //     )
-        //     .then(function (response) {
-
-        //         if (response.status == 201) {
-        //             navigate("/usuario/animais");
-        //         } else {
-        //             setErros(response.data.errors);
-        //         }
-
-        //     })
-        //     .catch(function (error) {
-        //         console.log("🚀 ~ file: CreateAnimal.jsx:85 ~ create ~ error:", error)
-        //         setErros(error.response.data.errors)
-        //         // setLoading(false);
-        //     });
-        // return
 
         let response = await apiFetch(`animais`, "post", animalData)
 
@@ -112,16 +94,32 @@ function CreateAnimal() {
                     apiErros={errosApi.idade}
                 />
 
+                <label htmlFor="">Sexo</label>
+                <br /><br />
+
                 <Input
-                    label='Sexo'
-                    typeInput='text'
-                    placeholder='Preencha seu Sexo'
+                    label='M'
+                    typeInput='radio'
+                    value="M"
                     name='sexo'
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
                     apiErros={errosApi.sexo}
                 />
+
+                <Input
+                    label='F'
+                    typeInput='radio'
+                    value="F"
+                    name='sexo'
+                    register={register}
+                    validation={{ required: true }}
+                    errors={errors}
+                    apiErros={errosApi.sexo}
+                />
+
+                <br />
 
                 <Input
                     label='Imagens'
