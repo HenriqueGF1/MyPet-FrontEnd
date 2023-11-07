@@ -2,19 +2,17 @@ import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Context } from "../../context/apiContext";
 import { useNavigate } from "react-router-dom";
-import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
-import Select from "../../components/Form/Select";
 import Categorias from "../../components/Categorias/Categorias";
 import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
-
 
 function CreateAnimal() {
 
     let navigate = useNavigate();
 
-    const [erros, setErros] = useState([])
+    const [errosApi, setErrosApi] = useState([])
+    const { loadingApi, apiFetch } = useContext(Context);
 
     const {
         register,
@@ -26,27 +24,39 @@ function CreateAnimal() {
 
         let animalData = new FormData(document.getElementById("createAnimal"));
 
-        await api
-            .post(`animais`,
-                animalData
-            )
-            .then(function (response) {
+        // await api
+        //     .post(`animais`,
+        //         animalData
+        //     )
+        //     .then(function (response) {
 
-                if (response.status == 201) {
-                    navigate("/animais");
-                } else {
-                    setErros(response.data.errors);
-                }
+        //         if (response.status == 201) {
+        //             navigate("/usuario/animais");
+        //         } else {
+        //             setErros(response.data.errors);
+        //         }
 
-            })
-            .catch(function (error) {
-                console.log("🚀 ~ file: CreateAnimal.jsx:85 ~ create ~ error:", error)
-                setErros(error.response.data.errors)
-                // setLoading(false);
-            });
+        //     })
+        //     .catch(function (error) {
+        //         console.log("🚀 ~ file: CreateAnimal.jsx:85 ~ create ~ error:", error)
+        //         setErros(error.response.data.errors)
+        //         // setLoading(false);
+        //     });
+        // return
 
-        return
+        let response = await apiFetch(`animais`, "post", animalData)
+
+        console.log("🚀 ~ file: CreateAnimal.jsx:49 ~ create ~ response:", response)
+
+        if (response.code == 201) {
+            navigate("/usuario/animais");
+        } else {
+            // alert(response.data.message)
+            setErrosApi(response.data.errors);
+        }
     }
+
+    console.log(errosApi)
 
     return (
         <>
@@ -65,7 +75,7 @@ function CreateAnimal() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={erros}
+                    apiErros={errosApi.nome}
                 />
 
                 <Input
@@ -76,21 +86,19 @@ function CreateAnimal() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={erros}
+                    apiErros={errosApi.descricao}
                 />
 
                 <PorteAnimal
                     label="Porte Animal"
                     name="id_porte"
                     register={register}
-                    erros={erros}
                 />
 
                 <Categorias
                     label="Categorias"
                     name="id_categoria"
                     register={register}
-                    erros={erros}
                 />
 
                 <Input
@@ -101,7 +109,7 @@ function CreateAnimal() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={erros}
+                    apiErros={errosApi.idade}
                 />
 
                 <Input
@@ -112,35 +120,8 @@ function CreateAnimal() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={erros}
+                    apiErros={errosApi.sexo}
                 />
-
-                {/* {loading ? <h1>Carregando****</h1> : (
-
-                    <>
-
-                        <Select
-                            label='Categoria'
-                            name='id_categoria'
-                            register={register}
-                            arrayValues={categorias}
-                            valueId='id_categoria'
-                            valueText='descricao'
-                            apiErros={erros}
-                        />
-
-                        <Select
-                            label='Porte'
-                            name='id_porte'
-                            register={register}
-                            arrayValues={porte}
-                            valueId='id_porte'
-                            valueText='descricao'
-                            apiErros={erros}
-                        />
-
-                    </>
-                )} */}
 
                 <Input
                     label='Imagens'
@@ -149,7 +130,7 @@ function CreateAnimal() {
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
-                    apiErros={erros}
+                    apiErros={errosApi.imagens}
                 />
 
                 <br />

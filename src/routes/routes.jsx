@@ -20,7 +20,7 @@ import CriarConta from "../pages/CriarConta";
 import Animais from "../pages/Animais/Animais";
 import CreateAnimal from "../pages/Animais/CreateAnimal";
 import UpdateAnimais from "../pages/Animais/UpdateAnimais";
-import MeusAnimais from "../pages/Animais/MeusAnimais";
+import UsuarioAnimais from "../pages/Animais/UsuarioAnimais";
 
 export default function AppRoutes() {
   return (
@@ -55,10 +55,10 @@ export default function AppRoutes() {
           }
         />
         <Route
-          path="/animais/usuario"
+          path="/usuario/animais"
           element={
             <PrivateRoute>
-              <MeusAnimais />
+              <UsuarioAnimais />
             </PrivateRoute>
           }
         />

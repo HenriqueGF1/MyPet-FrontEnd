@@ -4,7 +4,7 @@ import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";
 import AnimaisList from "../../components/Animais/AnimaisList";
 
-function MeusAnimais() {
+function UsuarioAnimais() {
 
     const [animais, setAnimais] = useState([]);
     const [erros, setErros] = useState([]);
@@ -20,6 +20,7 @@ function MeusAnimais() {
                 alert("Por Favor Tente mais tarde...")
             }
         }
+
 
         getAnimais();
 
@@ -48,7 +49,7 @@ function MeusAnimais() {
             adotado: adotado == 1 ? 0 : 1
         })
 
-        console.log("🚀 ~ file: MeusAnimais.jsx:47 ~ handleAdotado ~ response:", response)
+        console.log("🚀 ~ file: UsuarioAnimais.jsx:47 ~ handleAdotado ~ response:", response)
 
         if (response.data.code == 400) {
             alert(response.data.message)
@@ -62,7 +63,7 @@ function MeusAnimais() {
 
     const handleDesativar = async (id_animal) => {
 
-        console.log("🚀 ~ file: MeusAnimais.jsx:64 ~ handleDesati ~ id_animal:", id_animal)
+        console.log("🚀 ~ file: UsuarioAnimais.jsx:64 ~ handleDesati ~ id_animal:", id_animal)
 
         let response = await apiFetch(`animais/desativar/${id_animal}`, "patch")
 
@@ -78,7 +79,7 @@ function MeusAnimais() {
 
     const handleAtivar = async (id_animal) => {
 
-        console.log("🚀 ~ file: MeusAnimais.jsx:80 ~ handleAti ~ id_animal:", id_animal)
+        console.log("🚀 ~ file: UsuarioAnimais.jsx:80 ~ handleAti ~ id_animal:", id_animal)
 
         let response = await apiFetch(`animais/ativar/${id_animal}`, "patch")
 
@@ -92,42 +93,46 @@ function MeusAnimais() {
 
     }
 
+
     return (
         <>
             <h1>Meu Animais</h1>
 
             <NavBar />
 
-            {loadingApi ? <h1>Carregando........</h1> :
-                animais.length == 0 ? <h1>Sem Animais...</h1> : animais.map((animal) => {
-                    return (
+            {
+                loadingApi ? <h1>Carregando........</h1> : ''
+            }
 
-                        <div key={animal.id_animal}>
-                            <AnimaisList
-                                id_animal={animal.id_animal}
-                                dt_inativacao={animal.dt_inativacao}
-                                nome={animal.nome}
-                                adotado={animal.adotado}
-                                usuario={animal.usuario.nome}
-                                sexo={animal.sexo}
-                                descricao={animal.descricao}
-                                categoria={animal.categoria.descricao}
-                                idade={animal.idade}
-                                porte={animal.porte.descricao}
-                                fotos={animal.fotos}
-                                handleDelete={handleDelete}
-                                handleAdotado={handleAdotado}
-                                handleDesativar={handleDesativar}
-                                handleAtivar={handleAtivar}
-                            />
-                        </div>
+            {animais.length == 0 ? <h1>Sem Animais...</h1> : animais.map((animal) => {
+                return (
 
-                    )
-                })}
+                    <div key={animal.id_animal}>
+                        <AnimaisList
+                            id_animal={animal.id_animal}
+                            dt_inativacao={animal.dt_inativacao}
+                            nome={animal.nome}
+                            adotado={animal.adotado}
+                            usuario={animal.usuario.nome}
+                            sexo={animal.sexo}
+                            descricao={animal.descricao}
+                            categoria={animal.categoria.descricao}
+                            idade={animal.idade}
+                            porte={animal.porte.descricao}
+                            fotos={animal.fotos}
+                            handleDelete={handleDelete}
+                            handleAdotado={handleAdotado}
+                            handleDesativar={handleDesativar}
+                            handleAtivar={handleAtivar}
+                        />
+                    </div>
+
+                )
+            })}
         </>
     )
 
 
 }
 
-export default MeusAnimais;
+export default UsuarioAnimais;

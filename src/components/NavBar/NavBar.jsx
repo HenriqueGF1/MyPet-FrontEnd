@@ -26,7 +26,7 @@ const NavBar = memo(function NavBar() {
                     <Link to='/animais/editar'>Editar Animais</Link>
                 </li>
                 <li>
-                    <Link to='/animais/usuario'>Meus Animais</Link>
+                    <Link to='/usuario/animais'>Meus Animais</Link>
                 </li>
                 <li>
                     <Link to='/teste'>Teste</Link>

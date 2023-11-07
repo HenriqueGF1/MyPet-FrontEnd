@@ -3,6 +3,9 @@ import { memo } from "react";
 const Input = memo(
     function Input({ label, typeInput, placeholder, name, register, validation, errors, apiErros }) {
 
+        console.log("🚀 ~ file: Input.jsx:5 ~ Input ~ errors:", errors)
+        console.log("🚀 ~ file: Input.jsx:5 ~ Input ~ apiErros:", apiErros)
+
         let inputName = name.replaceAll("[]", "");
         let erroMsg = '';
 

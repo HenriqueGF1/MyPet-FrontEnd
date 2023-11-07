@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Context } from "../../context/apiContext";
 import { useNavigate } from "react-router-dom";
-import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
 import Categorias from "../../components/Categorias/Categorias";
