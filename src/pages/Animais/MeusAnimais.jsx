@@ -13,31 +13,23 @@ function MeusAnimais() {
     useEffect(() => {
 
         async function getAnimais() {
-            let response = await apiFetch("animais", "get")
-            setAnimais(response.data);
+            let response = await apiFetch("usuario/animais", "get")
+            if (response.data != undefined) {
+                setAnimais(response.data);
+            } else {
+                alert("Por Favor Tente mais tarde...")
+            }
         }
 
         getAnimais();
 
-    }, []);
+    }, [animais]);
 
     const handleDelete = async (id_animal) => {
-        // console.log("🚀 ~ file: MeusAnimais.jsx:29 ~ handleDelete ~ id_animal:", id_animal)
-        // await api
-        //     .delete(`animais/${id_animal}`)
-        //     .then(function (response) {
-        //         console.log("🚀 ~ file: MeusAnimais.jsx:33 ~ response:", response)
-        //         setAnimais((prev) => prev.filter((animal) => animal.id_animal != id_animal))
-        //     })
-        //     .catch(function (error) {
-        //         setErros(error);
-        //     });
 
         let response = await apiFetch(`animais/${id_animal}`, "delete")
 
-        console.log("🚀 ~ file: MeusAnimais.jsx:37 ~ handleDelete ~ response:", response)
-
-        if (response.data.message != undefined) {
+        if (response.data.code == 400) {
             alert(response.data.message)
         }
 
@@ -46,12 +38,58 @@ function MeusAnimais() {
             setAnimais((prev) => prev.filter((animal) => animal.id_animal != id_animal))
         }
 
+    }
+
+    const handleAdotado = async (id_animal, adotado) => {
+
+        console.log(adotado == 1 ? 0 : 1)
+
+        let response = await apiFetch(`animais/${id_animal}/adotado`, "patch", {
+            adotado: adotado == 1 ? 0 : 1
+        })
+
+        console.log("🚀 ~ file: MeusAnimais.jsx:47 ~ handleAdotado ~ response:", response)
+
+        if (response.data.code == 400) {
+            alert(response.data.message)
+        }
+
+        if (response.code === 200) {
+            alert('Adotado com Sucesso !!')
+        }
 
     }
-    console.log("🚀 ~ file: MeusAnimais.jsx:51 ~ MeusAnimais ~ loadingApi:", loadingApi)
 
-    if (loadingApi) {
-        return <h1>Carregando........</h1>
+    const handleDesativar = async (id_animal) => {
+
+        console.log("🚀 ~ file: MeusAnimais.jsx:64 ~ handleDesati ~ id_animal:", id_animal)
+
+        let response = await apiFetch(`animais/desativar/${id_animal}`, "patch")
+
+        if (response.data.code == 400) {
+            alert(response.data.message)
+        }
+
+        if (response.code === 200) {
+            alert('Desativado com Sucesso !!')
+        }
+
+    }
+
+    const handleAtivar = async (id_animal) => {
+
+        console.log("🚀 ~ file: MeusAnimais.jsx:80 ~ handleAti ~ id_animal:", id_animal)
+
+        let response = await apiFetch(`animais/ativar/${id_animal}`, "patch")
+
+        if (response.data.code == 400) {
+            alert(response.data.message)
+        }
+
+        if (response.code === 200) {
+            alert('Ativado com Sucesso !!')
+        }
+
     }
 
     return (
@@ -60,14 +98,16 @@ function MeusAnimais() {
 
             <NavBar />
 
-            {animais.length == 0 ? "Sem animais" :
+            {loadingApi ? <h1>Carregando........</h1> :
                 animais.length == 0 ? <h1>Sem Animais...</h1> : animais.map((animal) => {
                     return (
 
                         <div key={animal.id_animal}>
                             <AnimaisList
                                 id_animal={animal.id_animal}
+                                dt_inativacao={animal.dt_inativacao}
                                 nome={animal.nome}
+                                adotado={animal.adotado}
                                 usuario={animal.usuario.nome}
                                 sexo={animal.sexo}
                                 descricao={animal.descricao}
@@ -76,6 +116,9 @@ function MeusAnimais() {
                                 porte={animal.porte.descricao}
                                 fotos={animal.fotos}
                                 handleDelete={handleDelete}
+                                handleAdotado={handleAdotado}
+                                handleDesativar={handleDesativar}
+                                handleAtivar={handleAtivar}
                             />
                         </div>
 

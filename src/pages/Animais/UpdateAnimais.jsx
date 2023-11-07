@@ -7,11 +7,13 @@ import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
 import Categorias from "../../components/Categorias/Categorias";
 import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
+import { useParams } from 'react-router-dom';
 
 function UpdateAnimais() {
 
     let navigate = useNavigate();
 
+    let { id_animal } = useParams();
     const [errosApi, setErrosApi] = useState([]);
     const { loadingApi, apiFetch } = useContext(Context);
 
@@ -21,7 +23,7 @@ function UpdateAnimais() {
         formState: { errors },
     } = useForm({
         defaultValues: async () => {
-            let response = await apiFetch(`animais/71`, "get")
+            let response = await apiFetch(`animais/${id_animal}`, "get")
             return {
                 id_animal: response.data.id_animal,
                 nome: response.data.nome,
@@ -35,20 +37,6 @@ function UpdateAnimais() {
     });
 
     const edit = async (data) => {
-
-        // await api
-        //     .patch(`animais/${data.id_animal}`, data)
-        //     .then(function (response) {
-        //         if (response.status == 200) {
-        //             navigate("/animais");
-        //         } else {
-        //             setErrosApi(response.data.errors);
-        //         }
-        //     })
-        //     .catch(function (error) {
-        //         console.log("🚀 ~ file: UpdateAnimais.jsx:62 ~ edit ~ error:", error)
-        //         setErrosApi(error.response.data)
-        //     });
 
         let response = await apiFetch(`animais/${data.id_animal}`, "patch", data)
 

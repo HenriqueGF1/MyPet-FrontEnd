@@ -4,6 +4,7 @@ import api from "../services/axiosInstance";
 export default function useFetch() {
 
     const [loadingApi, setLoadingApi] = useState(true)
+    console.log("🚀 ~ file: useFetch.jsx:7 ~ useFetch ~ loadingApi:", loadingApi)
 
     const apiFetch = (url, method, values = null) => {
 

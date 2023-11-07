@@ -47,7 +47,7 @@ export default function AppRoutes() {
           }
         />
         <Route
-          path="/animais/editar"
+          path="/animais/editar/:id_animal"
           element={
             <PrivateRoute>
               <UpdateAnimais />
@@ -69,7 +69,7 @@ export default function AppRoutes() {
           path="/teste"
           element={
             // <PrivateRoute>
-              <Teste />
+            <Teste />
             // </PrivateRoute>
           }
         />
