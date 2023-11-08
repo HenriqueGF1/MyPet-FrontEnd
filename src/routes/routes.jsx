@@ -24,6 +24,7 @@ import UsuarioAnimais from "../pages/Animais/UsuarioAnimais";
 import Contatos from "../pages/Usuario/Contato/Contatos";
 import UpdateContato from "../pages/Usuario/Contato/UpdateContato";
 import CreateContato from "../pages/Usuario/Contato/CreateContato";
+import UpdateUsuario from "../pages/Usuario/UpdateUsuario";
 
 export default function AppRoutes() {
   return (
@@ -39,6 +40,14 @@ export default function AppRoutes() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CriarConta />} />
+        <Route
+          path="/usuario/editar/:id_usuario"
+          element={
+            <PrivateRoute>
+              <UpdateUsuario />
+            </PrivateRoute>
+          }
+        />
         {/* Animais */}
         <Route path="/animais" element={<Animais />} />
         <Route

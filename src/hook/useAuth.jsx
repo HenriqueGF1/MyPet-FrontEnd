@@ -23,6 +23,7 @@ export default function useAuth() {
           if (httpCodes.includes(response.data.code)) {
             setAuthenticated(false);
             localStorage.removeItem("token");
+            localStorage.removeItem("user");
             api.defaults.headers.Authorization = undefined;
             setLoading(false);
             return
@@ -50,6 +51,14 @@ export default function useAuth() {
           "token",
           JSON.stringify(response.data.authorisation.token)
         );
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id_usuario: response.data.user.id_usuario,
+            nome: response.data.user.nome,
+            id_perfil: response.data.user.id_perfil,
+          })
+        );
         api.defaults.headers.Authorization = `Bearer ${response.data.authorisation.token}`;
         setAuthenticated(true);
         return { response, status }
@@ -69,6 +78,7 @@ export default function useAuth() {
       .then(function (response) {
         setAuthenticated(false);
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         api.defaults.headers.Authorization = undefined;
       })
       .catch(function (error) {

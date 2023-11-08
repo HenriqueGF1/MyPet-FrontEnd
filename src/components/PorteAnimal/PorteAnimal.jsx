@@ -7,6 +7,8 @@ function PorteAnimal({ label, name, valorDefinido, register, erros }) {
     const [porteAnimal, setPorteAnimal] = useState([])
     const { loadingApi, apiFetch } = useContext(Context);  
 
+    console.log("PorteAnimal")
+
     useEffect(() => {
 
         const getData = async () => {

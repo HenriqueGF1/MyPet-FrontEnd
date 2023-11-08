@@ -6,7 +6,7 @@ function Categorias({ label, name, valorDefinido, register, erros }) {
 
     const [categorias, setCategorias] = useState([])
     const { loadingApi, apiFetch } = useContext(Context);
-
+    console.log("Categorias")
     useEffect(() => {
 
         const getData = async () => {

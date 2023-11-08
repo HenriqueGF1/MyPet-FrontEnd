@@ -38,8 +38,6 @@ function CreateAnimal() {
         }
     }
 
-    console.log(errosApi)
-
     return (
         <>
 
