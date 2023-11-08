@@ -13,6 +13,10 @@ const Input = memo(
         apiErros
     }) {
 
+        console.log("🚀 ~ file: Input.jsx:15 ~ name:", name)
+
+        console.log("🚀 ~ file: Input.jsx:15 ~ apiErros:", apiErros)
+
         let inputName = name.replaceAll("[]", "");
         let erroMsg = '';
 

@@ -22,11 +22,17 @@ const NavBar = memo(function NavBar() {
                 <li>
                     <Link to='/animais/cadastrar'>Criar Animais</Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to='/animais/editar'>Editar Animais</Link>
-                </li>
+                </li> */}
                 <li>
                     <Link to='/usuario/animais'>Meus Animais</Link>
+                </li>
+                <li>
+                    <Link to='/contatos/cadastrar'>Criar Contato</Link>
+                </li>
+                <li>
+                    <Link to='/usuarios/contatos'>Meus Contatos</Link>
                 </li>
                 <li>
                     <Link to='/teste'>Teste</Link>

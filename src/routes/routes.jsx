@@ -21,6 +21,9 @@ import Animais from "../pages/Animais/Animais";
 import CreateAnimal from "../pages/Animais/CreateAnimal";
 import UpdateAnimais from "../pages/Animais/UpdateAnimais";
 import UsuarioAnimais from "../pages/Animais/UsuarioAnimais";
+import Contatos from "../pages/Usuario/Contato/Contatos";
+import UpdateContato from "../pages/Usuario/Contato/UpdateContato";
+import CreateContato from "../pages/Usuario/Contato/CreateContato";
 
 export default function AppRoutes() {
   return (
@@ -59,6 +62,31 @@ export default function AppRoutes() {
           element={
             <PrivateRoute>
               <UsuarioAnimais />
+            </PrivateRoute>
+          }
+        />
+        {/*  */}
+        <Route
+          path="/contatos/cadastrar"
+          element={
+            <PrivateRoute>
+              <CreateContato />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="usuarios/contatos"
+          element={
+            <PrivateRoute>
+              <Contatos />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/contatos/editar/:id_contato"
+          element={
+            <PrivateRoute>
+              <UpdateContato />
             </PrivateRoute>
           }
         />

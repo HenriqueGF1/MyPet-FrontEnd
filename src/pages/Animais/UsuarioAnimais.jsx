@@ -14,17 +14,15 @@ function UsuarioAnimais() {
 
         async function getAnimais() {
             let response = await apiFetch("usuario/animais", "get")
+            console.log("🚀 ~ file: UsuarioAnimais.jsx:17 ~ getAnimais ~ response:", response)
             if (response.data != undefined) {
                 setAnimais(response.data);
-            } else {
-                alert("Por Favor Tente mais tarde...")
             }
         }
 
-
         getAnimais();
 
-    }, [animais]);
+    }, []);
 
     const handleDelete = async (id_animal) => {
 
