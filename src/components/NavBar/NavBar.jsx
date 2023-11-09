@@ -55,6 +55,12 @@ const NavBar = memo(function NavBar() {
                     <Link to='/usuarios/contatos'>Meus Contatos</Link>
                 </li>
                 <li>
+                    <Link to='/enderecos/cadastrar'>Criar Endereço</Link>
+                </li>
+                <li>
+                    <Link to={`/usuarios/${user.id_usuario}/enderecos`}>Meus Endereços</Link>
+                </li>
+                <li>
                     <Link to='/teste'>Teste</Link>
                 </li>
             </ul>

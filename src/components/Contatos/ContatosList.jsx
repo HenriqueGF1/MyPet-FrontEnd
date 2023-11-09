@@ -25,7 +25,7 @@ function ContatosList({
                     - {id_contato}
                 </li>
                 <br />
-                <li onClick={() => handleDelete(id_contato)}>EXCLUIR: - {id_contato}</li>
+                {principal == 0 ? <li onClick={() => handleDelete(id_contato)}>EXCLUIR: - {id_contato}</li> : ""}
                 <br />
             </ul>
         </>

@@ -8,27 +8,19 @@ function Contatos() {
     const [contatos, setContatos] = useState([]);
     const { loadingApi, apiFetch } = useContext(Context);
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     async function getContatos() {
-    //         let response = await apiFetch(`usuarios/1/contatos`, "get")
-    //         console.log("🚀 ~ file: Contatos.jsx:15 ~ getContatos ~ response:", response)
-    //         if (response.data != undefined) {
-    //             setContatos(response.data);
-    //         }
-    //     }
-
-    //     getContatos();
-
-    // }, []);
-
-    const loadBookFromServer = useCallback(async () => {
-        let response = await apiFetch(`usuarios/1/contatos`, "get")
-        if (response.data != undefined) {
-            console.log("🚀 ~ file: Contatos.jsx:28 ~ loadBookFromServer ~ response:", response)
-            setContatos(response.data);
+        async function getContatos() {
+            let response = await apiFetch(`usuarios/1/contatos`, "get")
+            console.log("🚀 ~ file: Contatos.jsx:15 ~ getContatos ~ response:", response)
+            if (response.data != undefined) {
+                setContatos(response.data);
+            }
         }
-    }, [contatos])
+
+        getContatos();
+
+    }, []);
 
     const handlePrincipal = async (id_contato) => {
 
@@ -60,10 +52,6 @@ function Contatos() {
             setContatos((prev) => prev.filter((contatos) => contatos.id_contato != id_contato))
         }
     }
-
-    useEffect(() => {
-        loadBookFromServer()
-    }, [])
 
     return (
         <>

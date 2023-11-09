@@ -5,6 +5,8 @@ import { Context } from "../context/apiContext";
 const PrivateRoute = ({ children }) => {
   const { loading, authenticated, checkTokenIsValid } = useContext(Context);
 
+  console.log("🚀 ~ file: routes.jsx:9 ~ PrivateRoute ~ loading:", loading)
+
   if (loading) {
     // return <h1>Loading...</h1>;
     return
@@ -25,6 +27,9 @@ import Contatos from "../pages/Usuario/Contato/Contatos";
 import UpdateContato from "../pages/Usuario/Contato/UpdateContato";
 import CreateContato from "../pages/Usuario/Contato/CreateContato";
 import UpdateUsuario from "../pages/Usuario/UpdateUsuario";
+import Enderecos from "../pages/Usuario/Enderecos/Enderecos";
+import UpdateEnderecos from "../pages/Usuario/Enderecos/UpdateEnderecos";
+import CreateEnderecos from "../pages/Usuario/Enderecos/CreateEnderecos";
 
 export default function AppRoutes() {
   return (
@@ -96,6 +101,31 @@ export default function AppRoutes() {
           element={
             <PrivateRoute>
               <UpdateContato />
+            </PrivateRoute>
+          }
+        />
+        {/* Enderecos */}
+        <Route
+          path="/usuarios/:id_usuario/enderecos"
+          element={
+            <PrivateRoute>
+              <Enderecos />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/enderecos/cadastrar"
+          element={
+            <PrivateRoute>
+              <CreateEnderecos />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/enderecos/editar/:id_endereco"
+          element={
+            <PrivateRoute>
+              <UpdateEnderecos />
             </PrivateRoute>
           }
         />
