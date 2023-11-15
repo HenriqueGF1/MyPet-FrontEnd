@@ -30,6 +30,10 @@ import UpdateUsuario from "../pages/Usuario/UpdateUsuario";
 import Enderecos from "../pages/Usuario/Enderecos/Enderecos";
 import UpdateEnderecos from "../pages/Usuario/Enderecos/UpdateEnderecos";
 import CreateEnderecos from "../pages/Usuario/Enderecos/CreateEnderecos";
+import CreateDenuncia from "../pages/Denuncias/CreateDenuncia";
+import Denuncias from "../pages/Denuncias/Denuncias";
+import UpdateDenuncia from "../pages/Denuncias/UpdateDenuncia";
+import AnimalShow from "../components/Animais/AnimalShow";
 
 export default function AppRoutes() {
   return (
@@ -55,6 +59,14 @@ export default function AppRoutes() {
         />
         {/* Animais */}
         <Route path="/animais" element={<Animais />} />
+        <Route
+          path="/animais/:id_animal"
+          element={
+            <PrivateRoute>
+              <AnimalShow />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/animais/cadastrar"
           element={
@@ -126,6 +138,31 @@ export default function AppRoutes() {
           element={
             <PrivateRoute>
               <UpdateEnderecos />
+            </PrivateRoute>
+          }
+        />
+        {/* Denuncias */}
+        <Route
+          path="/denuncias/:id_usuario/:id_animal/cadastrar"
+          element={
+            <PrivateRoute>
+              <CreateDenuncia />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/minhas/denuncias"
+          element={
+            <PrivateRoute>
+              <Denuncias />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/denuncias/editar/:id_denuncia"
+          element={
+            <PrivateRoute>
+              <UpdateDenuncia />
             </PrivateRoute>
           }
         />

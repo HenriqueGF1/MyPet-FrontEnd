@@ -18,12 +18,14 @@ function AnimaisList({
     handleAtivar
 }) {
 
+    console.log(usuario)
+
     return (
         <>
             <ul >
                 <li>{dt_inativacao ? 'DESATIVADO' : ''}</li>
                 <li><b>Nome:</b> {nome}</li>
-                <li><b>Dono:</b> {usuario}</li>
+                <li><b>Dono:</b> {usuario.nome}</li>
                 <li><b>Adotado:</b> {adotado}</li>
                 <li><b>Sexo:</b> {sexo}</li>
                 <li><b>Descricao:</b> {descricao}</li>
@@ -60,6 +62,9 @@ function AnimaisList({
                 <br />
                 {dt_inativacao ? <li onClick={() => handleAtivar(id_animal)}>ATIVAR: - {id_animal}</li> : ""}
                 <br />
+                {/* <li>
+                    <Link to={`/denuncias/${usuario.id_usuario}/${id_animal}/cadastrar`}>Denunciar</Link>
+                </li> */}
             </ul>
         </>
     )

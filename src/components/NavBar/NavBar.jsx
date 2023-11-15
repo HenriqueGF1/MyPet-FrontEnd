@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../../context/apiContext";
 
 const NavBar = memo(function NavBar() {
-    console.log("NavBar")
+    // console.log("NavBar")
     const { authenticated } = useContext(Context);
     const { loadingApi, apiFetch } = useContext(Context);
 
@@ -14,9 +14,12 @@ const NavBar = memo(function NavBar() {
 
     useEffect(() => {
 
-        console.log("Aqui");
+        // console.log("Aqui");
 
-        setUser((prev) => JSON.parse(localStorage.getItem("user")));
+        if (localStorage.getItem("user") != undefined) {
+            setUser((prev) => JSON.parse(localStorage.getItem("user")));
+        }
+
     }, [])
 
     return (
@@ -59,6 +62,9 @@ const NavBar = memo(function NavBar() {
                 </li>
                 <li>
                     <Link to={`/usuarios/${user.id_usuario}/enderecos`}>Meus Endereços</Link>
+                </li>
+                <li>
+                    <Link to={`/minhas/denuncias`}>Minhas Denuncias</Link>
                 </li>
                 <li>
                     <Link to='/teste'>Teste</Link>

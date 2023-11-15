@@ -1,8 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { Context } from "../../context/apiContext";
-import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";
 import AnimaisList from "../../components/Animais/AnimaisList";
+
+import { toast } from 'react-toastify';
 
 function UsuarioAnimais() {
 
@@ -41,27 +42,35 @@ function UsuarioAnimais() {
 
     const handleAdotado = async (id_animal, adotado) => {
 
-        console.log(adotado == 1 ? 0 : 1)
+        const adotar = adotado == 1 ? 0 : 1;
 
         let response = await apiFetch(`animais/${id_animal}/adotado`, "patch", {
-            adotado: adotado == 1 ? 0 : 1
+            adotado: adotar
         })
 
-        console.log("🚀 ~ file: UsuarioAnimais.jsx:47 ~ handleAdotado ~ response:", response)
-
         if (response.data.code == 400) {
-            alert(response.data.message)
+            // alert(response.data.message)
+            toast.warn(response.data.message);
         }
 
         if (response.code === 200) {
-            alert('Adotado com Sucesso !!')
+
+            const animal = animais.map(animal =>
+                animal.id_animal === id_animal
+                    ? { ...animal, adotado: adotar }
+                    : animal
+            );
+
+            setAnimais(
+                prev => animal
+            );
+
+            toast.success("Adotado com Sucesso !!");
         }
 
     }
 
     const handleDesativar = async (id_animal) => {
-
-        console.log("🚀 ~ file: UsuarioAnimais.jsx:64 ~ handleDesati ~ id_animal:", id_animal)
 
         let response = await apiFetch(`animais/desativar/${id_animal}`, "patch")
 
@@ -70,7 +79,18 @@ function UsuarioAnimais() {
         }
 
         if (response.code === 200) {
-            alert('Desativado com Sucesso !!')
+
+            const animal = animais.map(animal =>
+                animal.id_animal === id_animal
+                    ? { ...animal, dt_inativacao: response.data.data.dt_inativacao }
+                    : animal
+            );
+
+            setAnimais(
+                prev => animal
+            );
+
+            toast.success("Desativado com Sucesso !!");
         }
 
     }
@@ -86,11 +106,21 @@ function UsuarioAnimais() {
         }
 
         if (response.code === 200) {
+
+            const animal = animais.map(animal =>
+                animal.id_animal === id_animal
+                    ? { ...animal, dt_inativacao: response.data.data.dt_inativacao }
+                    : animal
+            );
+
+            setAnimais(
+                prev => animal
+            );
+
             alert('Ativado com Sucesso !!')
         }
 
     }
-
 
     return (
         <>
@@ -111,7 +141,7 @@ function UsuarioAnimais() {
                             dt_inativacao={animal.dt_inativacao}
                             nome={animal.nome}
                             adotado={animal.adotado}
-                            usuario={animal.usuario.nome}
+                            usuario={animal.usuario}
                             sexo={animal.sexo}
                             descricao={animal.descricao}
                             categoria={animal.categoria.descricao}

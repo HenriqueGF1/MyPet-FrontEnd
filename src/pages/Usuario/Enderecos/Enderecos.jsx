@@ -36,7 +36,23 @@ function Enderecos() {
             alert(response.data.message)
         }
 
-        if (response.data === 1) {
+        if (response.code === 200) {
+
+            let principal = 0;
+
+            const endereco = enderecos.map(endereco => {
+                if (endereco.id_endereco === id_endereco) {
+                    principal = response.data.data.principal
+                } else {
+                    principal = 0;
+                }
+                return { ...endereco, principal: principal }
+            });
+
+            setEnderecos(
+                prev => endereco
+            );
+
             alert('Alterado com Sucesso !!')
         }
 

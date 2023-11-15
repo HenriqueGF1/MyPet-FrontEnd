@@ -24,16 +24,29 @@ function Contatos() {
 
     const handlePrincipal = async (id_contato) => {
 
-        console.log("🚀 ~ file: Contatos.jsx:26 ~ handlePrincipal ~ id_contato:", id_contato)
-
         let response = await apiFetch(`usuarios/1/contatos/${id_contato}/definirPrincipal`, "patch")
 
-        console.log("🚀 ~ file: Contatos.jsx:31 ~ handlePrincipal ~ response:", response)
         if (response.data.code == 400) {
             alert(response.data.message)
         }
 
-        if (response.data === 1) {
+        if (response.code === 200) {
+
+            let principal = 0;
+
+            const contato = contatos.map(contato => {
+                if (contato.id_contato === id_contato) {
+                    principal = response.data.data.principal
+                } else {
+                    principal = 0;
+                }
+                return { ...contato, principal: principal }
+            });
+
+            setContatos(
+                prev => contato
+            );
+
             alert('Alterado com Sucesso !!')
         }
 
