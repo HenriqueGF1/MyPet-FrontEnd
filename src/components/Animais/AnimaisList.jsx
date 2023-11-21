@@ -32,8 +32,8 @@ function AnimaisList({
                 <li><b>Categoria:</b> {categoria}</li>
                 <li><b>Idade:</b> {idade}</li>
                 <li><b>Porte:</b> {porte}</li>
+                <li><b>Fotos:</b></li>
                 <li>
-                    <b>Fotos:</b>
                     {
                         fotos.length == 0 ? <h1>Carregando........</h1> : fotos.map((foto) => {
                             return (

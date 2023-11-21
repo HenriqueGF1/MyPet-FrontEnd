@@ -3,13 +3,13 @@ import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { Context } from "../context/apiContext";
 
 const PrivateRoute = ({ children }) => {
-  const { loading, authenticated, checkTokenIsValid } = useContext(Context);
+  const { loadingApi, loading, authenticated } = useContext(Context);
 
-  console.log("🚀 ~ file: routes.jsx:9 ~ PrivateRoute ~ loading:", loading)
+  console.log("🚀 ~ file: routes.jsx:9 ~ PrivateRoute ~ loading:", loadingApi)
 
   if (loading) {
-    // return <h1>Loading...</h1>;
-    return
+    return <h1>Loading...</h1>;
+    // return
   }
   return authenticated ? children : <Navigate to="/login" />;
 };

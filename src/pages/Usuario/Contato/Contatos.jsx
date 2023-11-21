@@ -2,6 +2,8 @@ import { useState, useEffect, useContext, useCallback } from "react";
 import { Context } from "../../../context/apiContext";
 import NavBar from "../../../components/NavBar/NavBar";
 import ContatosList from "../../../components/Contatos/ContatosList";
+import Loading from '../../../components/Loading/Loading'
+import { toast } from 'react-toastify';
 
 function Contatos() {
 
@@ -27,7 +29,7 @@ function Contatos() {
         let response = await apiFetch(`usuarios/1/contatos/${id_contato}/definirPrincipal`, "patch")
 
         if (response.data.code == 400) {
-            alert(response.data.message)
+            toast.warning(response.data.message);
         }
 
         if (response.code === 200) {
@@ -47,7 +49,7 @@ function Contatos() {
                 prev => contato
             );
 
-            alert('Alterado com Sucesso !!')
+            toast.success("Alterado com Sucesso !!");
         }
 
     }
@@ -57,14 +59,16 @@ function Contatos() {
         let response = await apiFetch(`contatos/${id_contato}`, "delete")
 
         if (response.data.code == 400) {
-            alert(response.data.message)
+            toast.warning(response.data.message);
         }
 
         if (response.data === 1) {
-            alert('Excluído com Sucesso !!')
+            toast.success("Excluído com Sucesso !!");
             setContatos((prev) => prev.filter((contatos) => contatos.id_contato != id_contato))
         }
     }
+
+    console.log("Aqui")
 
     return (
         <>
@@ -72,8 +76,10 @@ function Contatos() {
             <br />
             <NavBar />
             <br />
-            {contatos.length != 0 ? contatos.map((contato) => {
-                return (
+            {loadingApi ? (
+                <Loading />
+            ) : contatos.length > 0 ? (
+                contatos.map((contato) => (
                     <div key={contato.id_contato}>
                         <ContatosList
                             id_contato={contato.id_contato}
@@ -84,12 +90,11 @@ function Contatos() {
                             handleDelete={handleDelete}
                         />
                         <h1>-------</h1>
-                    </div >
-                )
-
-            })
-                : <h1>Sem contatos...</h1>
-            }
+                    </div>
+                ))
+            ) : (
+                <h1>Sem contatos...</h1>
+            )}
         </>
     )
 

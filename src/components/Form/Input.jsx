@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { toast } from 'react-toastify';
 
 const Input = memo(
     function Input({
@@ -10,7 +11,9 @@ const Input = memo(
         register,
         validation,
         errors,
-        apiErros
+        apiErros,
+        onChange,
+        id
     }) {
 
         console.log("🚀 ~ file: Input.jsx:15 ~ name:", name)
@@ -32,6 +35,13 @@ const Input = memo(
                     break;
             }
 
+
+
+        }
+
+        if (apiErros != undefined || erroMsg != '') {
+
+            toast.warning('Atenção');
         }
 
         return (
@@ -44,6 +54,9 @@ const Input = memo(
                     name={name}
                     {...register(name, validation)}
                     value={value}
+                    onChange={onChange}
+                    id={id}
+                    accept="image/*" multiple
                 />
                 <br /><br />
                 {

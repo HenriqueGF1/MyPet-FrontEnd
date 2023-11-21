@@ -7,6 +7,7 @@ import Input from "../../components/Form/Input";
 import Categorias from "../../components/Categorias/Categorias";
 import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
 import TipoDenucia from "../../components/TipoDenucia/Categorias";
+import Loading from "../../components/Loading/Loading";
 
 function CreateDenuncia() {
 
@@ -15,6 +16,7 @@ function CreateDenuncia() {
 
     const [errosApi, setErrosApi] = useState([])
     const { loadingApi, apiFetch } = useContext(Context);
+    console.log("🚀 ~ file: CreateDenuncia.jsx:19 ~ CreateDenuncia ~ loadingApi:", loadingApi)
 
     const {
         register,
@@ -41,10 +43,11 @@ function CreateDenuncia() {
         if (response.code == 201) {
             navigate("/usuario/animais");
         } else {
-            // alert(response.data.message)
             setErrosApi(response.data.errors);
         }
     }
+
+    
 
     return (
         <>

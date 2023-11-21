@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Context } from "../../context/apiContext";
 import NavBar from "../../components/NavBar/NavBar";
 import AnimaisList from "../../components/Animais/AnimaisList";
+import Loading from '../../components/Loading/Loading'
 
 import { toast } from 'react-toastify';
 
@@ -50,7 +51,7 @@ function UsuarioAnimais() {
 
         if (response.data.code == 400) {
             // alert(response.data.message)
-            toast.warn(response.data.message);
+            toast.warning(response.data.message);
         }
 
         if (response.code === 200) {
@@ -65,7 +66,9 @@ function UsuarioAnimais() {
                 prev => animal
             );
 
-            toast.success("Adotado com Sucesso !!");
+            let message = adotar == 1 ? "Adotado com Sucesso !!" : "Animal disponível novamente para a adoção"
+
+            toast.success(message)
         }
 
     }
@@ -102,7 +105,7 @@ function UsuarioAnimais() {
         let response = await apiFetch(`animais/ativar/${id_animal}`, "patch")
 
         if (response.data.code == 400) {
-            alert(response.data.message)
+            toast.warning(response.data.message);
         }
 
         if (response.code === 200) {
@@ -117,7 +120,7 @@ function UsuarioAnimais() {
                 prev => animal
             );
 
-            alert('Ativado com Sucesso !!')
+            toast.success("Ativado com Sucesso !!");
         }
 
     }
@@ -128,13 +131,10 @@ function UsuarioAnimais() {
 
             <NavBar />
 
-            {
-                loadingApi ? <h1>Carregando........</h1> : ''
-            }
-
-            {animais.length == 0 ? <h1>Sem Animais...</h1> : animais.map((animal) => {
-                return (
-
+            {loadingApi ? (
+                <Loading />
+            ) : animais.length > 0 ? (
+                animais.map((animal) => (
                     <div key={animal.id_animal}>
                         <AnimaisList
                             id_animal={animal.id_animal}
@@ -154,9 +154,10 @@ function UsuarioAnimais() {
                             handleAtivar={handleAtivar}
                         />
                     </div>
-
-                )
-            })}
+                ))
+            ) : (
+                <h1>Sem Animais</h1>
+            )}
         </>
     )
 

@@ -2,6 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { Context } from "../../context/apiContext";
 import { Link, useParams } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
+import Loading from "../Loading/Loading";
+import CreateDenuncia from "../../pages/Denuncias/CreateDenuncia";
 
 function AnimalShow() {
 
@@ -9,13 +11,14 @@ function AnimalShow() {
 
     const { loadingApi, apiFetch } = useContext(Context);
     const [animal, setAnimal] = useState([]);
+    const [user, setUser] = useState({ id_usuario: '', nome: "" })
+    console.log("🚀 ~ file: AnimalShow.jsx:15 ~ AnimalShow ~ user:", user)
 
 
     useEffect(() => {
 
         async function getAnimais() {
             let response = await apiFetch(`animais/${id_animal}`, "get")
-            console.log("🚀 ~ file: Animais.jsx:19 ~ getAnimais ~ response:", response)
             if (response.data != undefined) {
                 setAnimal(response.data);
             }
@@ -23,15 +26,11 @@ function AnimalShow() {
 
         getAnimais();
 
+        if (localStorage.getItem("user") != undefined) {
+            setUser((prev) => JSON.parse(localStorage.getItem("user")));
+        }
+
     }, []);
-
-    console.log("🚀 ~ file: AnimalShow.jsx:28 ~ AnimalShow ~ loadingApi:", loadingApi)
-
-    if (loadingApi) {
-        console.log('AAA', animal)
-    } else {
-        console.log('Carregando')
-    }
 
     return (
         <>
@@ -40,18 +39,9 @@ function AnimalShow() {
 
             <NavBar />
 
-            {loadingApi || animal.length == 0 ? "Carregando" : (<>
-                <p><b>Nome:</b> {animal.nome}</p>
-                <p><b>Dono:</b> {animal.usuario.nome}</p>
-                <p><b>Sexo:</b> {animal.sexo}</p>
-                <p><b>Descricao:</b> {animal.descricao}</p>
-                <p><b>Categoria:</b> {animal.categoria.descricao}</p>
-                <p><b>Idade:</b> {animal.idade}</p>
-                <p><b>Porte:</b> {animal.porte.descricao}</p>
+            {loadingApi || animal.length == 0 ? <Loading /> : (<>
                 <p>
-                    <b>Fotos:</b>
-                    <br />
-                    {animal.fotos.map((foto) => {
+                    {animal.fotos?.map((foto) => {
                         return (
                             <img
                                 key={foto.nome_arquivo}
@@ -61,11 +51,48 @@ function AnimalShow() {
                         )
                     })}
                 </p>
-                <p>
-                    <Link to={`/denuncias/${animal.usuario.id_usuario}/${animal.id_animal}/cadastrar`}>Denunciar</Link>
-                </p>
+                <p><b>Nome:</b> {animal.nome}</p>
+                <p><b>Sexo:</b> {animal.sexo}</p>
+                <p><b>Idade:</b> {animal.idade} {animal.idade < 2 ? 'Ano' : 'Anos'}</p>
+                <p><b>Categoria:</b> {animal.categoria.descricao}</p>
+                <p><b>Porte:</b> {animal.porte.descricao}</p>
+                <p><b>Descrição:</b> {animal.descricao}</p>
+
                 <br />
+
+                <p><b>ID:</b> {animal.usuario.id_usuario}</p>
+                <p><b>Dono:</b> {animal.usuario.nome}</p>
+                <p><b>E-mail:</b> {animal.usuario.email}</p>
+                <p><b>Contatos:</b></p>
+                <div>
+                    {animal.usuario.contatos.map((contato) => (
+                        contato.principal === 1 && (
+                            <div key={contato.id_contato}>
+                                <p><b>Numero:</b> ({contato.dd}) {contato.numero}</p>
+                            </div>
+                        )
+                    ))}
+                </div>
+                <p><b>Endereços:</b></p>
+                <div>
+                    {animal.usuario.enderecos.map((endereco) => (
+                        endereco.principal === 1 && (
+                            <div key={endereco.id_endereco}>
+                                <p><b>CEP:</b>{endereco.cep}</p>
+                                <p><b>Bairro:</b>{endereco.bairro}</p>
+                                <p><b>Numero:</b>{endereco.numero}</p>
+                                <p><b>Complemento:</b>{endereco.complemento}</p>
+                            </div>
+                        )
+                    ))}
+                </div>
+
+                <br />
+                <p>
+                    {user.id_usuario == animal.usuario.id_usuario ? '' : <Link to={`/denuncias/${animal.usuario.id_usuario}/${animal.id_animal}/cadastrar`}>Denunciar</Link>}
+                </p>
                 <hr />
+
             </>)}
         </>
     )

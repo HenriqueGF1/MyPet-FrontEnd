@@ -7,6 +7,7 @@ import Input from "../../components/Form/Input";
 import Categorias from "../../components/Categorias/Categorias";
 import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function UpdateAnimais() {
 
@@ -41,16 +42,15 @@ function UpdateAnimais() {
         let response = await apiFetch(`animais/${data.id_animal}`, "patch", data)
 
         if (response.code == 200) {
+            toast.success('Editado com Sucesso !!')
             navigate("/animais");
         } else {
+            console.log('sssssssssssss')
             setErrosApi(response.data.errors);
+            // toast.warning('Atenção');
         }
 
     };
-
-    if (loadingApi) {
-        return <h1>Carregando.......</h1>
-    }
 
     return (
         <>

@@ -38,6 +38,38 @@ function CreateAnimal() {
         }
     }
 
+    function previewFiles() {
+        const fileInput = document.getElementById('imagens');
+        console.log("🚀 ~ file: CreateAnimal.jsx:43 ~ previewFiles ~ imagens:", fileInput)
+        const previewsContainer = document.getElementById('previews');
+        console.log("🚀 ~ file: CreateAnimal.jsx:44 ~ previewFiles ~ previewsContainer:", previewsContainer)
+        previewsContainer.innerHTML = ''; // Limpa previews anteriores
+
+        // Verifica se o navegador suporta a API FileReader
+        if (window.FileReader) {
+            Array.from(fileInput.files).forEach(file => {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Cria uma nova imagem de prévia para cada arquivo
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100%';
+                    img.style.maxHeight = '300px';
+
+                    // Adiciona a imagem de prévia ao contêiner
+                    previewsContainer.appendChild(img);
+                };
+
+                // Lê o conteúdo do arquivo como uma URL de dados
+                reader.readAsDataURL(file);
+            });
+        } else {
+            // Fallback para navegadores que não suportam FileReader
+            alert('Seu navegador não suporta a visualização de arquivos.');
+        }
+    }
+
     return (
         <>
 
@@ -123,13 +155,17 @@ function CreateAnimal() {
                     label='Imagens'
                     typeInput='file'
                     name='imagens[]'
+                    id='imagens'
                     register={register}
                     validation={{ required: true }}
                     errors={errors}
                     apiErros={errosApi.imagens}
+                    onChange={previewFiles}
                 />
 
                 <br />
+
+                <div id="previews">Preview</div>
 
                 <button type="submit">Enviar</button>
             </form>

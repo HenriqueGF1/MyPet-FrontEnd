@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Context } from "../../context/apiContext";
 import NavBar from "../../components/NavBar/NavBar";
 import AnimaisCards from "../../components/Animais/AnimaisCards";
+import Loading from "../../components/Loading/Loading";
 
 function Animais() {
 
@@ -25,9 +26,9 @@ function Animais() {
     }, []);
 
 
-    if (loadingApi) {
-        return <h1>Carregando....................</h1>
-    }
+    // if (loadingApi) {
+    //     return <Loading />
+    // }
 
     return (
         <>
@@ -35,16 +36,19 @@ function Animais() {
 
             <NavBar />
 
-            {
-                animais.length == 0 ? "Sem Animais" :
-                    animais.map((animal) => {
-                        return (
-                            <div key={animal.id_animal}>
-                                <AnimaisCards animal={animal} />
-                            </div>
-                        )
-                    })
-            }
+            {/* <Loading /> */}
+
+            <br /><br />
+
+            {loadingApi ? <Loading /> : (
+                animais.length > 0
+                    ? animais.map(animal => (
+                        <div key={animal.id_animal}>
+                            <AnimaisCards animal={animal} />
+                        </div>
+                    ))
+                    : "Sem Animais"
+            )}
         </>
     )
 
