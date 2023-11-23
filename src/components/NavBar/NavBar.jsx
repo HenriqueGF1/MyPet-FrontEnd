@@ -67,6 +67,9 @@ const NavBar = memo(function NavBar() {
                     <Link to={`/minhas/denuncias`}>Minhas Denuncias</Link>
                 </li>
                 <li>
+                    <Link to={`/animais/favoritos`}>Favoritos</Link>
+                </li>
+                <li>
                     <Link to='/teste'>Teste</Link>
                 </li>
             </ul>

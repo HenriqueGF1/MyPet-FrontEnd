@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";
 import DenunciasList from "../../components/Denuncias/DenunciasList";
+import Loading from "../../components/Loading/Loading";
+import { toast } from 'react-toastify';
 
 function Denuncias() {
     const { authenticated, loading, setLoading } = useContext(Context);
@@ -45,7 +47,7 @@ function Denuncias() {
                 prev => denuncia
             );
 
-            alert('Retirada com Sucesso !!')
+            toast.success("Retirada com Sucesso !!");
         }
     }
 
@@ -57,26 +59,31 @@ function Denuncias() {
     return (
         <>
             <h1>Minhas Denuncias</h1>
+
             <NavBar />
-            {/* <pre>{JSON.stringify(animais, null, 2)}</pre> */}
-            {
-                denuncias.length == 0 ? "Sem denuncias" :
-                    denuncias.map((denuncia) => {
-                        return (
-                            <div key={denuncia.id_denuncia}>
-                                <DenunciasList
-                                    id_denuncia={denuncia.id_denuncia}
-                                    descricao={denuncia.descricao}
-                                    tipo={denuncia.tipo}
-                                    usuario={denuncia.usuario}
-                                    animal={denuncia.animal}
-                                    dt_exclusao={denuncia.dt_exclusao}
-                                    handleRetirarDenuncia={handleRetirarDenuncia}
-                                />
-                            </div>
-                        )
-                    })
-            }
+
+            {loadingApi ? (
+                <Loading />
+            ) : (
+                denuncias.length > 0 ? (
+                    denuncias.map((denuncia) => (
+                        <div key={denuncia.id_denuncia}>
+                            <DenunciasList
+                                id_denuncia={denuncia.id_denuncia}
+                                descricao={denuncia.descricao}
+                                tipo={denuncia.tipo}
+                                usuario={denuncia.usuario}
+                                animal={denuncia.animal}
+                                dt_exclusao={denuncia.dt_exclusao}
+                                handleRetirarDenuncia={handleRetirarDenuncia}
+                            />
+                        </div>
+                    ))
+                ) : (
+                    <p>Sem denúncias</p>
+                )
+            )}
+
         </>
     )
 

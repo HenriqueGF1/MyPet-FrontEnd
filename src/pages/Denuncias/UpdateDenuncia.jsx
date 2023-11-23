@@ -8,6 +8,7 @@ import Categorias from "../../components/Categorias/Categorias";
 import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
 import { useParams } from 'react-router-dom';
 import TipoDenucia from "../../components/TipoDenucia/Categorias";
+import { toast } from 'react-toastify';
 
 function UpdateDenuncia() {
 
@@ -36,23 +37,18 @@ function UpdateDenuncia() {
 
         console.log("🚀 ~ file: UpdateAnimais.jsx:39 ~ edit ~ data:", data)
 
-        // return
-
         let response = await apiFetch(`animais/denuncias/${data.id_denuncia}`, "patch", data)
 
         console.log("🚀 ~ file: UpdateDenuncia.jsx:43 ~ edit ~ response:", response)
 
         if (response.code == 200) {
+            toast.success("Editado com Sucesso !!");
             navigate("/minhas/denuncias");
         } else {
             setErrosApi(response.data.errors);
         }
 
     };
-
-    if (loadingApi) {
-        return <h1>Carregando.......</h1>
-    }
 
     return (
         <>

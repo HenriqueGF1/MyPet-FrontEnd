@@ -3,6 +3,8 @@ import { Context } from "../../../context/apiContext";
 import NavBar from "../../../components/NavBar/NavBar";
 import EnderecosList from "../../../components/Enderecos/EnderecosList";
 import { useParams } from 'react-router-dom';
+import Loading from "../../../components/Loading/Loading";
+import { toast } from 'react-toastify';
 
 function Enderecos() {
 
@@ -33,7 +35,7 @@ function Enderecos() {
         console.log("🚀 ~ file: Enderecos.jsx:30 ~ handlePrincipal ~ response:", response)
 
         if (response.data.code == 400) {
-            alert(response.data.message)
+            toast.warning(response.data.message);
         }
 
         if (response.code === 200) {
@@ -53,7 +55,7 @@ function Enderecos() {
                 prev => endereco
             );
 
-            alert('Alterado com Sucesso !!')
+            toast.success("Definido como principal com sucesso !!");
         }
 
     }
@@ -65,11 +67,11 @@ function Enderecos() {
         let response = await apiFetch(`enderecos/${id_endereco}`, "delete")
 
         if (response.data.code == 400) {
-            alert(response.data.message)
+            toast.warning(response.data.message);
         }
 
         if (response.data === 1) {
-            alert('Excluído com Sucesso !!')
+            toast.success('Excluído com Sucesso !!');
             setEnderecos((prev) => prev.filter((enderecos) => enderecos.id_endereco != id_endereco))
         }
     }
@@ -80,26 +82,29 @@ function Enderecos() {
             <br />
             <NavBar />
             <br />
-            {enderecos.length != 0 ? enderecos.map((endereco) => {
-                return (
-                    <div key={endereco.id_endereco}>
-                        <EnderecosList
-                            id_endereco={endereco.id_endereco}
-                            cep={endereco.cep}
-                            bairro={endereco.bairro}
-                            numero={endereco.numero}
-                            complemento={endereco.complemento}
-                            principal={endereco.principal}
-                            handlePrincipal={handlePrincipal}
-                            handleDelete={handleDelete}
-                        />
-                        <h1>-------</h1>
-                    </div >
+            {loadingApi ? (
+                <Loading />
+            ) : (
+                enderecos.length > 0 ? (
+                    enderecos.map((endereco) => (
+                        <div key={endereco.id_endereco}>
+                            <EnderecosList
+                                id_endereco={endereco.id_endereco}
+                                cep={endereco.cep}
+                                bairro={endereco.bairro}
+                                numero={endereco.numero}
+                                complemento={endereco.complemento}
+                                principal={endereco.principal}
+                                handlePrincipal={handlePrincipal}
+                                handleDelete={handleDelete}
+                            />
+                            <h1>-------</h1>
+                        </div>
+                    ))
+                ) : (
+                    <h1>Sem Endereços...</h1>
                 )
-
-            })
-                : <h1>Sem Endereços...</h1>
-            }
+            )}
         </>
     )
 

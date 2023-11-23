@@ -49,7 +49,7 @@ function Contatos() {
                 prev => contato
             );
 
-            toast.success("Alterado com Sucesso !!");
+            toast.success("Definido como principal com sucesso !!");
         }
 
     }

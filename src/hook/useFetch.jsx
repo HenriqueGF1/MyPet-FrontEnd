@@ -5,7 +5,7 @@ export default function useFetch() {
 
     const abortController = new AbortController();
     const [loadingApi, setLoadingApi] = useState(true)
-    console.log("🚀 ~ file: useFetch.jsx:7 ~ useFetch ~ loadingApi:", loadingApi)
+    // console.log("🚀 ~ file: useFetch.jsx:7 ~ useFetch ~ loadingApi:", loadingApi)
 
     const apiFetch = async (url, method, values = null) => {
         try {

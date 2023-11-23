@@ -5,7 +5,7 @@ import { Context } from "../context/apiContext";
 const PrivateRoute = ({ children }) => {
   const { loadingApi, loading, authenticated } = useContext(Context);
 
-  console.log("🚀 ~ file: routes.jsx:9 ~ PrivateRoute ~ loading:", loadingApi)
+  // console.log("🚀 ~ file: routes.jsx:9 ~ PrivateRoute ~ loading:", loadingApi)
 
   if (loading) {
     return <h1>Loading...</h1>;
@@ -34,6 +34,7 @@ import CreateDenuncia from "../pages/Denuncias/CreateDenuncia";
 import Denuncias from "../pages/Denuncias/Denuncias";
 import UpdateDenuncia from "../pages/Denuncias/UpdateDenuncia";
 import AnimalShow from "../components/Animais/AnimalShow";
+import Favoritos from "../pages/Usuario/Favoritos/Favoritos";
 
 export default function AppRoutes() {
   return (
@@ -163,6 +164,15 @@ export default function AppRoutes() {
           element={
             <PrivateRoute>
               <UpdateDenuncia />
+            </PrivateRoute>
+          }
+        />
+        {/* Favoritos */}
+        <Route
+          path="/animais/favoritos"
+          element={
+            <PrivateRoute>
+              <Favoritos />
             </PrivateRoute>
           }
         />

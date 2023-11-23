@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import Loading from "../Loading/Loading";
 import CreateDenuncia from "../../pages/Denuncias/CreateDenuncia";
+import { toast } from 'react-toastify';
 
 function AnimalShow() {
 
@@ -11,18 +12,10 @@ function AnimalShow() {
 
     const { loadingApi, apiFetch } = useContext(Context);
     const [animal, setAnimal] = useState([]);
+    console.log("🚀 ~ file: AnimalShow.jsx:15 ~ AnimalShow ~ animal:", animal)
     const [user, setUser] = useState({ id_usuario: '', nome: "" })
-    console.log("🚀 ~ file: AnimalShow.jsx:15 ~ AnimalShow ~ user:", user)
-
 
     useEffect(() => {
-
-        async function getAnimais() {
-            let response = await apiFetch(`animais/${id_animal}`, "get")
-            if (response.data != undefined) {
-                setAnimal(response.data);
-            }
-        }
 
         getAnimais();
 
@@ -31,6 +24,56 @@ function AnimalShow() {
         }
 
     }, []);
+
+    async function getAnimais() {
+        let response = await apiFetch(`animais/${id_animal}`, "get")
+        if (response.data != undefined) {
+            setAnimal(response.data);
+        }
+    }
+
+    const removerFavorito = async (id_favorito) => {
+
+        let response = await apiFetch(`animais/favoritos/${id_favorito}`, "delete")
+
+        if (response.data.code == 400) {
+            toast.warning(response.data.message)
+        }
+
+        if (response.code === 200) {
+
+            setAnimal({ ...animal, favoritoUsuario: [] })
+
+            toast.success("Removido dos favoritos com Sucesso !!");
+        }
+
+    }
+
+    const favoritar = async (id_animal) => {
+
+        let data = {
+            "id_usuario": user.id_usuario,
+            "id_animal": id_animal
+        }
+
+        let response = await apiFetch(`/animais/favoritos`, "post", data)
+
+        if (response.data.code == 400) {
+            toast.warning(response.data.message)
+        }
+
+        if (response.code === 201) {
+
+            setAnimal({
+                ...animal,
+                favoritoUsuario: [response.data.data]
+            })
+
+            toast.success("Favoritado !!");
+        }
+
+    }
+
 
     return (
         <>
@@ -91,6 +134,13 @@ function AnimalShow() {
                 <p>
                     {user.id_usuario == animal.usuario.id_usuario ? '' : <Link to={`/denuncias/${animal.usuario.id_usuario}/${animal.id_animal}/cadastrar`}>Denunciar</Link>}
                 </p>
+                <br />
+                <ul>
+                    {animal.favoritoUsuario.length > 0 ?
+                        <li onClick={() => removerFavorito(animal?.favoritoUsuario[0].id_favorito)}>REMOVER FAVORITAR: - {animal.favoritoUsuario[0].id_favorito}</li> :
+                        <li onClick={() => favoritar(animal.id_animal)}>FAVORITAR: - {animal.id_animal}</li>
+                    }
+                </ul>
                 <hr />
 
             </>)}
