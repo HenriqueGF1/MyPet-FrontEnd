@@ -8,6 +8,7 @@ import Categorias from "../../components/Categorias/Categorias";
 import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Loading from "../../components/Loading/Loading";
 
 function UpdateAnimais() {
 
@@ -136,6 +137,7 @@ function UpdateAnimais() {
 
             <br />
             <br />
+
         </>
     );
 }

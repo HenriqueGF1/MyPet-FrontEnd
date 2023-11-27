@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../../../components/NavBar/NavBar";
 import Input from "../../../components/Form/Input";
 import { useParams } from 'react-router-dom';
+import Loading from "../../../components/Loading/Loading";
 
 function UpdateEnderecos() {
 
@@ -57,58 +58,63 @@ function UpdateEnderecos() {
 
             <NavBar />
 
-            <form onSubmit={handleSubmit(edit)}>
+            {loadingApi ? (
+                <Loading />
+            ) : (<>
 
-                <Input
-                    label='CEP'
-                    typeInput='text'
-                    placeholder='Preencha seu CEP'
-                    name='cep'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.cep}
-                />
+                <form onSubmit={handleSubmit(edit)}>
 
-                <Input
-                    label='Numero'
-                    typeInput='number'
-                    placeholder='Preencha seu Número'
-                    name='numero_endereco'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.numero}
-                />
+                    <Input
+                        label='CEP'
+                        typeInput='text'
+                        placeholder='Preencha seu CEP'
+                        name='cep'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={errosApi.cep}
+                    />
 
-                <Input
-                    label='Bairro'
-                    typeInput='text'
-                    placeholder='Preencha seu Bairro'
-                    name='bairro'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.bairro}
-                />
+                    <Input
+                        label='Numero'
+                        typeInput='number'
+                        placeholder='Preencha seu Número'
+                        name='numero_endereco'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={errosApi.numero}
+                    />
 
-                <Input
-                    label='Complemento'
-                    typeInput='text'
-                    placeholder='Preencha seu Complemento'
-                    name='complemento'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.complemento}
-                />
+                    <Input
+                        label='Bairro'
+                        typeInput='text'
+                        placeholder='Preencha seu Bairro'
+                        name='bairro'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={errosApi.bairro}
+                    />
+
+                    <Input
+                        label='Complemento'
+                        typeInput='text'
+                        placeholder='Preencha seu Complemento'
+                        name='complemento'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={errosApi.complemento}
+                    />
+
+                    <br />
+                    <button type="submit">Enviar</button>
+                </form>
 
                 <br />
-                <button type="submit">Enviar</button>
-            </form>
-
-            <br />
-            <br />
+                <br />
+            </>)}
         </>
     );
 }

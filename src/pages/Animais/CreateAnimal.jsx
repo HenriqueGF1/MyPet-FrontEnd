@@ -54,7 +54,7 @@ function CreateAnimal() {
                     // Cria uma nova imagem de prévia para cada arquivo
                     const img = document.createElement('img');
                     img.src = e.target.result;
-                    img.style.maxWidth = '100%';
+                    img.style.width = '300px';
                     img.style.maxHeight = '300px';
 
                     // Adiciona a imagem de prévia ao contêiner
@@ -166,6 +166,8 @@ function CreateAnimal() {
                 <br />
 
                 <div id="previews">Preview</div>
+
+                <br /><br />
 
                 <button type="submit">Enviar</button>
             </form>

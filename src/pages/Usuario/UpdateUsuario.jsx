@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
 import { useParams } from 'react-router-dom';
+import Loading from "../../components/Loading/Loading";
 
 function UpdateUsuario() {
 
@@ -56,35 +57,36 @@ function UpdateUsuario() {
 
     };
 
-    if (loadingApi) {
-        return <h1>Carregando.......</h1>
-    }
-
     return (
         <>
             <h1>Editar Usuário</h1>
 
             <NavBar />
 
-            <form onSubmit={handleSubmit(edit)}>
+            {loadingApi ? (
+                <Loading />
+            ) : (<>
+                <form onSubmit={handleSubmit(edit)}>
 
-                <Input
-                    label='Nome'
-                    typeInput='text'
-                    placeholder='Preencha seu Nome'
-                    name='nome'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.nome}
-                />
+                    <Input
+                        label='Nome'
+                        typeInput='text'
+                        placeholder='Preencha seu Nome'
+                        name='nome'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={errosApi.nome}
+                    />
 
+                    <br />
+                    <button type="submit">Enviar</button>
+                </form>
                 <br />
-                <button type="submit">Enviar</button>
-            </form>
+                <br />
+            </>)}
 
-            <br />
-            <br />
+
         </>
     );
 }

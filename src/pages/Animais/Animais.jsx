@@ -25,11 +25,6 @@ function Animais() {
 
     }, []);
 
-
-    // if (loadingApi) {
-    //     return <Loading />
-    // }
-
     return (
         <>
             <h1>Animais</h1>

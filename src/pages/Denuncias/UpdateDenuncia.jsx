@@ -9,6 +9,7 @@ import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
 import { useParams } from 'react-router-dom';
 import TipoDenucia from "../../components/TipoDenucia/Categorias";
 import { toast } from 'react-toastify';
+import Loading from "../../components/Loading/Loading";
 
 function UpdateDenuncia() {
 
@@ -56,31 +57,35 @@ function UpdateDenuncia() {
 
             <NavBar />
 
-            <form onSubmit={handleSubmit(edit)} id="editAnimal">
+            {loadingApi ? (
+                <Loading />
+            ) : (<>
+                <form onSubmit={handleSubmit(edit)} id="editAnimal">
 
-                <Input
-                    label='Descrição'
-                    typeInput='text'
-                    placeholder='Preencha sua Descrição'
-                    name='descricao'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.descricao}
-                />
+                    <Input
+                        label='Descrição'
+                        typeInput='text'
+                        placeholder='Preencha sua Descrição'
+                        name='descricao'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={errosApi.descricao}
+                    />
 
-                <TipoDenucia
-                    label="Tipo de Denuncia"
-                    name="id_tipo"
-                    register={register}
-                />
+                    <TipoDenucia
+                        label="Tipo de Denuncia"
+                        name="id_tipo"
+                        register={register}
+                    />
+
+                    <br />
+                    <button type="submit">Enviar</button>
+                </form>
 
                 <br />
-                <button type="submit">Enviar</button>
-            </form>
-
-            <br />
-            <br />
+                <br />
+            </>)}
         </>
     );
 }

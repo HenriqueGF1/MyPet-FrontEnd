@@ -44,6 +44,7 @@ function Favoritos() {
             <br />
             <NavBar />
             <br />
+
             {loadingApi ? (
                 <Loading />
             ) : favoritos.length > 0 ? (

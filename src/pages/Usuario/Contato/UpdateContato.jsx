@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "../../../components/NavBar/NavBar";
 import Input from "../../../components/Form/Input";
 import { useParams } from 'react-router-dom';
+import Loading from "../../../components/Loading/Loading";
 
 function UpdateContato() {
 
@@ -44,46 +45,46 @@ function UpdateContato() {
 
     };
 
-    if (loadingApi) {
-        return <h1>Carregando.......</h1>
-    }
-
     return (
         <>
             <h1>Editar Contato</h1>
 
             <NavBar />
 
-            <form onSubmit={handleSubmit(edit)}>
+            {loadingApi ? (
+                <Loading />
+            ) : (<>
+                <form onSubmit={handleSubmit(edit)}>
 
-                <Input
-                    label='DD'
-                    typeInput='text'
-                    placeholder='Preencha seu DD'
-                    name='dd'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.dd}
-                />
+                    <Input
+                        label='DD'
+                        typeInput='text'
+                        placeholder='Preencha seu DD'
+                        name='dd'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={errosApi.dd}
+                    />
 
-                <Input
-                    label='Numero'
-                    typeInput='text'
-                    placeholder='Preencha seu Número'
-                    name='numero'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.numero}
-                />
+                    <Input
+                        label='Numero'
+                        typeInput='text'
+                        placeholder='Preencha seu Número'
+                        name='numero'
+                        register={register}
+                        validation={{ required: true }}
+                        errors={errors}
+                        apiErros={errosApi.numero}
+                    />
+
+                    <br />
+                    <button type="submit">Enviar</button>
+                </form>
 
                 <br />
-                <button type="submit">Enviar</button>
-            </form>
-
-            <br />
-            <br />
+                <br />
+            </>)}
         </>
     );
 }

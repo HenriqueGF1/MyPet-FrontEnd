@@ -79,9 +79,11 @@ function Enderecos() {
     return (
         <>
             <h1>Meus Endereços</h1>
+            
             <br />
             <NavBar />
             <br />
+
             {loadingApi ? (
                 <Loading />
             ) : (
