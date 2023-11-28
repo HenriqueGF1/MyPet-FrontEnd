@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import api from "../services/axiosInstance";
 
 export default function useAuth() {
+
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -71,6 +72,49 @@ export default function useAuth() {
     return response;
   };
 
+  const handleLoginAdm = async (data) => {
+    console.log("🚀 ~ file: useAuth.jsx:75 ~ handleLoginAdm ~ data:", data)
+
+    setLoading(true);
+    const response = await api
+      .post("admin/login", data)
+      .then(function (response) {
+        console.log("🚀 ~ file: useAuth.jsx:82 ~ response:", response)
+
+        localStorage.setItem(
+          "token",
+          JSON.stringify(response.data.authorisation.token)
+        );
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            id_usuario: response.data.user.id_usuario,
+            nome: response.data.user.nome,
+            id_perfil: response.data.user.id_perfil,
+          })
+        );
+        api.defaults.headers.Authorization = `Bearer ${response.data.authorisation.token}`;
+        setAuthenticated(true);
+        return { response, status }
+
+
+      })
+      .catch(function (error) {
+        console.log("🚀 ~ file: useAuth.jsx:103 ~ handleLoginAdm ~ error:", error)
+        if (error.response.data.code == 401) {
+          alert('Não autorizado')
+        }
+        const { message, response } = error
+        return { message, response }
+      });
+    setLoading(false);
+
+    // console.log("🚀 ~ file: useAuth.jsx:108 ~ handleLoginAdm ~ response:", response)
+
+    return response;
+  };
+
+
   const handleLogout = async () => {
     setLoading(true);
     await api
@@ -107,5 +151,5 @@ export default function useAuth() {
     return response;
   };
 
-  return { authenticated, loading, setLoading, handleLogin, handleLogout, handleCreate };
+  return { authenticated, loading, setLoading, handleLogin, handleLogout, handleCreate, handleLoginAdm };
 }

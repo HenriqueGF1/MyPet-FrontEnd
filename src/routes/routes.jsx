@@ -35,6 +35,13 @@ import Denuncias from "../pages/Denuncias/Denuncias";
 import UpdateDenuncia from "../pages/Denuncias/UpdateDenuncia";
 import AnimalShow from "../components/Animais/AnimalShow";
 import Favoritos from "../pages/Usuario/Favoritos/Favoritos";
+import LoginAdm from "../pages/ADM/LoginAdm";
+import CreateCategorias from "../pages/ADM/Categorias/CreateCategorias";
+import AdmCategorias from "../pages/ADM/Categorias/AdmCategorias";
+import UpdateCategoria from "../pages/ADM/Categorias/UpdateCategoria";
+import AdmPorte from "../pages/ADM/Porte/AdmPorte";
+import CreatePorte from "../pages/ADM/Porte/CreatePorte";
+import UpdatePorte from "../pages/ADM/Porte/UpdatePorte";
 
 export default function AppRoutes() {
   return (
@@ -50,6 +57,8 @@ export default function AppRoutes() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CriarConta />} />
+        {/* ADMIN */}
+        <Route path="/loginAdm" element={<LoginAdm />} />
         <Route
           path="/usuario/editar/:id_usuario"
           element={
@@ -58,6 +67,62 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+        {/* ADM Categorias */}
+        <Route
+          path="/admin/categorias"
+          element={
+            <PrivateRoute>
+              <AdmCategorias />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/categorias/cadastrar"
+          element={
+            <PrivateRoute>
+              <CreateCategorias />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/categorias/editar/:id_categoria"
+          element={
+            <PrivateRoute>
+              <UpdateCategoria />
+            </PrivateRoute>
+          }
+        />
+
+        {/* ADM Porte */}
+        <Route
+          path="/admin/portes"
+          element={
+            <PrivateRoute>
+              <AdmPorte />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/portes/cadastrar"
+          element={
+            <PrivateRoute>
+              <CreatePorte />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin/portes/editar/:id_porte"
+          element={
+            <PrivateRoute>
+              <UpdatePorte />
+            </PrivateRoute>
+          }
+        />
+
         {/* Animais */}
         <Route path="/animais" element={<Animais />} />
         <Route

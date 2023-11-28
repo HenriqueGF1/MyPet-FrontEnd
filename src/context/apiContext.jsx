@@ -7,12 +7,12 @@ const Context = createContext();
 
 function AuthProvider({ children }) {
 
-  const { authenticated, loading, setLoading, handleLogin, handleLogout, handleCreate } = useAuth();
+  const { authenticated, loading, setLoading, handleLogin,handleLoginAdm, handleLogout, handleCreate ,} = useAuth();
   const { loadingApi, apiFetch } = useFetch();
 
   return (
     <Context.Provider
-      value={{ authenticated, loading, setLoading, handleLogin, handleLogout, handleCreate, loadingApi, apiFetch }}
+      value={{ authenticated, loading, setLoading, handleLogin,handleLoginAdm, handleLogout, handleCreate, loadingApi, apiFetch }}
     >
       {children}
     </Context.Provider>
