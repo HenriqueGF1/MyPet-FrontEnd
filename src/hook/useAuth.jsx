@@ -4,6 +4,8 @@ import api from "../services/axiosInstance";
 export default function useAuth() {
 
   const [authenticated, setAuthenticated] = useState(false);
+  const [perfil, setPerfil] = useState(null);
+  console.log("🚀 ~ file: useAuth.jsx:8 ~ useAuth ~ perfil:", perfil)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,6 +41,30 @@ export default function useAuth() {
     }
 
     checkTokenIsValid()
+
+    const checkPerfil = async () => {
+
+      setLoading(true);
+
+      await api.get("checkPerfil")
+        .then(function (response) {
+          console.log("🚀 ~ file: useAuth.jsx:50 ~ response:", response)
+          let httpCodes = [200];
+          if (httpCodes.includes(response.status)) {
+            setPerfil(response.data.id_perfil);
+            setLoading(false);
+            return
+          }
+          setAuthenticated(true);
+          setLoading(false);
+        })
+        .catch(function (error) {
+          setLoading(false);
+          return error
+        });
+    }
+
+    checkPerfil()
 
     // setLoading(false);
   }, []);
@@ -151,5 +177,5 @@ export default function useAuth() {
     return response;
   };
 
-  return { authenticated, loading, setLoading, handleLogin, handleLogout, handleCreate, handleLoginAdm };
+  return { authenticated, perfil, loading, setLoading, handleLogin, handleLogout, handleCreate, handleLoginAdm };
 }

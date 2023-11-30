@@ -17,6 +17,8 @@ export default function useFetch() {
                 data: values,
             }, { signal: abortController.signal });
 
+            if (response.data.code == 401) alert(response.data.message)
+
             return {
                 code: response.status,
                 data: method === 'get' ? response.data.data : response.data

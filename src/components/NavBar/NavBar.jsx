@@ -5,6 +5,7 @@ import { Context } from "../../context/apiContext";
 const NavBar = memo(function NavBar() {
     // console.log("NavBar")
     const { authenticated } = useContext(Context);
+    console.log("🚀 ~ file: NavBar.jsx:8 ~ NavBar ~ authenticated:", authenticated)
     const { loadingApi, apiFetch } = useContext(Context);
 
     const [user, setUser] = useState({

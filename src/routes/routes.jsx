@@ -1,17 +1,30 @@
 import { useContext } from "react";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
 import { Context } from "../context/apiContext";
+import PropTypes from 'prop-types';
 
 const PrivateRoute = ({ children }) => {
+
   const { loadingApi, loading, authenticated } = useContext(Context);
 
-  // console.log("🚀 ~ file: routes.jsx:9 ~ PrivateRoute ~ loading:", loadingApi)
+  PrivateRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-    // return
-  }
-  return authenticated ? children : <Navigate to="/login" />;
+  return loading ? <h1>Loading...</h1> : authenticated ? children : <Navigate to="/login" />;
+
+};
+
+const AdmRoute = ({ children }) => {
+
+  const { loadingApi, perfil, loading, authenticated } = useContext(Context);
+
+  AdmRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
+  return loading ? <h1>Loading...</h1> : perfil === 1 ? children : <Navigate to="/home" />;
+
 };
 
 // Paginas
@@ -47,6 +60,7 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route
           path="/home"
           element={
@@ -55,10 +69,17 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
+        {/* Usuario */}
+
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CriarConta />} />
+
+
         {/* ADMIN */}
+
         <Route path="/loginAdm" element={<LoginAdm />} />
+
         <Route
           path="/usuario/editar/:id_usuario"
           element={
@@ -67,64 +88,69 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
-        {/* ADM Categorias */}
+
+        {/* ADM CATEGORIAS */}
+
         <Route
           path="/admin/categorias"
           element={
-            <PrivateRoute>
+            <AdmRoute>
               <AdmCategorias />
-            </PrivateRoute>
+            </AdmRoute>
           }
         />
 
         <Route
           path="/admin/categorias/cadastrar"
           element={
-            <PrivateRoute>
+            <AdmRoute>
               <CreateCategorias />
-            </PrivateRoute>
+            </AdmRoute>
           }
         />
 
         <Route
           path="/admin/categorias/editar/:id_categoria"
           element={
-            <PrivateRoute>
+            <AdmRoute>
               <UpdateCategoria />
-            </PrivateRoute>
+            </AdmRoute>
           }
         />
 
-        {/* ADM Porte */}
+        {/* ADM PORTE */}
+
         <Route
           path="/admin/portes"
           element={
-            <PrivateRoute>
+            <AdmRoute>
               <AdmPorte />
-            </PrivateRoute>
+            </AdmRoute>
           }
         />
 
         <Route
           path="/admin/portes/cadastrar"
           element={
-            <PrivateRoute>
+            <AdmRoute>
               <CreatePorte />
-            </PrivateRoute>
+            </AdmRoute>
           }
         />
 
         <Route
           path="/admin/portes/editar/:id_porte"
           element={
-            <PrivateRoute>
+            <AdmRoute>
               <UpdatePorte />
-            </PrivateRoute>
+            </AdmRoute>
           }
         />
 
-        {/* Animais */}
+        {/* ANIMAIS */}
+
         <Route path="/animais" element={<Animais />} />
+
         <Route
           path="/animais/:id_animal"
           element={
@@ -133,6 +159,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/animais/cadastrar"
           element={
@@ -141,6 +168,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/animais/editar/:id_animal"
           element={
@@ -149,6 +177,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/usuario/animais"
           element={
@@ -157,7 +186,9 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
-        {/*  */}
+
+        {/* CONTATOS */}
+
         <Route
           path="/contatos/cadastrar"
           element={
@@ -166,6 +197,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="usuarios/contatos"
           element={
@@ -174,6 +206,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/contatos/editar/:id_contato"
           element={
@@ -182,7 +215,9 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
-        {/* Enderecos */}
+
+        {/* ENDERECOS */}
+
         <Route
           path="/usuarios/:id_usuario/enderecos"
           element={
@@ -191,6 +226,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/enderecos/cadastrar"
           element={
@@ -199,6 +235,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/enderecos/editar/:id_endereco"
           element={
@@ -207,7 +244,9 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
-        {/* Denuncias */}
+
+        {/* DENUNCIAS */}
+
         <Route
           path="/denuncias/:id_usuario/:id_animal/cadastrar"
           element={
@@ -216,6 +255,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/minhas/denuncias"
           element={
@@ -224,6 +264,7 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
+
         <Route
           path="/denuncias/editar/:id_denuncia"
           element={
@@ -232,7 +273,9 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
-        {/* Favoritos */}
+
+        {/* FAVORITOS */}
+
         <Route
           path="/animais/favoritos"
           element={
@@ -241,9 +284,9 @@ export default function AppRoutes() {
             </PrivateRoute>
           }
         />
-        {/* Rota 404 */}
-        <Route path="*" element={<Navigate to="/home" replace />} />
-        {/*  */}
+
+        {/* TESTE */}
+
         <Route
           path="/teste"
           element={
@@ -252,6 +295,11 @@ export default function AppRoutes() {
             // </PrivateRoute>
           }
         />
+
+        {/* Rota 404 */}
+
+        <Route path="*" element={<Navigate to="/home" replace />} />
+
       </Routes>
     </BrowserRouter>
   );
