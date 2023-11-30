@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import AnimaisList from "../Animais/AnimaisList";
+import PropTypes from 'prop-types';
 
 function DenunciasList({
     id_denuncia,
@@ -30,8 +30,16 @@ function DenunciasList({
             </ul>
         </>
     )
-
-
 }
+
+DenunciasList.propTypes = {
+    id_denuncia: PropTypes.number.isRequired,
+    descricao: PropTypes.string.isRequired,
+    tipo: PropTypes.string.isRequired,
+    usuario: PropTypes.object.isRequired, 
+    animal: PropTypes.object.isRequired,
+    dt_exclusao: PropTypes.string.isRequired, 
+    handleRetirarDenuncia: PropTypes.func.isRequired,
+};
 
 export default DenunciasList;

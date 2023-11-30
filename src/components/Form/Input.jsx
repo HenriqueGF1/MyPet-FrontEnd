@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 const Input = memo(
     function Input({
@@ -65,5 +66,19 @@ const Input = memo(
         )
     }
 )
+
+Input.propTypes = {
+    label: PropTypes.string.isRequired,
+    typeInput: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    placeholder: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    register: PropTypes.func.isRequired,
+    validation: PropTypes.object,
+    errors: PropTypes.object,
+    apiErros: PropTypes.array,
+    onChange: PropTypes.func,
+    id: PropTypes.string,
+};
 
 export default Input;

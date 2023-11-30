@@ -1,4 +1,19 @@
-function Select({ label, name, register, arrayValues, valueId, valueText, validation, errors, apiErros, valorDefinido, onChange }) {
+import PropTypes from 'prop-types';
+
+function Select({
+    label,
+    name,
+    register,
+    arrayValues,
+    valueId,
+    valueText,
+    validation,
+    errors,
+    apiErros,
+    valorDefinido,
+    onChange
+}) {
+
 
     return (
         <>
@@ -26,5 +41,19 @@ function Select({ label, name, register, arrayValues, valueId, valueText, valida
         </>
     )
 }
+
+Select.propTypes = {
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    register: PropTypes.func.isRequired,
+    arrayValues: PropTypes.array.isRequired,
+    valueId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    valueText: PropTypes.string,
+    validation: PropTypes.object,
+    errors: PropTypes.object,
+    apiErros: PropTypes.array,
+    valorDefinido: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    onChange: PropTypes.func,
+};
 
 export default Select;

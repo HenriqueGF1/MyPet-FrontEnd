@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
-function FavoritosList({ id_favorito, animal, handleFavorito }) {
+function FavoritosList({
+    id_favorito,
+    animal,
+    handleFavorito
+}) {
     return (
         <>
             <p>
@@ -31,5 +36,11 @@ function FavoritosList({ id_favorito, animal, handleFavorito }) {
         </>
     )
 }
+
+FavoritosList.propTypes = {
+    id_favorito: PropTypes.number.isRequired,
+    animal: PropTypes.object.isRequired, 
+    handleFavorito: PropTypes.func.isRequired,
+};
 
 export default FavoritosList

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 function ContatosList({
     id_contato,
@@ -31,7 +32,15 @@ function ContatosList({
         </>
     )
 
-
 }
+
+ContatosList.propTypes = {
+    id_contato: PropTypes.number.isRequired,
+    dd: PropTypes.string.isRequired,
+    numero: PropTypes.string.isRequired,
+    principal: PropTypes.number.isRequired,
+    handlePrincipal: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+};
 
 export default ContatosList;

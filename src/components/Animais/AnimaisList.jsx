@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 function AnimaisList({
     id_animal,
@@ -69,5 +70,26 @@ function AnimaisList({
 
 
 }
+
+AnimaisList.propTypes = {
+    id_animal: PropTypes.number.isRequired,
+    dt_inativacao: PropTypes.string,
+    nome: PropTypes.string.isRequired,
+    usuario: PropTypes.shape({
+        id_usuario: PropTypes.number.isRequired,
+        nome: PropTypes.string.isRequired,
+    }).isRequired,
+    adotado: PropTypes.number.isRequired,
+    sexo: PropTypes.string.isRequired,
+    descricao: PropTypes.string.isRequired,
+    categoria: PropTypes.string.isRequired,
+    idade: PropTypes.number.isRequired,
+    porte: PropTypes.string.isRequired,
+    fotos: PropTypes.arrayOf(PropTypes.string).isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    handleAdotado: PropTypes.func.isRequired,
+    handleDesativar: PropTypes.func.isRequired,
+    handleAtivar: PropTypes.func.isRequired,
+};
 
 export default AnimaisList;

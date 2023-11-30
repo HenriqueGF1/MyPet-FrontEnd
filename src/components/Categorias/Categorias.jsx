@@ -1,8 +1,15 @@
 import { useState, useContext, useEffect } from "react";
 import { Context } from "../../context/apiContext";
 import Select from "../Form/Select";
+import PropTypes from 'prop-types';
 
-function Categorias({ label, name, valorDefinido, register, erros }) {
+function Categorias({
+    label,
+    name,
+    valorDefinido,
+    register,
+    erros
+}) {
 
     const [categorias, setCategorias] = useState([])
     const { loadingApi, apiFetch } = useContext(Context);
@@ -36,5 +43,13 @@ function Categorias({ label, name, valorDefinido, register, erros }) {
         </>
     )
 }
+
+Categorias.propTypes = {
+    label: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    valorDefinido: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    register: PropTypes.func.isRequired,
+    erros: PropTypes.object,
+};
 
 export default Categorias;
