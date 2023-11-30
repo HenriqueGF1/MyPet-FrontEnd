@@ -14,7 +14,6 @@ function Favoritos() {
 
         async function getFavoritos() {
             let response = await apiFetch(`animais/favoritos`, "get")
-            console.log("🚀 ~ file: Favoritos.jsx:18 ~ getFavoritos ~ response:", response)
             if (response.data != undefined) {
                 setFavoritos(response.data);
             }

@@ -14,7 +14,6 @@ function Contatos() {
 
         async function getContatos() {
             let response = await apiFetch(`usuarios/1/contatos`, "get")
-            console.log("🚀 ~ file: Contatos.jsx:15 ~ getContatos ~ response:", response)
             if (response.data != undefined) {
                 setContatos(response.data);
             }
@@ -67,8 +66,6 @@ function Contatos() {
             setContatos((prev) => prev.filter((contatos) => contatos.id_contato != id_contato))
         }
     }
-
-    console.log("Aqui")
 
     return (
         <>

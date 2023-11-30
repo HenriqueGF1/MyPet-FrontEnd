@@ -31,8 +31,6 @@ function UpdateUsuario() {
 
     const edit = async (data) => {
 
-        console.log("🚀 ~ file: UpdateUsuario.jsx:34 ~ edit ~ data:", data)
-
         let response = await apiFetch(`usuarios/${data.id_usuario}`, "patch", data)
 
         if (response.code == 200) {

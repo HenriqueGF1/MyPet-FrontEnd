@@ -16,8 +16,6 @@ const Delete = async (idAnimal) => {
         .delete(`animais/${idAnimal}`)
         .then(function (response) {
 
-            console.log("🚀 ~ file: Delete.jsx:18 ~ response:", response)
-
             // if (response.status == 201) {
             //     navigate("/animais");
             // } else {
@@ -26,7 +24,6 @@ const Delete = async (idAnimal) => {
 
         })
         .catch(function (error) {
-            console.log("🚀 ~ file: Delete.jsx:27 ~ Delete ~ error:", error)
             setErros(error.response.data.errors)
             // setLoading(false);
         });

@@ -36,11 +36,7 @@ function UpdateDenuncia() {
 
     const edit = async (data) => {
 
-        console.log("🚀 ~ file: UpdateAnimais.jsx:39 ~ edit ~ data:", data)
-
         let response = await apiFetch(`animais/denuncias/${data.id_denuncia}`, "patch", data)
-
-        console.log("🚀 ~ file: UpdateDenuncia.jsx:43 ~ edit ~ response:", response)
 
         if (response.code == 200) {
             toast.success("Editado com Sucesso !!");

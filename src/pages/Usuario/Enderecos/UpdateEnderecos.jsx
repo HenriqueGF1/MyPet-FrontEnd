@@ -34,11 +34,7 @@ function UpdateEnderecos() {
 
     const edit = async (data) => {
 
-        console.log("🚀 ~ file: UpdateEnderecos.jsx:39 ~ edit ~ data:", data)
-
         let response = await apiFetch(`enderecos/${data.id_endereco}`, "patch", data)
-
-        console.log("🚀 ~ file: UpdateEnderecos.jsx:40 ~ edit ~ response:", response)
 
         if (response.code == 200) {
             navigate("/usuarios/1/enderecos");

@@ -20,8 +20,6 @@ function CreateContato() {
 
     const create = async (data) => {
 
-        console.log("🚀 ~ file: CreateContato.jsx:34 ~ edit ~ data:", data)
-
         let response = await apiFetch(`contatos`, "post", data)
 
         if (response.code == 201) {

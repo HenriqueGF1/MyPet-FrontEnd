@@ -17,7 +17,6 @@ function Enderecos() {
         async function getEnderecos() {
             let response = await apiFetch(`usuarios/${id_usuario}/enderecos`, "get")
             if (response.data != undefined) {
-                console.log("🚀 ~ file: Enderecos.jsx:16 ~ getEnderecos ~ response:", response)
                 setEnderecos(response.data);
             }
         }
@@ -28,11 +27,7 @@ function Enderecos() {
 
     const handlePrincipal = async (id_endereco) => {
 
-        console.log("🚀 ~ file: Enderecos.jsx:26 ~ handlePrincipal ~ id_endereco:", id_endereco)
-
         let response = await apiFetch(`usuarios/1/enderecos/${id_endereco}/definirPrincipal`, "patch")
-
-        console.log("🚀 ~ file: Enderecos.jsx:30 ~ handlePrincipal ~ response:", response)
 
         if (response.data.code == 400) {
             toast.warning(response.data.message);
@@ -61,8 +56,6 @@ function Enderecos() {
     }
 
     const handleDelete = async (id_endereco) => {
-
-        console.log("🚀 ~ file: Enderecos.jsx:43 ~ handleDelete ~ id_endereco:", id_endereco)
 
         let response = await apiFetch(`enderecos/${id_endereco}`, "delete")
 

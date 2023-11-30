@@ -33,8 +33,6 @@ function UpdateContato() {
 
     const edit = async (data) => {
 
-        console.log("🚀 ~ file: UpdateContato.jsx:39 ~ edit ~ data:", data)
-
         let response = await apiFetch(`contatos/${data.id_contato}`, "patch", data)
 
         if (response.code == 200) {

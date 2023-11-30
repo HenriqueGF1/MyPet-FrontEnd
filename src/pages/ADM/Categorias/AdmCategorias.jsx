@@ -16,7 +16,6 @@ function AdmCategorias() {
 
         async function getCategorias() {
             let response = await apiFetch("admin/categoriasAnimal", "get")
-            console.log("🚀 ~ file: AdmCategorias.jsx:20 ~ getCategorias ~ response:", response)
             if (response.data != undefined) {
                 setCategorias(response.data);
             }
@@ -67,8 +66,6 @@ function AdmCategorias() {
     }
 
     const handleAtivar = async (id_categoria) => {
-
-        console.log("🚀 ~ file: UsuarioAnimais.jsx:80 ~ handleAti ~ id_categoria:", id_categoria)
 
         let response = await apiFetch(`admin/categoriasAnimal/ativar/${id_categoria}`, "patch")
 

@@ -23,7 +23,6 @@ function UpdatePorte() {
     } = useForm({
         defaultValues: async () => {
             let response = await apiFetch(`admin/porteAnimais/${id_porte}`, "get")
-            console.log("🚀 ~ file: UpdatePorte.jsx:27 ~ defaultValues: ~ response:", response)
             return {
                 id_porte: response.data.id_porte,
                 descricao: response.data.descricao
@@ -33,17 +32,12 @@ function UpdatePorte() {
 
     const edit = async (data) => {
 
-        console.log("🚀 ~ file: UpdatePorte.jsx:35 ~ edit ~ data:", data)
-
         let response = await apiFetch(`admin/porteAnimais/${data.id_porte}`, "patch", data)
-
-        console.log("🚀 ~ file: UpdatePorte.jsx:40 ~ edit ~ response:", response)
 
         if (response.code == 200) {
             toast.success('Editado com Sucesso !!')
             navigate("/admin/portes");
         } else {
-            console.log('sssssssssssss')
             setErrosApi(response.data.errors);
             // toast.warning('Atenção');
         }

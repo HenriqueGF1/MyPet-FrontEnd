@@ -17,7 +17,6 @@ function Denuncias() {
 
         async function getData() {
             let response = await apiFetch("animais/denuncias", "get")
-            console.log("🚀 ~ file: Denuncias.jsx:37 ~ getData ~ response:", response)
             if (response.data != undefined) {
                 setDenuncias(response.data);
             }

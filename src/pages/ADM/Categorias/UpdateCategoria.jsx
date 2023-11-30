@@ -23,7 +23,6 @@ function UpdateCategoria() {
     } = useForm({
         defaultValues: async () => {
             let response = await apiFetch(`admin/categoriasAnimal/${id_categoria}`, "get")
-            console.log("🚀 ~ file: UpdateCategoria.jsx:27 ~ defaultValues: ~ response:", response)
             return {
                 id_categoria: response.data.id_categoria,
                 descricao: response.data.descricao
@@ -33,17 +32,12 @@ function UpdateCategoria() {
 
     const edit = async (data) => {
 
-        console.log("🚀 ~ file: UpdateCategoria.jsx:36 ~ edit ~ data:", data)
-
         let response = await apiFetch(`admin/categoriasAnimal/${data.id_categoria}`, "patch", data)
-
-        console.log("🚀 ~ file: UpdateCategoria.jsx:40 ~ edit ~ response:", response)
 
         if (response.code == 200) {
             toast.success('Editado com Sucesso !!')
             navigate("/admin/categorias");
         } else {
-            console.log('sssssssssssss')
             setErrosApi(response.data.errors);
             // toast.warning('Atenção');
         }

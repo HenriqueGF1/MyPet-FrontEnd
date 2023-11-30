@@ -5,7 +5,6 @@ export default function useAuth() {
 
   const [authenticated, setAuthenticated] = useState(false);
   const [perfil, setPerfil] = useState(null);
-  console.log("🚀 ~ file: useAuth.jsx:8 ~ useAuth ~ perfil:", perfil)
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -48,7 +47,6 @@ export default function useAuth() {
 
       await api.get("checkPerfil")
         .then(function (response) {
-          console.log("🚀 ~ file: useAuth.jsx:50 ~ response:", response)
           let httpCodes = [200];
           if (httpCodes.includes(response.status)) {
             setPerfil(response.data.id_perfil);
@@ -99,14 +97,11 @@ export default function useAuth() {
   };
 
   const handleLoginAdm = async (data) => {
-    console.log("🚀 ~ file: useAuth.jsx:75 ~ handleLoginAdm ~ data:", data)
 
     setLoading(true);
     const response = await api
       .post("admin/login", data)
       .then(function (response) {
-        console.log("🚀 ~ file: useAuth.jsx:82 ~ response:", response)
-
         localStorage.setItem(
           "token",
           JSON.stringify(response.data.authorisation.token)
@@ -126,7 +121,6 @@ export default function useAuth() {
 
       })
       .catch(function (error) {
-        console.log("🚀 ~ file: useAuth.jsx:103 ~ handleLoginAdm ~ error:", error)
         if (error.response.data.code == 401) {
           alert('Não autorizado')
         }
@@ -134,8 +128,6 @@ export default function useAuth() {
         return { message, response }
       });
     setLoading(false);
-
-    // console.log("🚀 ~ file: useAuth.jsx:108 ~ handleLoginAdm ~ response:", response)
 
     return response;
   };

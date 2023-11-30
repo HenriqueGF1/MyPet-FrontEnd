@@ -15,7 +15,6 @@ function Animais() {
 
         async function getAnimais() {
             let response = await apiFetch("animais", "get")
-            console.log("🚀 ~ file: Animais.jsx:19 ~ getAnimais ~ response:", response)
             if (response.data != undefined) {
                 setAnimais(response.data);
             }

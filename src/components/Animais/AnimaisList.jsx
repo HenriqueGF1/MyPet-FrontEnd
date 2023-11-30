@@ -18,8 +18,6 @@ function AnimaisList({
     handleAtivar
 }) {
 
-    console.log(usuario)
-
     return (
         <>
             <ul >

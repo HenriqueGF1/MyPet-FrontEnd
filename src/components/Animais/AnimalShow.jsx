@@ -12,7 +12,6 @@ function AnimalShow() {
 
     const { loadingApi, apiFetch } = useContext(Context);
     const [animal, setAnimal] = useState([]);
-    console.log("🚀 ~ file: AnimalShow.jsx:15 ~ AnimalShow ~ animal:", animal)
     const [user, setUser] = useState({ id_usuario: '', nome: "" })
 
     useEffect(() => {

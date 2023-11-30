@@ -15,7 +15,6 @@ function AdmPorte() {
 
         async function getPorte() {
             let response = await apiFetch("admin/porteAnimais", "get")
-            console.log("🚀 ~ file: AdmPorte.jsx:19 ~ getPorte ~ response:", response)
             if (response.data != undefined) {
                 setPortes(response.data);
             }
@@ -66,8 +65,6 @@ function AdmPorte() {
     }
 
     const handleAtivar = async (id_porte) => {
-
-        console.log("🚀 ~ file: AdmPorte.jsx:71 ~ handleAti ~ id_porte:", id_porte)
 
         let response = await apiFetch(`admin/porteAnimais/${id_porte}/ativar`, "patch")
 

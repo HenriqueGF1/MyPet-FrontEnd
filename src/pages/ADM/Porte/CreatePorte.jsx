@@ -20,11 +20,7 @@ function CreatePorte() {
 
     const create = async (data) => {
 
-        console.log("🚀 ~ file: CreatePorte.jsx:22 ~ create ~ data:", data)
-
         let response = await apiFetch(`/admin/porteAnimais`, "post", data)
-
-        console.log("🚀 ~ file: CreatePorte.jsx:27 ~ create ~ response:", response)
 
         if (response.code == 201) {
             navigate("/admin/portes");

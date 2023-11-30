@@ -20,11 +20,7 @@ function CreateContato() {
 
     const create = async (data) => {
 
-        console.log("🚀 ~ file: CreateEnderecos.jsx:22 ~ create ~ data:", data)
-
         let response = await apiFetch(`enderecos`, "post", data)
-
-        console.log("🚀 ~ file: CreateEnderecos.jsx:27 ~ create ~ response:", response)
 
         if (response.code == 201) {
             navigate("/usuarios/1/enderecos");

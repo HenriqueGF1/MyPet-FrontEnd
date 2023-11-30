@@ -38,7 +38,6 @@ function UpdateAnimais() {
     });
 
     const edit = async (data) => {
-        console.log("🚀 ~ file: UpdateAnimais.jsx:39 ~ edit ~ data:", data)
 
         let response = await apiFetch(`animais/${data.id_animal}`, "patch", data)
 
@@ -46,7 +45,6 @@ function UpdateAnimais() {
             toast.success('Editado com Sucesso !!')
             navigate("/animais");
         } else {
-            console.log('sssssssssssss')
             setErrosApi(response.data.errors);
             // toast.warning('Atenção');
         }

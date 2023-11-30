@@ -16,7 +16,6 @@ function CreateDenuncia() {
 
     const [errosApi, setErrosApi] = useState([])
     const { loadingApi, apiFetch } = useContext(Context);
-    console.log("🚀 ~ file: CreateDenuncia.jsx:19 ~ CreateDenuncia ~ loadingApi:", loadingApi)
 
     const {
         register,
@@ -37,8 +36,6 @@ function CreateDenuncia() {
         }
 
         let response = await apiFetch(`animais/denuncias`, "post", dados)
-
-        console.log("🚀 ~ file: CreateAnimal.jsx:49 ~ create ~ response:", response)
 
         if (response.code == 201) {
             navigate("/usuario/animais");

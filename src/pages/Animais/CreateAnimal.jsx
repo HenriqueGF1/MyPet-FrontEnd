@@ -22,13 +22,9 @@ function CreateAnimal() {
 
     const create = async (data) => {
 
-        console.log("🚀 ~ file: CreateAnimal.jsx:24 ~ create ~ data:", data)
-
         let animalData = new FormData(document.getElementById("createAnimal"));
 
         let response = await apiFetch(`animais`, "post", animalData)
-
-        console.log("🚀 ~ file: CreateAnimal.jsx:49 ~ create ~ response:", response)
 
         if (response.code == 201) {
             navigate("/usuario/animais");
@@ -40,9 +36,7 @@ function CreateAnimal() {
 
     function previewFiles() {
         const fileInput = document.getElementById('imagens');
-        console.log("🚀 ~ file: CreateAnimal.jsx:43 ~ previewFiles ~ imagens:", fileInput)
         const previewsContainer = document.getElementById('previews');
-        console.log("🚀 ~ file: CreateAnimal.jsx:44 ~ previewFiles ~ previewsContainer:", previewsContainer)
         previewsContainer.innerHTML = ''; // Limpa previews anteriores
 
         // Verifica se o navegador suporta a API FileReader

@@ -6,7 +6,7 @@ function TipoDenucia({ label, name, valorDefinido, register, erros }) {
 
     const [tipos, setTipos] = useState([])
     const { loadingApi, apiFetch } = useContext(Context);
-    console.log("tipos")
+    
     useEffect(() => {
 
         const getData = async () => {

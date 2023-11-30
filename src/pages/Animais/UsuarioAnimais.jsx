@@ -16,7 +16,6 @@ function UsuarioAnimais() {
 
         async function getAnimais() {
             let response = await apiFetch("usuario/animais", "get")
-            console.log("🚀 ~ file: UsuarioAnimais.jsx:17 ~ getAnimais ~ response:", response)
             if (response.data != undefined) {
                 setAnimais(response.data);
             }
@@ -99,8 +98,6 @@ function UsuarioAnimais() {
     }
 
     const handleAtivar = async (id_animal) => {
-
-        console.log("🚀 ~ file: UsuarioAnimais.jsx:80 ~ handleAti ~ id_animal:", id_animal)
 
         let response = await apiFetch(`animais/ativar/${id_animal}`, "patch")
 

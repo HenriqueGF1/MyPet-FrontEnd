@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { Context } from "../../context/apiContext";
 
 const NavBar = memo(function NavBar() {
-    // console.log("NavBar")
+
     const { authenticated } = useContext(Context);
-    console.log("🚀 ~ file: NavBar.jsx:8 ~ NavBar ~ authenticated:", authenticated)
     const { loadingApi, apiFetch } = useContext(Context);
 
     const [user, setUser] = useState({
@@ -14,8 +13,6 @@ const NavBar = memo(function NavBar() {
     })
 
     useEffect(() => {
-
-        // console.log("Aqui");
 
         if (localStorage.getItem("user") != undefined) {
             setUser((prev) => JSON.parse(localStorage.getItem("user")));
