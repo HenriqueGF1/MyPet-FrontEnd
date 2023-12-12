@@ -102,6 +102,7 @@ export default function useAuth() {
     const response = await api
       .post("admin/login", data)
       .then(function (response) {
+        console.log("🚀 ~ file: useAuth.jsx:105 ~ response:", response)
         localStorage.setItem(
           "token",
           JSON.stringify(response.data.authorisation.token)

@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Context } from "../../context/apiContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
 import Categorias from "../../components/Categorias/Categorias";
@@ -134,6 +134,8 @@ function UpdateAnimais() {
             </form>
 
             <br />
+            <Link to={`/animais/editar/imagens/${id_animal}`}>EDITAR IMAGENS: - {id_animal}</Link>
+
             <br />
 
         </>

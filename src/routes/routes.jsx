@@ -18,6 +18,7 @@ const PrivateRoute = ({ children }) => {
 const AdmRoute = ({ children }) => {
 
   const { loadingApi, perfil, loading, authenticated } = useContext(Context);
+  console.log("🚀 ~ file: routes.jsx:21 ~ AdmRoute ~ perfil:", perfil)
 
   AdmRoute.propTypes = {
     children: PropTypes.node.isRequired,
@@ -46,7 +47,7 @@ import CreateEnderecos from "../pages/Usuario/Enderecos/CreateEnderecos";
 import CreateDenuncia from "../pages/Denuncias/CreateDenuncia";
 import Denuncias from "../pages/Denuncias/Denuncias";
 import UpdateDenuncia from "../pages/Denuncias/UpdateDenuncia";
-import AnimalShow from "../components/Animais/AnimalShow";
+import AnimalShow from "../pages/Animais/AnimalShow";
 import Favoritos from "../pages/Usuario/Favoritos/Favoritos";
 import LoginAdm from "../pages/ADM/LoginAdm";
 import CreateCategorias from "../pages/ADM/Categorias/CreateCategorias";
@@ -55,6 +56,10 @@ import UpdateCategoria from "../pages/ADM/Categorias/UpdateCategoria";
 import AdmPorte from "../pages/ADM/Porte/AdmPorte";
 import CreatePorte from "../pages/ADM/Porte/CreatePorte";
 import UpdatePorte from "../pages/ADM/Porte/UpdatePorte";
+import AnimaisImagens from "../pages/Animais/AnimaisImagens";
+import DenunciaTipo from "../pages/ADM/DenunciaTipo/DenunciaTipo";
+import CreateDenunciaTipo from "../pages/ADM/DenunciaTipo/CreateDenunciaTipo";
+import UpdateDenunciaTipo from "../pages/ADM/DenunciaTipo/UpdateDenunciaTipo";
 
 export default function AppRoutes() {
   return (
@@ -147,6 +152,35 @@ export default function AppRoutes() {
           }
         />
 
+        {/* ADM DENUNCIAS TIPO */}
+
+        <Route
+          path="/admin/denuncias/tipos"
+          element={
+            <AdmRoute>
+              <DenunciaTipo />
+            </AdmRoute>
+          }
+        />
+
+        <Route
+          path="/admin/denunciasTipos/cadastrar"
+          element={
+            <AdmRoute>
+              <CreateDenunciaTipo />
+            </AdmRoute>
+          }
+        />
+
+        <Route
+          path="/admin/denunciasTipos/editar/:id_tipo"
+          element={
+            <AdmRoute>
+              <UpdateDenunciaTipo />
+            </AdmRoute>
+          }
+        />
+
         {/* ANIMAIS */}
 
         <Route path="/animais" element={<Animais />} />
@@ -174,6 +208,15 @@ export default function AppRoutes() {
           element={
             <PrivateRoute>
               <UpdateAnimais />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/animais/editar/imagens/:id_animal"
+          element={
+            <PrivateRoute>
+              <AnimaisImagens />
             </PrivateRoute>
           }
         />
@@ -290,9 +333,9 @@ export default function AppRoutes() {
         <Route
           path="/teste"
           element={
-            // <PrivateRoute>
-            <Teste />
-            // </PrivateRoute>
+            <PrivateRoute>
+              <Teste />
+            </PrivateRoute>
           }
         />
 

@@ -15,6 +15,8 @@ export default function useFetch() {
                 url,
                 data: values,
             }, { signal: abortController.signal });
+            
+            // console.log("🚀 ~ file: useFetch.jsx:18 ~ apiFetch ~ response:", response)
 
             if (response.data.code == 401) alert(response.data.message)
 

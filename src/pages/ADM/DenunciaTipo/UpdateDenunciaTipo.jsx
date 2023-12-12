@@ -1,21 +1,18 @@
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../../context/apiContext";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/NavBar/NavBar";
-import Input from "../../components/Form/Input";
-import Categorias from "../../components/Categorias/Categorias";
-import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
+import NavBar from "../../../components/NavBar/NavBar";
+import Input from "../../../components/Form/Input";
 import { useParams } from 'react-router-dom';
-import TipoDenucia from "../../components/TipoDenucia/TipoDenucia";
 import { toast } from 'react-toastify';
-import Loading from "../../components/Loading/Loading";
+import Loading from "../../../components/Loading/Loading";
 
-function UpdateDenuncia() {
+function UpdateDenunciaTipo() {
 
     let navigate = useNavigate();
 
-    let { id_denuncia } = useParams();
+    let { id_tipo } = useParams();
     const [errosApi, setErrosApi] = useState([]);
     const { loadingApi, apiFetch } = useContext(Context);
 
@@ -25,38 +22,39 @@ function UpdateDenuncia() {
         formState: { errors },
     } = useForm({
         defaultValues: async () => {
-            let response = await apiFetch(`animais/denuncias/${id_denuncia}`, "get")
+            let response = await apiFetch(`admin/denunciasTipos/${id_tipo}`, "get")
             return {
-                id_denuncia: response.data.id_denuncia,
-                descricao: response.data.descricao,
                 id_tipo: response.data.id_tipo,
+                descricao: response.data.descricao
             }
         }
     });
 
     const edit = async (data) => {
 
-        let response = await apiFetch(`animais/denuncias/${data.id_denuncia}`, "patch", data)
+        let response = await apiFetch(`admin/denuncias/tipos/${data.id_tipo}`, "patch", data)
 
         if (response.code == 200) {
-            toast.success("Editado com Sucesso !!");
-            navigate("/minhas/denuncias");
+            toast.success('Editado com Sucesso !!')
+            navigate("/admin/denuncias/tipos");
         } else {
             setErrosApi(response.data.errors);
+            // toast.warning('Atenção');
         }
 
     };
 
     return (
         <>
-            <h1>Editar Animal</h1>
+            <h1>Editar Tipo de Denuncia</h1>
 
             <NavBar />
 
             {loadingApi ? (
                 <Loading />
             ) : (<>
-                <form onSubmit={handleSubmit(edit)} id="editAnimal">
+
+                <form onSubmit={handleSubmit(edit)} id="editPorte">
 
                     <Input
                         label='Descrição'
@@ -69,21 +67,16 @@ function UpdateDenuncia() {
                         apiErros={errosApi.descricao}
                     />
 
-                    <TipoDenucia
-                        label="Tipo de Denuncia"
-                        name="id_tipo"
-                        register={register}
-                    />
-
                     <br />
+
                     <button type="submit">Enviar</button>
                 </form>
 
                 <br />
-                <br />
             </>)}
+
         </>
     );
 }
 
-export default UpdateDenuncia;
+export default UpdateDenunciaTipo;

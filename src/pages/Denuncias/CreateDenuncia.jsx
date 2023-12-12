@@ -6,13 +6,14 @@ import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
 import Categorias from "../../components/Categorias/Categorias";
 import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
-import TipoDenucia from "../../components/TipoDenucia/Categorias";
+import TipoDenucia from "../../components/TipoDenucia/TipoDenucia";
 import Loading from "../../components/Loading/Loading";
+import AnimalDetalhes from "../../components/Animais/AnimalDetalhes";
 
-function CreateDenuncia() {
+function CreateDenuncia({ id_usuario, id_animal }) {
 
     let navigate = useNavigate();
-    let { id_usuario, id_animal } = useParams();
+    // let { id_usuario, id_animal } = useParams();
 
     const [errosApi, setErrosApi] = useState([])
     const { loadingApi, apiFetch } = useContext(Context);
@@ -49,7 +50,13 @@ function CreateDenuncia() {
 
             <h1>Denunciar Animal</h1>
 
-            <NavBar />
+            {/* <NavBar /> */}
+
+            {/* {loadingApi || id_animal === null ? <Loading /> : (
+                <AnimalDetalhes animal={id_animal}>
+
+                </AnimalDetalhes>
+            )} */}
 
             <form onSubmit={handleSubmit(create)} id='createAnimal'>
 
