@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { Context } from "../../context/apiContext";
 import { Link, useParams } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
-// import Loading from "../Loading/Loading";
 import { toast } from 'react-toastify';
 import AnimalDetalhes from "../../components/Animais/AnimalDetalhes";
 import Loading from "../../components/Loading/Loading";

@@ -49,39 +49,36 @@ function UpdateDenuncia() {
 
     return (
         <>
-            <h1>Editar Animal</h1>
+            <h1>Editar Denuncia</h1>
 
             <NavBar />
 
-            {loadingApi ? (
-                <Loading />
-            ) : (<>
-                <form onSubmit={handleSubmit(edit)} id="editAnimal">
+            <form onSubmit={handleSubmit(edit)} id="editAnimal">
 
-                    <Input
-                        label='Descrição'
-                        typeInput='text'
-                        placeholder='Preencha sua Descrição'
-                        name='descricao'
-                        register={register}
-                        validation={{ required: true }}
-                        errors={errors}
-                        apiErros={errosApi.descricao}
-                    />
+                <Input
+                    label='Descrição'
+                    typeInput='text'
+                    placeholder='Preencha sua Descrição'
+                    name='descricao'
+                    register={register}
+                    validation={{ required: true }}
+                    errors={errors}
+                    apiErros={errosApi.descricao}
+                />
 
-                    <TipoDenucia
-                        label="Tipo de Denuncia"
-                        name="id_tipo"
-                        register={register}
-                    />
-
-                    <br />
-                    <button type="submit">Enviar</button>
-                </form>
+                <TipoDenucia
+                    label="Tipo de Denuncia"
+                    name="id_tipo"
+                    register={register}
+                />
 
                 <br />
-                <br />
-            </>)}
+                <button type="submit">Enviar</button>
+            </form>
+
+            <br />
+            <br />
+
         </>
     );
 }

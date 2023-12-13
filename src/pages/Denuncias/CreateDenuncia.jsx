@@ -39,7 +39,7 @@ function CreateDenuncia({ id_usuario, id_animal }) {
         let response = await apiFetch(`animais/denuncias`, "post", dados)
 
         if (response.code == 201) {
-            navigate("/usuario/animais");
+            navigate("/minhas/denuncias");
         } else {
             setErrosApi(response.data.errors);
         }

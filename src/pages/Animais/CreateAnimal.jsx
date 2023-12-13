@@ -6,6 +6,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
 import Categorias from "../../components/Categorias/Categorias";
 import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
+import { toast } from "react-toastify";
 
 function CreateAnimal() {
 
@@ -24,9 +25,14 @@ function CreateAnimal() {
 
         let animalData = new FormData(document.getElementById("createAnimal"));
 
+        console.log("🚀 ~ file: CreateAnimal.jsx:26 ~ create ~ animalData:", animalData)
+
         let response = await apiFetch(`animais`, "post", animalData)
 
+        console.log("🚀 ~ file: CreateAnimal.jsx:32 ~ create ~ response:", response)
+        
         if (response.code == 201) {
+            toast.success('Cadastrado com sucesso')
             navigate("/usuario/animais");
         } else {
             // alert(response.data.message)

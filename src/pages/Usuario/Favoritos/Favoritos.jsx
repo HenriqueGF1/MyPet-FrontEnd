@@ -33,7 +33,7 @@ function Favoritos() {
 
         if (response.data === 1) {
             toast.success("Removido com sucesso !!");
-            setFavoritos((prev) => prev.filter((favorito) => favorito.id_contato != id_favorito))
+            setFavoritos((prev) => prev.filter((favorito) => favorito.id_favorito != id_favorito))
         }
     }
 

@@ -35,13 +35,16 @@ const NavBar = memo(function NavBar() {
                     <Link to='/loginAdm'>Login ADMIN</Link>
                 </li>
                 <li>
+                    <Link to='/admin/denuncias'>ADMIN Listar Denuncias PENDENTES</Link>
+                </li>
+                <li>
+                    <Link to='/admin/denuncias/respostas'>ADMIN Listar Denuncias RESPONDIDAS</Link>
+                </li>
+                <li>
                     <Link to='/admin/categorias/cadastrar'>ADMIN Categorias Cadastrar</Link>
                 </li>
                 <li>
                     <Link to='/admin/categorias'>ADMIN Categorias</Link>
-                </li>
-                <li>
-                    <Link to='/admin/portes/cadastrar'>ADMIN Porte Cadastrar</Link>
                 </li>
                 <li>
                     <Link to='/admin/portes'>ADMIN Porte</Link>

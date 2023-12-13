@@ -60,6 +60,9 @@ import AnimaisImagens from "../pages/Animais/AnimaisImagens";
 import DenunciaTipo from "../pages/ADM/DenunciaTipo/DenunciaTipo";
 import CreateDenunciaTipo from "../pages/ADM/DenunciaTipo/CreateDenunciaTipo";
 import UpdateDenunciaTipo from "../pages/ADM/DenunciaTipo/UpdateDenunciaTipo";
+import AdmDenuncias from "../pages/ADM/Denuncias/ADMDenuncias";
+import CreateDenunciaResposta from "../pages/ADM/Denuncias/CreateDenunciaResposta";
+import AdmDenunciasRespostas from "../pages/ADM/Denuncias/AdmDenunciasRespostas";
 
 export default function AppRoutes() {
   return (
@@ -180,6 +183,35 @@ export default function AppRoutes() {
             </AdmRoute>
           }
         />
+
+        {/* ADM DENUNCIAS */}
+
+        <Route
+          path="/admin/denuncias"
+          element={
+            <AdmRoute>
+              <AdmDenuncias />
+            </AdmRoute>
+          }
+        />
+
+        <Route
+          path="/admin/denuncias/responder/:id_denuncia"
+          element={
+            <AdmRoute>
+              <CreateDenunciaResposta />
+            </AdmRoute>
+          }
+        />
+
+        <Route
+          path="/admin/denuncias/respostas"
+          element={
+            <AdmRoute>
+              <AdmDenunciasRespostas />
+            </AdmRoute>
+          }
+        /> 
 
         {/* ANIMAIS */}
 
