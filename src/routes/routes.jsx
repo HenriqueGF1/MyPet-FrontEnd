@@ -1,37 +1,11 @@
 import { useContext } from "react";
 import { Routes, Route, BrowserRouter, Navigate } from "react-router-dom";
-import { Context } from "../context/apiContext";
+import { Context } from "../context/Context";
 import PropTypes from 'prop-types';
-
-const PrivateRoute = ({ children }) => {
-
-  const { loadingApi, loading, authenticated } = useContext(Context);
-
-  PrivateRoute.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-
-  return loading ? <h1>Loading...</h1> : authenticated ? children : <Navigate to="/login" />;
-
-};
-
-const AdmRoute = ({ children }) => {
-
-  const { loadingApi, perfil, loading, authenticated } = useContext(Context);
-  console.log("🚀 ~ file: routes.jsx:21 ~ AdmRoute ~ perfil:", perfil)
-
-  AdmRoute.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
-
-  return loading ? <h1>Loading...</h1> : perfil === 1 ? children : <Navigate to="/home" />;
-
-};
 
 // Paginas
 import Home from "../pages/Home";
 import Login from "../pages/Login";
-import Teste from "../pages/Teste";
 import CriarConta from "../pages/CriarConta";
 import Animais from "../pages/Animais/Animais";
 import CreateAnimal from "../pages/Animais/CreateAnimal";
@@ -44,7 +18,6 @@ import UpdateUsuario from "../pages/Usuario/UpdateUsuario";
 import Enderecos from "../pages/Usuario/Enderecos/Enderecos";
 import UpdateEnderecos from "../pages/Usuario/Enderecos/UpdateEnderecos";
 import CreateEnderecos from "../pages/Usuario/Enderecos/CreateEnderecos";
-import CreateDenuncia from "../pages/Denuncias/CreateDenuncia";
 import Denuncias from "../pages/Denuncias/Denuncias";
 import UpdateDenuncia from "../pages/Denuncias/UpdateDenuncia";
 import AnimalShow from "../pages/Animais/AnimalShow";
@@ -63,19 +36,88 @@ import UpdateDenunciaTipo from "../pages/ADM/DenunciaTipo/UpdateDenunciaTipo";
 import AdmDenuncias from "../pages/ADM/Denuncias/ADMDenuncias";
 import CreateDenunciaResposta from "../pages/ADM/Denuncias/CreateDenunciaResposta";
 import AdmDenunciasRespostas from "../pages/ADM/Denuncias/AdmDenunciasRespostas";
+import DashBoard from "../pages/ADM/DashBoard/DashBoard";
+import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
+
+const checkTokenExpiration = () => {
+
+  const token = localStorage.getItem("token");
+
+  if (token == null) {
+    return false
+  }
+
+  const decodedToken = jwtDecode(token);
+  const currentTime = new Date().getTime() / 1000;
+
+  if (decodedToken.exp < currentTime) {
+    return true
+  }
+
+  return false
+}
+
+const PrivateRoute = ({ children }) => {
+
+  PrivateRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
+  const { loadingApi, perfil, authenticated, handleLogout } = useContext(Context);
+
+  if (checkTokenExpiration()) {
+    toast.warning('Seu acesso expirou')
+    handleLogout()
+    return <Navigate to="/login" />
+  }
+
+  return authenticated ? children : <Navigate to="/login" />;
+
+};
+
+const AdmRoute = ({ children }) => {
+
+  AdmRoute.propTypes = {
+    children: PropTypes.node.isRequired,
+  };
+
+  const { authenticated, handleLogout } = useContext(Context);
+
+  if (!authenticated) return <Navigate to="/login" />
+
+  if (checkTokenExpiration()) {
+    toast.warning('Seu acesso expirou')
+    handleLogout()
+    return <Navigate to="/login" />
+  }
+
+  let perfil = 0;
+  let usuario = JSON.parse(localStorage.getItem("user"))
+
+  if (usuario.id_perfil) {
+    perfil = 1
+  } else {
+    toast.warning('Você não é autorizado.')
+    perfil = 0
+    return
+  }
+
+
+  return perfil === 1 && authenticated ? children : <Navigate to="/login" />;
+
+};
+
 
 export default function AppRoutes() {
+
   return (
     <BrowserRouter>
       <Routes>
 
         <Route
           path="/home"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
+          element={<Home />}
         />
 
         {/* Usuario */}
@@ -83,17 +125,27 @@ export default function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CriarConta />} />
 
-
-        {/* ADMIN */}
-
-        <Route path="/loginAdm" element={<LoginAdm />} />
-
         <Route
           path="/usuario/editar/:id_usuario"
           element={
             <PrivateRoute>
               <UpdateUsuario />
             </PrivateRoute>
+          }
+        />
+
+        {/* ADMIN */}
+
+        <Route path="/loginAdm" element={<LoginAdm />} />
+
+        {/* ADM DASHBOARD */}
+
+        <Route
+          path="/admin/dashBoard"
+          element={
+            <AdmRoute>
+              <DashBoard />
+            </AdmRoute>
           }
         />
 
@@ -211,7 +263,7 @@ export default function AppRoutes() {
               <AdmDenunciasRespostas />
             </AdmRoute>
           }
-        /> 
+        />
 
         {/* ANIMAIS */}
 
@@ -220,9 +272,9 @@ export default function AppRoutes() {
         <Route
           path="/animais/:id_animal"
           element={
-            <PrivateRoute>
-              <AnimalShow />
-            </PrivateRoute>
+            // <PrivateRoute>
+            <AnimalShow />
+            // </PrivateRoute>
           }
         />
 
@@ -294,7 +346,7 @@ export default function AppRoutes() {
         {/* ENDERECOS */}
 
         <Route
-          path="/usuarios/:id_usuario/enderecos"
+          path="/usuarios/enderecos"
           element={
             <PrivateRoute>
               <Enderecos />
@@ -322,14 +374,14 @@ export default function AppRoutes() {
 
         {/* DENUNCIAS */}
 
-        <Route
+        {/* <Route
           path="/denuncias/:id_usuario/:id_animal/cadastrar"
           element={
             <PrivateRoute>
               <CreateDenuncia />
             </PrivateRoute>
           }
-        />
+        /> */}
 
         <Route
           path="/minhas/denuncias"
@@ -360,17 +412,6 @@ export default function AppRoutes() {
           }
         />
 
-        {/* TESTE */}
-
-        <Route
-          path="/teste"
-          element={
-            <PrivateRoute>
-              <Teste />
-            </PrivateRoute>
-          }
-        />
-
         {/* Rota 404 */}
 
         <Route path="*" element={<Navigate to="/home" replace />} />
@@ -378,4 +419,5 @@ export default function AppRoutes() {
       </Routes>
     </BrowserRouter>
   );
+
 }

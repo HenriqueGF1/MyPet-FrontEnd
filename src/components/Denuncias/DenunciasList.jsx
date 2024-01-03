@@ -21,6 +21,10 @@ function DenunciasList({
                 <li><b>Tipo:</b> {tipo.descricao}</li>
                 <br />
                 {/* <li><b>Animal Denunciado:</b> {animal.nome}</li> */}
+
+                <h1>Animal</h1>
+
+                <br />
                 <AnimalDetalhes
                     animal={animal}
                 >
@@ -43,10 +47,12 @@ function DenunciasList({
 DenunciasList.propTypes = {
     id_denuncia: PropTypes.number.isRequired,
     descricao: PropTypes.string.isRequired,
-    tipo: PropTypes.string.isRequired,
+    tipo: PropTypes.shape({
+        descricao: PropTypes.string.isRequired,
+    }).isRequired,
     usuario: PropTypes.object.isRequired,
     animal: PropTypes.object.isRequired,
-    dt_exclusao: PropTypes.string.isRequired,
+    // dt_exclusao: PropTypes.string.isRequired,
     handleRetirarDenuncia: PropTypes.func.isRequired,
 };
 

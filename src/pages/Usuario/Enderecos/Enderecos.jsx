@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useCallback } from "react";
-import { Context } from "../../../context/apiContext";
+import { Context } from "../../../context/Context";
 import NavBar from "../../../components/NavBar/NavBar";
 import EnderecosList from "../../../components/Enderecos/EnderecosList";
 import { useParams } from 'react-router-dom';
@@ -8,14 +8,13 @@ import { toast } from 'react-toastify';
 
 function Enderecos() {
 
-    let { id_usuario } = useParams();
     const [enderecos, setEnderecos] = useState([]);
     const { loadingApi, apiFetch } = useContext(Context);
 
     useEffect(() => {
 
         async function getEnderecos() {
-            let response = await apiFetch(`usuarios/${id_usuario}/enderecos`, "get")
+            let response = await apiFetch(`usuarios/enderecos`, "get")
             if (response.data != undefined) {
                 setEnderecos(response.data);
             }
@@ -27,7 +26,7 @@ function Enderecos() {
 
     const handlePrincipal = async (id_endereco) => {
 
-        let response = await apiFetch(`usuarios/1/enderecos/${id_endereco}/definirPrincipal`, "patch")
+        let response = await apiFetch(`usuarios/enderecos/${id_endereco}/definirPrincipal`, "patch")
 
         if (response.data.code == 400) {
             toast.warning(response.data.message);
@@ -72,7 +71,7 @@ function Enderecos() {
     return (
         <>
             <h1>Meus Endereços</h1>
-            
+
             <br />
             <NavBar />
             <br />

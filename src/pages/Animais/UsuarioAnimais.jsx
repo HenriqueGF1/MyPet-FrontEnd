@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import NavBar from "../../components/NavBar/NavBar";
 import AnimaisList from "../../components/Animais/AnimaisList";
 import Loading from '../../components/Loading/Loading'
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 function UsuarioAnimais() {
 
     const [animais, setAnimais] = useState([]);
+    console.log("🚀 ~ file: UsuarioAnimais.jsx:12 ~ UsuarioAnimais ~ animais:", animais)
     const [erros, setErros] = useState([]);
     const { loadingApi, apiFetch } = useContext(Context);
 
@@ -34,7 +35,7 @@ function UsuarioAnimais() {
         }
 
         if (response.data === 1) {
-            alert('Excluído com Sucesso !!')
+            toast.success('Excluído com Sucesso !!')
             setAnimais((prev) => prev.filter((animal) => animal.id_animal != id_animal))
         }
 

@@ -1,28 +1,36 @@
 import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
+import ErrosField from "../../components/Validation/errosField";
+import MessageValidation from "../../components/Validation/MessageValidation";
 
 function LoginAdm() {
   const { authenticated, loading, handleLoginAdm, handleLogout } = useContext(Context);
   let navigate = useNavigate();
-  const [erros, setErros] = useState([])
+  const [errosApi, setErrosApi] = useState({})
 
   const {
     register,
-    handleSubmit
+    handleSubmit,
+    formState: { errors }
   } = useForm();
 
   const login = async (data) => {
 
     const { response } = await handleLoginAdm(data)
 
-    if (response.status == 200) {
+    if (response.code == 200) {
       navigate("/home");
-    } else {
-      setErros(response.data.errors);
+      return
     }
+
+    setErrosApi({
+      "code": response.code,
+      "erro": response.data.errors,
+    })
+
   }
 
   return (
@@ -31,51 +39,45 @@ function LoginAdm() {
 
       <NavBar />
 
-      <div className="app-container">
+      <form onSubmit={handleSubmit(login)} id='loginADM'>
+
         <div className="form-group">
           <label>E-mail</label><br></br>
           <input
             type="text"
-            placeholder="Preencha seu e-mail..."
+            placeholder="Preencha seu e-mail"
             value='henrique@gmail.com'
             {...register("email", { required: true })}
           />
-          {
-            erros?.email?.map((message, index) => {
-              return (
-                <p key={index} className="error-message">{message}</p>
-              )
-            })
-          }
+          {errosApi.erro?.email && <ErrosField errosApi={errosApi} field='email' />}
+          {errors.email && MessageValidation('email', errors.email.type)}
         </div>
 
         <div className="form-group">
           <label>Senha</label><br></br>
           <input
             type="text"
-            placeholder="Preencha sua senha..."
+            placeholder="Preencha seu senha"
             value='123321'
             {...register("password", { required: true })}
           />
-          {
-            erros?.password?.map((message, index) => {
-              return (
-                <p key={index} className="error-message">{message}</p>
-              )
-            })
-          }
+          {errosApi.erro?.password && <ErrosField errosApi={errosApi} field='password' />}
+          {errors.password && MessageValidation('password', errors.password.type)}
         </div>
-        <br></br>
+
         {
           loading ? <h1>Carregando...</h1> : (<>
+
             <div className="form-group">
-              <button onClick={() => handleSubmit(login)()}>Login</button>
-              <button onClick={handleLogout}>Logout</button>
+              <button type="submit">Enviar</button>
+              <button type="reset">Cancelar</button>
+              <button onClick={handleLogout}>Sair</button>
             </div>
+
           </>)
         }
 
-      </div>
+      </form>
     </>
   );
 }

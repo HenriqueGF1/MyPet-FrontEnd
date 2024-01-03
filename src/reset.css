@@ -2,7 +2,6 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -140,4 +139,8 @@ table {
 .error-message {
   color: red;
   padding: 5px;
+}
+
+li{
+  padding: 3px;
 }

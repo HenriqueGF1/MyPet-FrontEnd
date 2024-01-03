@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { Link, useParams } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import { toast } from 'react-toastify';
@@ -11,8 +11,7 @@ function AnimalShow() {
 
     let { id_animal } = useParams();
 
-    const { loadingApi, apiFetch } = useContext(Context);
-    console.log("🚀 ~ file: AnimalShow.jsx:16 ~ AnimalShow ~ loadingApi:", loadingApi)
+    const { loadingApi, apiFetch, authenticated } = useContext(Context);
     const [animal, setAnimal] = useState(null);
     const [user, setUser] = useState({ id_usuario: '', nome: "" })
     const [denunciar, setDenunciar] = useState(false);
@@ -21,6 +20,7 @@ function AnimalShow() {
 
         async function getAnimais() {
             let response = await apiFetch(`animais/${id_animal}`, "get")
+            console.log("🚀 ~ file: AnimalShow.jsx:24 ~ getAnimais ~ response:", response)
             if (response.data != undefined) {
                 setAnimal(response.data);
             }
@@ -60,8 +60,6 @@ function AnimalShow() {
 
         let response = await apiFetch(`/animais/favoritos`, "post", data)
 
-        console.log("🚀 ~ file: AnimalShow.jsx:64 ~ favoritar ~ response:", response)
-
         if (response.data.code == 400) {
             toast.warning(response.data.message)
         }
@@ -93,29 +91,32 @@ function AnimalShow() {
 
                     <AnimalDetalhes animal={animal}>
 
-                        <div>
-                            <br />
-                            <ul>
-                                {user.id_usuario !== animal.id_usuario && (
-                                    <>
-                                        <li>
-                                            {/* <Link to={`/denuncias/${animal.id_usuario}/${animal.id_animal}/cadastrar`}>
-                                            Denunciar
-                                        </Link> */}
-                                        </li>
-                                        <li onClick={() => setDenunciar(prev => !prev)}>
-                                            DENUNCIAR
-                                        </li>
-                                        <br />
-                                        <li onClick={() => (animal.favoritoUsuario.length > 0 ? removerFavorito(animal.favoritoUsuario[0]) : favoritar(animal.id_animal))}>
-                                            {animal.favoritoUsuario.length > 0 ? `REMOVER FAVORITAR: - ${animal.favoritoUsuario[0].id_favorito}` : `FAVORITAR: - ${animal.id_animal}`}
-                                        </li>
-                                    </>
-                                )}
-                            </ul>
+                        {authenticated ? (<>
 
-                            <hr />
-                        </div>
+                            <div>
+                                <br />
+                                <ul>
+                                    {user.id_usuario !== animal.id_usuario && (
+                                        <>
+
+                                            <li onClick={() => setDenunciar(prev => !prev)}>
+                                                DENUNCIAR
+                                            </li>
+
+                                            <br />
+
+                                            <li onClick={() => (animal.favoritoUsuario.length > 0 ? removerFavorito(animal.favoritoUsuario[0]) : favoritar(animal.id_animal))}>
+                                                {animal.favoritoUsuario.length > 0 ? `REMOVER FAVORITAR: - ${animal.favoritoUsuario[0].id_favorito}` : `FAVORITAR: - ${animal.id_animal}`}
+                                            </li>
+
+                                        </>
+                                    )}
+                                </ul>
+
+                                <hr />
+                            </div>
+
+                        </>) : ''}
 
                     </AnimalDetalhes>
 

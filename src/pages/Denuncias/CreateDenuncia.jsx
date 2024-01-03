@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { useNavigate, useParams } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
@@ -9,11 +9,14 @@ import PorteAnimal from "../../components/PorteAnimal/PorteAnimal";
 import TipoDenucia from "../../components/TipoDenucia/TipoDenucia";
 import Loading from "../../components/Loading/Loading";
 import AnimalDetalhes from "../../components/Animais/AnimalDetalhes";
+import PropTypes from 'prop-types';
+import MessageValidation from "../../components/Validation/MessageValidation";
+import ErrosField from "../../components/Validation/errosField";
+import { toast } from "react-toastify";
 
 function CreateDenuncia({ id_usuario, id_animal }) {
 
     let navigate = useNavigate();
-    // let { id_usuario, id_animal } = useParams();
 
     const [errosApi, setErrosApi] = useState([])
     const { loadingApi, apiFetch } = useContext(Context);
@@ -38,10 +41,16 @@ function CreateDenuncia({ id_usuario, id_animal }) {
 
         let response = await apiFetch(`animais/denuncias`, "post", dados)
 
+        console.log("🚀 ~ file: CreateDenuncia.jsx:43 ~ create ~ response:", response)
+
         if (response.code == 201) {
+            toast.success('Cadastrado com sucesso')
             navigate("/minhas/denuncias");
         } else {
-            setErrosApi(response.data.errors);
+            setErrosApi({
+                "code": response.code,
+                "erro": response.data.errors,
+            })
         }
     }
 
@@ -60,16 +69,16 @@ function CreateDenuncia({ id_usuario, id_animal }) {
 
             <form onSubmit={handleSubmit(create)} id='createAnimal'>
 
-                <Input
-                    label='Descrição'
-                    typeInput='text'
-                    placeholder='Preencha sua Descrição'
-                    name='descricao'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.descricao}
-                />
+                <div className="form-group">
+                    <label>Descrição</label><br></br>
+                    <input
+                        type="text"
+                        placeholder='Preencha sua Descrição'
+                        {...register("descricao", { required: true })}
+                    />
+                    {errosApi.erro?.descricao && <ErrosField errosApi={errosApi} field='descricao' />}
+                    {errors.descricao && MessageValidation('descricao', errors.descricao.type)}
+                </div>
 
                 <TipoDenucia
                     label="Tipo de Denuncia"
@@ -87,5 +96,10 @@ function CreateDenuncia({ id_usuario, id_animal }) {
         </>
     );
 }
+
+CreateDenuncia.propTypes = {
+    id_usuario: PropTypes.number.isRequired,
+    id_animal: PropTypes.number.isRequired,
+};
 
 export default CreateDenuncia;

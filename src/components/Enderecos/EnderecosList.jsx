@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
+import formatarCEP from "../../helpers/formatarCEP";
 
 function ContatosList({
     id_endereco,
@@ -16,7 +17,8 @@ function ContatosList({
         <>
             <ul >
                 <li><b>id_contato:</b> {id_endereco}</li>
-                <li><b>CEP:</b> {cep}</li>
+                {/* <li><b>CEP:</b> {cep}</li> */}
+                <li><b>CEP:</b> {formatarCEP(cep)}</li>
                 <li><b>Bairro:</b> {bairro}</li>
                 <li><b>Complemento:</b> {complemento}</li>
                 <li><b>Numero:</b> {numero}</li>
@@ -42,9 +44,9 @@ ContatosList.propTypes = {
     id_endereco: PropTypes.number.isRequired,
     cep: PropTypes.string.isRequired,
     bairro: PropTypes.string.isRequired,
-    numero: PropTypes.string.isRequired,
+    numero: PropTypes.number.isRequired,
     complemento: PropTypes.string,
-    principal: PropTypes.bool.isRequired,
+    principal: PropTypes.number.isRequired,
     handlePrincipal: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired,
 };

@@ -7,6 +7,7 @@ const api = axios.create({
     "X-Custom-Header": "foobar",
     Authorization: `Bearer ${localStorage.getItem("token")}`,
     // "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 

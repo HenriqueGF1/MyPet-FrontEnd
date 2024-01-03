@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { useForm } from "react-hook-form";
 import NavBar from "../../components/NavBar/NavBar";
 import Loading from '../../components/Loading/Loading'
@@ -7,6 +7,8 @@ import { Link, useParams } from "react-router-dom";
 import AnimalDetalhes from '../../components/Animais/AnimalDetalhes'
 import Input from "../../components/Form/Input";
 import { toast } from "react-toastify";
+import MessageValidation from "../../components/Validation/MessageValidation";
+import ErrosField from "../../components/Validation/errosField";
 
 function AnimaisImagens() {
 
@@ -16,13 +18,12 @@ function AnimaisImagens() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm();
+    } = useForm({ defaultValues: { fotos: false } });
 
     const [errosApi, setErrosApi] = useState([])
 
     const [animalFotos, setAnimalFotos] = useState(null);
     const [animal, setAnimal] = useState(null);
-    console.log("🚀 ~ file: AnimaisImagens.jsx:24 ~ AnimaisImagens ~ animalFotos:", animalFotos)
     const { loadingApi, apiFetch } = useContext(Context);
 
     const getAnimalFotos = async () => {
@@ -33,7 +34,6 @@ function AnimaisImagens() {
     }
     const getAnimalAnimal = async () => {
         let response = await apiFetch(`animais/${id_animal}`, "get")
-        console.log("🚀 ~ file: AnimaisImagens.jsx:37 ~ getAnimalAnimal ~ response:", response)
         if (response.data != undefined) {
             setAnimal(response.data);
         }
@@ -49,13 +49,14 @@ function AnimaisImagens() {
     const cadastrar = async (data) => {
 
         let animalData = new FormData(document.getElementById("animalFotos"));
-        animalData.set('id_animal', animal.id_animal);
+        animalData.set('id_animal', id_animal);
         animalData.delete('fotos');
 
         let response = await apiFetch(`animais/fotos`, "post", animalData)
 
         if (response.code == 200) {
             toast.success(`Cadastrado com sucesso !!`)
+            getAnimalAnimal();
             getAnimalFotos();
         } else {
             toast.warning(response.data.message)
@@ -69,16 +70,17 @@ function AnimaisImagens() {
         const idsMarcados = Array.from(checkboxesMarcados).map(checkbox => checkbox.value);
 
         let animalData = new FormData(document.getElementById("animalFotos"));
-        animalData.set('id_animal', animalFotos[0].animal.id_animal);
+        animalData.set('id_animal', id_animal);
         animalData.set('id_foto_animal', idsMarcados.join(','));
         animalData.delete('fotos');
 
         let response = await apiFetch(`animais/${animalFotos[0].animal.id_animal}/fotos/atualizar`, "post", animalData)
 
-        console.log("🚀 ~ file: AnimaisImagens.jsx:55 ~ substituir ~ response:", response)
+        console.log('response', response)
 
         if (response.code == 200) {
             toast.success(`Substituído com sucesso !!`)
+            getAnimalAnimal();
             getAnimalFotos();
         } else {
             toast.warning(response.data.message)
@@ -90,12 +92,17 @@ function AnimaisImagens() {
         const checkboxesMarcados = document.querySelectorAll('input[type="checkbox"]:checked');
         const idsMarcados = Array.from(checkboxesMarcados).map(checkbox => Number(checkbox.value));
 
-        let response = await apiFetch(`animais/fotos/${idsMarcados}`, "delete")
+        let animalData = new FormData(document.getElementById("animalFotos"));
+        animalData.set('id_animal', id_animal);
+        animalData.set('id_foto_animal', idsMarcados.join(','));
+        animalData.delete('fotos');
+        animalData.delete('imagens[]');
 
-        console.log("🚀 ~ file: AnimaisImagens.jsx:54 ~ excluir ~ response:", response)
+        let response = await apiFetch(`/animais/${id_animal}/fotos/apagar`, "post", animalData)
 
         if (response.code == 200) {
             toast.success(`Deletado com sucesso !!`)
+            getAnimalAnimal();
             getAnimalFotos();
         } else {
             toast.warning(response.data.message)
@@ -136,40 +143,48 @@ function AnimaisImagens() {
         <>
             <NavBar />
 
-            <h1>AnimaisImagens</h1>
+            <h1>Animais Editar Imagens</h1>
+
+            <br />
 
             {loadingApi || animalFotos === null || animal === null ? <Loading /> : (
 
                 <>
 
                     <>
+                        <h1>Animal</h1>
+                        <br />
+
                         <AnimalDetalhes animal={animal}>
                         </AnimalDetalhes>
+
                         <br />
 
                         <form id="animalFotos">
 
-                            {animalFotos.length < 1 ? <div><p>Sem Animais</p><br /></div> : (
+                            {animalFotos.length < 1 ? <div><p>Sem Imagens</p><br /></div> : (
                                 (<>
-                                    <p>Selecione as imagen(s) para Substituir ou Excluir</p><br />
-                                    {animalFotos.map((foto) => {
+                                    <p>Selecione a imagem(s) para Substituir ou Excluir</p><br />
+                                    {animalFotos.map((foto,index) => {
                                         return (
                                             <div key={foto.nome_arquivo}>
                                                 <img
                                                     src={`http://localhost:8000/${foto.url}`} alt={foto.nome_arquivo_original}
                                                     width={'150px'}
                                                 />
-                                                <Input
-                                                    label=''
-                                                    typeInput='checkbox'
-                                                    name='fotos'
-                                                    id={`foto${foto.id_foto_animal}`}
-                                                    value={foto.id_foto_animal}
-                                                    register={register}
-                                                    validation={{ required: false }}
-                                                    errors={errors}
-                                                    apiErros={errosApi.imagens}
-                                                />
+
+                                                <div className="form-group">
+                                                    <label>Imagem {index + 1} - {foto.nome_arquivo_original}</label><br></br>
+                                                    <input
+                                                        type="checkbox"
+                                                        value={foto.id_foto_animal}
+                                                        id={`foto_${foto.id_foto_animal}`}
+                                                        {...register("fotos", { required: false })}
+                                                    />
+                                                    {errosApi.erro?.fotos && <ErrosField errosApi={errosApi} field='fotos' />}
+                                                    {errors.fotos && MessageValidation('fotos', errors.fotos.type)}
+                                                </div>
+
                                             </div>
                                         )
                                     })}
@@ -178,23 +193,30 @@ function AnimaisImagens() {
 
                             <br />
 
-                            <Input
-                                label='Imagens'
-                                typeInput='file'
-                                name='imagens[]'
-                                id='imagens'
-                                register={register}
-                                validation={{ required: false }}
-                                errors={errors}
-                                apiErros={errosApi.imagens}
-                                onChange={previewFiles}
-                            />
+                            <div className="form-group">
+                                <label>Imagens</label><br></br>
+                                <input
+                                    id='imagens'
+                                    type="file"
+                                    {...register("imagens[]", { required: true })}
+                                    onChange={() => previewFiles()}
+                                />
+                                {errosApi.erro?.imagens && <ErrosField errosApi={errosApi} field='imagens' />}
+                                {errors.imagens && MessageValidation('imagens', errors.imagens.type)}
+                            </div>
 
                             <div id="previews">Preview</div><br /><br />
 
-                            <button type="button" id="cadastrar" onClick={handleSubmit(cadastrar)}>Cadastrar</button>
-                            <button type="button" id="substituir" onClick={handleSubmit(substituir)}>Substituir</button>
-                            <button type="button" id="excluir" onClick={handleSubmit(excluir)}>Excluir</button>
+                            {
+                                loadingApi ? <h1>Carregando...</h1> : (<>
+
+                                    <button type="button" id="cadastrar" onClick={handleSubmit(cadastrar)}>Cadastrar</button>
+                                    <button type="button" id="substituir" onClick={handleSubmit(substituir)}>Substituir</button>
+                                    <button type="button" id="excluir" onClick={handleSubmit(excluir)}>Excluir</button>
+
+                                </>)
+                            }
+
                         </form>
 
                         <br /><br /><br /><br /><br />

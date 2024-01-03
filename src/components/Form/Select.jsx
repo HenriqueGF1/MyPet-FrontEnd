@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import ErrosField from '../Validation/errosField';
+import MessageValidation from '../Validation/MessageValidation';
 
 function Select({
     label,
@@ -13,8 +15,7 @@ function Select({
     valorDefinido,
     onChange
 }) {
-
-
+    
     return (
         <>
             <label>{label}</label>
@@ -34,10 +35,8 @@ function Select({
                 })}
             </select>
             <br />
-            {
-                // apiErros != '' ? <p>{apiErros[name]}</p> : <></>
-            }
-            <br />
+            {[apiErros].erro?.[name] && <ErrosField errosApi={apiErros} field={name} />}
+            {errors != undefined ? errors[name != undefined ? name : ''] : '' && MessageValidation(label, errors != undefined ? errors[name != undefined ? name : ''] : ''?.type)}
         </>
     )
 }

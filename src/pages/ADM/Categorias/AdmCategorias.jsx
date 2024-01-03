@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../../context/apiContext";
+import { Context } from "../../../context/Context";
 import NavBar from "../../../components/NavBar/NavBar";
 import Loading from '../../../components/Loading/Loading'
 

@@ -1,11 +1,15 @@
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Context } from "../../../context/apiContext";
+import { Context } from "../../../context/Context";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../../components/NavBar/NavBar";
-import Input from "../../../components/Form/Input";
 import { useParams } from 'react-router-dom';
 import Loading from "../../../components/Loading/Loading";
+import MessageValidation from "../../../components/Validation/MessageValidation";
+import ErrosField from "../../../components/Validation/errosField";
+import InputMask from "react-input-mask/lib/react-input-mask.development";
+import limparNumeros from "../../../helpers/limparNumeros";
+import { toast } from "react-toastify";
 
 function UpdateContato() {
 
@@ -33,12 +37,18 @@ function UpdateContato() {
 
     const edit = async (data) => {
 
+        data.dd = limparNumeros(data.dd)
+
         let response = await apiFetch(`contatos/${data.id_contato}`, "patch", data)
 
         if (response.code == 200) {
+            toast.success('Editado com sucesso !!')
             navigate("/usuarios/contatos");
         } else {
-            setErrosApi(response.data.errors);
+            setErrosApi({
+                "code": response.code,
+                "erro": response.data.errors,
+            })
         }
 
     };
@@ -54,30 +64,43 @@ function UpdateContato() {
             ) : (<>
                 <form onSubmit={handleSubmit(edit)}>
 
-                    <Input
-                        label='DD'
-                        typeInput='text'
-                        placeholder='Preencha seu DD'
-                        name='dd'
-                        register={register}
-                        validation={{ required: true }}
-                        errors={errors}
-                        apiErros={errosApi.dd}
-                    />
+                    <div className="form-group">
+                        <label>DD</label><br></br>
+                        <InputMask
+                            type="text"
+                            placeholder="Preencha seu dd"
+                            mask="(99)"
+                            {...register("dd", { required: true })}
+                        />
+                        {errosApi.erro?.dd && <ErrosField errosApi={errosApi} field='dd' />}
+                        {errors.dd && MessageValidation('dd', errors.dd.type)}
+                    </div>
 
-                    <Input
-                        label='Numero'
-                        typeInput='text'
-                        placeholder='Preencha seu Número'
-                        name='numero'
-                        register={register}
-                        validation={{ required: true }}
-                        errors={errors}
-                        apiErros={errosApi.numero}
-                    />
+                    <div className="form-group">
+                        <label>Número de Telefone</label><br></br>
+                        <InputMask
+                            type="text"
+                            placeholder="Preencha seu número"
+                            mask="9999-9999"
+                            {...register("numero", { required: true })}
+                        />
+                        {errosApi.erro?.numero && <ErrosField errosApi={errosApi} field='numero' />}
+                        {errors.numero && MessageValidation('numero', errors.numero.type)}
+                    </div>
 
                     <br />
-                    <button type="submit">Enviar</button>
+
+                    {
+                        loadingApi ? <h1>Carregando...</h1> : (<>
+
+                            <div className="form-group">
+                                <button type="submit">Enviar</button>
+                                <button type="reset">Cancelar</button>
+                            </div>
+
+                        </>)
+                    }
+
                 </form>
 
                 <br />

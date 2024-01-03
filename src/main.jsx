@@ -5,18 +5,18 @@ import Routes from "./routes/routes";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { AuthProvider } from "../src/context/apiContext";
-import Teste from "./pages/Teste";
+import { AuthProvider } from "../src/context/Context";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <AuthProvider>
-    {/* <React.StrictMode> */}
-      <>
-      <ToastContainer icon={'🐾'} theme="dark"/>
-      <Routes />
-      
-      </>
-      {/* <Teste/> */}
-    {/* </React.StrictMode> */}
-  </AuthProvider>
+  <div className="form-group">
+    <AuthProvider>
+      <React.StrictMode>
+        <>
+          <ToastContainer icon={'🐾'} theme="dark" limit={1} />
+          <Routes />
+        </>
+      </React.StrictMode>
+    </AuthProvider>
+  </div>
+
 );

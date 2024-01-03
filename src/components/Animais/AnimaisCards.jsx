@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 function AnimaisCards({ animal }) {
+    
+console.log("🚀 ~ file: AnimaisCards.jsx:5 ~ AnimaisCards ~ animal:", animal)
 
     return (
         <>
@@ -32,21 +34,23 @@ function AnimaisCards({ animal }) {
 }
 
 AnimaisCards.propTypes = {
-
     animal: PropTypes.shape({
         id_animal: PropTypes.number.isRequired,
-        fotos: PropTypes.arrayOf(PropTypes.string).isRequired,
+        fotos: PropTypes.arrayOf(
+            PropTypes.shape({
+                nome_arquivo: PropTypes.string,
+                url: PropTypes.string,
+                nome_arquivo_original: PropTypes.string
+            })
+        ).isRequired,
         nome: PropTypes.string.isRequired,
         descricao: PropTypes.string.isRequired,
-
         categoria: PropTypes.shape({
             descricao: PropTypes.string.isRequired,
         }).isRequired,
-
         porte: PropTypes.shape({
             descricao: PropTypes.string.isRequired,
         }).isRequired,
-
     }).isRequired,
 };
 

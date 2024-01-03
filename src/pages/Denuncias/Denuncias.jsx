@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { Link } from "react-router-dom";
 import api from "../../services/axiosInstance";
 import NavBar from "../../components/NavBar/NavBar";

@@ -35,14 +35,15 @@
 // export default AdmDenunciasList
 
 import { useState, useEffect, useContext, React } from "react";
-import { Context } from "../../../context/apiContext";
+import { Context } from "../../../context/Context";
 import { Link, useParams } from "react-router-dom";
 import NavBar from "../../NavBar/NavBar";
 import Loading from "../../Loading/Loading";
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+
 
 function DenunciaDetalhes({ denuncia, usuario, usuarioDenunciante, animal, children }) {
-    console.log("🚀 ~ file: DenunciaDetalhes.jsx:45 ~ DenunciaDetalhes ~ usuario, usuarioDenunciante, animal:", usuario, usuarioDenunciante, animal)
 
     return (
         <>
@@ -152,5 +153,18 @@ function DenunciaDetalhes({ denuncia, usuario, usuarioDenunciante, animal, child
     )
 
 }
+
+DenunciaDetalhes.propTypes = {
+    usuario: PropTypes.shape({
+        id_usuario: PropTypes.number.isRequired,
+    }).isRequired,
+    usuarioDenunciante: PropTypes.shape({
+        id_usuario: PropTypes.number.isRequired,
+    }).isRequired,
+    animal: PropTypes.shape({
+        id_animal: PropTypes.number.isRequired,
+    }).isRequired,
+    children: PropTypes.node.isRequired,
+};
 
 export default DenunciaDetalhes;

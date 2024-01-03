@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../../context/apiContext";
+import { Context } from "../../../context/Context";
 import NavBar from "../../../components/NavBar/NavBar";
 import DenunciaDetalhes from "../../../components/Adm/Denuncias/DenunciaDetalhes";
 import Loading from "../../../components/Loading/Loading";
@@ -13,7 +13,6 @@ function AdmDenuncias() {
 
     const getDenuncias = async () => {
         let response = await apiFetch("admin/denuncias", "get")
-        console.log("🚀 ~ file: ADMDenuncias.jsx:14 ~ getDenuncias ~ response:", response)
         if (response.data != undefined) {
             setDenuncias(response.data);
         }
@@ -23,43 +22,42 @@ function AdmDenuncias() {
         getDenuncias()
     }, [])
 
-    if (!loadingApi || denuncias?.length >= 1) {
-        console.log("🚀 ~ file: ADMDenuncias.jsx: usuario", denuncias.usuario)
-        console.log("🚀 ~ file: ADMDenuncias.jsx: animal", denuncias.animal)
-    }
-
     return (
         <>
+            <h1>Todas as Denuncias</h1>
+            
             <NavBar />
             <br />
 
-            <h1>Todas as Denuncias</h1>
             <br />
 
-            {loadingApi || denuncias.length < 1 ? <Loading /> : (
+            {loadingApi ? <Loading /> : (
 
-                <>
+                denuncias.length > 0 ? (
+                    <>
+                        {denuncias.map((denuncia) => {
 
-                    {denuncias.map((denuncia) => {
+                            return (
+                                <div key={denuncia.id_denuncia}>
+                                    <DenunciaDetalhes
+                                        denuncia={denuncia}
+                                        usuario={denuncia.usuario}
+                                        usuarioDenunciante={denuncia.usuarioDenunciante}
+                                        animal={denuncia.animal}
+                                    >
 
-                        return (
-                            <div key={denuncia.id_denuncia}>
-                                <DenunciaDetalhes
-                                    denuncia={denuncia}
-                                    usuario={denuncia.usuario}
-                                    usuarioDenunciante={denuncia.usuarioDenunciante}
-                                    animal={denuncia.animal}
-                                >
+                                        <Link to={`/admin/denuncias/responder/${denuncia.id_denuncia}`}>RESPONDER: - {denuncia.id_denuncia}</Link>
 
-                                    <Link to={`/admin/denuncias/responder/${denuncia.id_denuncia}`}>RESPONDER: - {denuncia.id_denuncia}</Link>
-
-                                </DenunciaDetalhes>
-                            </div>
-                        )
-                    })}
-                </>
+                                    </DenunciaDetalhes>
+                                </div>
+                            )
+                        })}
+                    </>
+                ) : 'Sem Denuncias'
             )}
+
         </>
+
     );
 }
 

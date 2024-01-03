@@ -1,29 +1,39 @@
 import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Context } from "../context/apiContext";
+import { Context } from "../context/Context";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
+import MessageValidation from "../components/Validation/MessageValidation";
+import ErrosField from "../components/Validation/errosField";
 
 function Login() {
-  const { authenticated, loading, handleLogin, handleLogout } = useContext(Context);
+
   let navigate = useNavigate();
-  const [erros, setErros] = useState([])
+  const { loading, handleLogin, handleLogout } = useContext(Context);
+  const [errosApi, setErrosApi] = useState([])
 
   const {
     register,
-    handleSubmit
+    handleSubmit,
+    formState: { errors },
   } = useForm();
 
   const login = async (data) => {
 
     const { response } = await handleLogin(data)
 
-    if (response.status == 200) {
+    if (response.status === 200) {
       navigate("/home");
-    } else {
-      setErros(response.data.errors);
+      return
     }
+
+    response.status == 401 ? setErrosApi({
+      "code": response.status,
+      "erro": response.data.data,
+    }) : setErrosApi({
+      "code": response.status,
+      "erro": response.data.errors,
+    })
   }
 
   return (
@@ -33,6 +43,7 @@ function Login() {
       <NavBar />
 
       <div className="app-container">
+
         <div className="form-group">
           <label>E-mail</label><br></br>
           <input
@@ -41,13 +52,8 @@ function Login() {
             value='henrique@gmail.com'
             {...register("email", { required: true })}
           />
-          {
-            erros?.email?.map((message, index) => {
-              return (
-                <p key={index} className="error-message">{message}</p>
-              )
-            })
-          }
+          {errosApi.erro?.email && <ErrosField errosApi={errosApi} field='email' />}
+          {errors.email && MessageValidation('email', errors.email.type)}
         </div>
 
         <div className="form-group">
@@ -58,21 +64,27 @@ function Login() {
             value='123321'
             {...register("password", { required: true })}
           />
+          {errosApi.erro?.password && <ErrosField errosApi={errosApi} field='password' />}
+          {errors.password && MessageValidation('senha', errors.password.type)}
+        </div>
+
+        <div className="form-group">
           {
-            erros?.password?.map((message, index) => {
-              return (
-                <p key={index} className="error-message">{message}</p>
-              )
-            })
+            errosApi.code == 401 ? <p className="error-message">{errosApi.erro}</p> : ''
           }
         </div>
+
         <br></br>
+
         {
           loading ? <h1>Carregando...</h1> : (<>
+
             <div className="form-group">
               <button onClick={() => handleSubmit(login)()}>Login</button>
-              <button onClick={handleLogout}>Logout</button>
+              <button type="reset">Cancelar</button>
+              <button onClick={handleLogout}>Sair</button>
             </div>
+
           </>)
         }
 

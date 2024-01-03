@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useCallback } from "react";
-import { Context } from "../../../context/apiContext";
+import { Context } from "../../../context/Context";
 import NavBar from "../../../components/NavBar/NavBar";
 import Loading from '../../../components/Loading/Loading'
 import { toast } from 'react-toastify';

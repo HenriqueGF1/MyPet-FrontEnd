@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 function PorteList({
     id_porte,
@@ -34,5 +35,15 @@ function PorteList({
     )
 }
 
+PorteList.propTypes = {
+    id_porte: PropTypes.number.isRequired,
+    descricao: PropTypes.string.isRequired,
+    dt_registro: PropTypes.string.isRequired,
+    dt_inativacao: PropTypes.string,
+    dt_exclusao: PropTypes.string,
+    handleDesativar: PropTypes.func.isRequired,
+    handleAtivar: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+  };
 
 export default PorteList

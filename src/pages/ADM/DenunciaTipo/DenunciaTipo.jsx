@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../../context/apiContext";
+import { Context } from "../../../context/Context";
 import NavBar from "../../../components/NavBar/NavBar";
 import Loading from '../../../components/Loading/Loading'
 import { toast } from 'react-toastify';
@@ -13,7 +13,6 @@ function DenunciaTipo() {
 
     const getTiposDenuncia = async () => {
         let response = await apiFetch("admin/denuncias/tipos", "get")
-        console.log("🚀 ~ file: DenunciaTipo.jsx:18 ~ getTiposDenuncia ~ response:", response)
         if (response.data != undefined) {
             setTiposDenuncia(response.data);
         }

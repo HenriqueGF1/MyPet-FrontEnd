@@ -29,12 +29,12 @@ function AnimaisList({
                 <li><b>Sexo:</b> {sexo}</li>
                 <li><b>Descricao:</b> {descricao}</li>
                 <li><b>Categoria:</b> {categoria}</li>
-                <li><b>Idade:</b> {idade}</li>
+                <li><b>Idade:</b> {idade} Ano(s)</li>
                 <li><b>Porte:</b> {porte}</li>
                 <li><b>Fotos:</b></li>
                 <li>
                     {
-                        fotos.length == 0 ? <h1>Carregando........</h1> : fotos.map((foto) => {
+                        fotos.length == 0 ? <h1>Sem Imagens</h1> : fotos.map((foto) => {
                             return (
                                 <img
                                     key={foto.nome_arquivo}
@@ -85,7 +85,13 @@ AnimaisList.propTypes = {
     categoria: PropTypes.string.isRequired,
     idade: PropTypes.number.isRequired,
     porte: PropTypes.string.isRequired,
-    fotos: PropTypes.arrayOf(PropTypes.string).isRequired,
+    fotos: PropTypes.arrayOf(
+        PropTypes.shape({
+            nome_arquivo: PropTypes.string,
+            url: PropTypes.string,
+            nome_arquivo_original: PropTypes.string
+        })
+    ).isRequired,
     handleDelete: PropTypes.func.isRequired,
     handleAdotado: PropTypes.func.isRequired,
     handleDesativar: PropTypes.func.isRequired,

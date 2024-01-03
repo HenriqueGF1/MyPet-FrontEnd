@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext, React } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { Link, useParams } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import Loading from "../Loading/Loading";
-import CreateDenuncia from "../../pages/Denuncias/CreateDenuncia";
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+import formatarNumeroTelefone from "../../helpers/formatarNumeroTelefone";
+import formatarCEP from "../../helpers/formatarCEP";
 
 function AnimalDetalhes({ animal, children }) {
 
@@ -12,7 +14,7 @@ function AnimalDetalhes({ animal, children }) {
     return (
         <>
 
-            <h1>Animal Detalhes</h1>
+            {/* <h1>Animal Detalhes</h1> */}
 
             {/* <NavBar /> */}
 
@@ -41,6 +43,8 @@ function AnimalDetalhes({ animal, children }) {
                 <p><b>Descrição:</b> {animal.descricao}</p>
 
                 <br />
+                <h1>Dono</h1>
+                <br />
 
                 <p><b>ID:</b> {animal.usuario.id_usuario}</p>
                 <p><b>Dono:</b> {animal.usuario.nome}</p>
@@ -50,7 +54,8 @@ function AnimalDetalhes({ animal, children }) {
                     {animal.usuario.contatos.map((contato) => (
                         contato.principal === 1 && (
                             <div key={contato.id_contato}>
-                                <p><b>Numero:</b> ({contato.dd}) {contato.numero}</p>
+                                {/* <p><b>Numero:</b> ({contato.dd}) {contato.numero}</p> */}
+                                <p><b>Numero:</b> {formatarNumeroTelefone(contato.dd + contato.numero)}</p>
                             </div>
                         )
                     ))}
@@ -60,7 +65,8 @@ function AnimalDetalhes({ animal, children }) {
                     {animal.usuario.enderecos.map((endereco) => (
                         endereco.principal === 1 && (
                             <div key={endereco.id_endereco}>
-                                <p><b>CEP:</b>{endereco.cep}</p>
+                                {/* <p><b>CEP:</b>{endereco.cep}</p> */}
+                                <p><b>CEP:</b>{formatarCEP(endereco.cep)}</p>
                                 <p><b>Bairro:</b>{endereco.bairro}</p>
                                 <p><b>Numero:</b>{endereco.numero}</p>
                                 <p><b>Complemento:</b>{endereco.complemento}</p>
@@ -79,5 +85,27 @@ function AnimalDetalhes({ animal, children }) {
     )
 
 }
+
+AnimalDetalhes.propTypes = {
+    animal: PropTypes.shape({
+        id_animal: PropTypes.number.isRequired,
+        nome: PropTypes.string.isRequired,
+        descricao: PropTypes.string.isRequired,
+        idade: PropTypes.number.isRequired,
+        sexo: PropTypes.string.isRequired,
+        dt_registro: PropTypes.string.isRequired,
+        dt_inativacao: PropTypes.string,
+        qtd_denuncia: PropTypes.number.isRequired,
+        id_categoria: PropTypes.number.isRequired,
+        id_porte: PropTypes.number.isRequired,
+        id_usuario: PropTypes.number.isRequired,
+        adotado: PropTypes.number.isRequired,
+    }).isRequired,
+
+
+
+
+    children: PropTypes.node,
+};
 
 export default AnimalDetalhes;

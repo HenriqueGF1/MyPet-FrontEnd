@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import Select from "../Form/Select";
 import PropTypes from 'prop-types';
 
@@ -28,18 +28,19 @@ function Categorias({
         <>
             {
                 loadingApi || categorias.length == 0 ? <h1>Carregando...</h1> :
-                    <Select
-                        label={label}
-                        name={name}
-                        register={register}
-                        arrayValues={categorias}
-                        valueId='id_categoria'
-                        valueText='descricao'
-                        apiErros={erros}
-                        valorDefinido={valorDefinido}
-                    />
+                    <div className="form-group">
+                        <Select
+                            label={label}
+                            name={name}
+                            register={register}
+                            arrayValues={categorias}
+                            valueId='id_categoria'
+                            valueText='descricao'
+                            apiErros={erros}
+                            valorDefinido={valorDefinido}
+                        />
+                    </div>
             }
-            <br />
         </>
     )
 }

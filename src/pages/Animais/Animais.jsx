@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import NavBar from "../../components/NavBar/NavBar";
 import AnimaisCards from "../../components/Animais/AnimaisCards";
 import Loading from "../../components/Loading/Loading";
@@ -7,9 +7,7 @@ import Loading from "../../components/Loading/Loading";
 function Animais() {
 
     const [animais, setAnimais] = useState([]);
-    const [erros, setErros] = useState([]);
     const { loadingApi, apiFetch } = useContext(Context);
-
 
     useEffect(() => {
 

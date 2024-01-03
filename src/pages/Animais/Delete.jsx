@@ -1,9 +1,10 @@
 
 import { useState, useContext, useEffect } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../../services/axiosInstance";
+import PropTypes from 'prop-types';
 
 const Delete = async (idAnimal) => {
 
@@ -28,5 +29,11 @@ const Delete = async (idAnimal) => {
             // setLoading(false);
         });
 }
+
+Delete.propTypes = {
+    id_usuario: PropTypes.number.isRequired, // Assuming id_usuario is a number
+    id_animal: PropTypes.number.isRequired,   // Assuming id_animal is a number
+};
+
 
 export default Delete;

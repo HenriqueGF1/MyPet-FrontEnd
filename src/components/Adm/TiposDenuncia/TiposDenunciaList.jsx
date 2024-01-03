@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 function TiposDenunciaList({
     id_tipo,
@@ -38,5 +39,17 @@ function TiposDenunciaList({
     )
 }
 
+
+TiposDenunciaList.propTypes = {
+    id_tipo: PropTypes.number.isRequired,
+    descricao: PropTypes.string.isRequired,
+    dt_registro: PropTypes.string.isRequired,
+    dt_inativacao: PropTypes.string,
+    dt_exclusao: PropTypes.string,
+    handleDesativar: PropTypes.func.isRequired,
+    handleAtivar: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    // Add other props as needed...
+};
 
 export default TiposDenunciaList

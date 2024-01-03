@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
 import Input from "../../components/Form/Input";
@@ -10,6 +10,8 @@ import { useParams } from 'react-router-dom';
 import TipoDenucia from "../../components/TipoDenucia/TipoDenucia";
 import { toast } from 'react-toastify';
 import Loading from "../../components/Loading/Loading";
+import MessageValidation from "../../components/Validation/MessageValidation";
+import ErrosField from "../../components/Validation/errosField";
 
 function UpdateDenuncia() {
 
@@ -42,7 +44,10 @@ function UpdateDenuncia() {
             toast.success("Editado com Sucesso !!");
             navigate("/minhas/denuncias");
         } else {
-            setErrosApi(response.data.errors);
+            setErrosApi({
+                "code": response.code,
+                "erro": response.data.errors,
+            })
         }
 
     };
@@ -55,16 +60,16 @@ function UpdateDenuncia() {
 
             <form onSubmit={handleSubmit(edit)} id="editAnimal">
 
-                <Input
-                    label='Descrição'
-                    typeInput='text'
-                    placeholder='Preencha sua Descrição'
-                    name='descricao'
-                    register={register}
-                    validation={{ required: true }}
-                    errors={errors}
-                    apiErros={errosApi.descricao}
-                />
+                <div className="form-group">
+                    <label>Descrição</label><br></br>
+                    <input
+                        type="text"
+                        placeholder='Preencha sua Descrição'
+                        {...register("descricao", { required: true })}
+                    />
+                    {errosApi.erro?.descricao && <ErrosField errosApi={errosApi} field='descricao' />}
+                    {errors.descricao && MessageValidation('descricao', errors.descricao.type)}
+                </div>
 
                 <TipoDenucia
                     label="Tipo de Denuncia"

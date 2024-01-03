@@ -1,11 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/NavBar/NavBar";
-import Input from "../../components/Form/Input";
 import { useParams } from 'react-router-dom';
 import Loading from "../../components/Loading/Loading";
+import MessageValidation from "../../components/Validation/MessageValidation";
+import ErrosField from "../../components/Validation/errosField";
+import { toast } from "react-toastify";
 
 function UpdateUsuario() {
 
@@ -35,6 +37,8 @@ function UpdateUsuario() {
 
         if (response.code == 200) {
 
+            toast.success('Editado com sucesso')
+
             const user = JSON.parse(localStorage.getItem("user"))
 
             localStorage.removeItem("user");
@@ -49,9 +53,12 @@ function UpdateUsuario() {
             );
 
             navigate("/home");
-        } else {
-            setErrosApi(response.data.errors);
         }
+
+        setErrosApi({
+            "code": response.code,
+            "erro": response.data.errors,
+        })
 
     };
 
@@ -66,19 +73,28 @@ function UpdateUsuario() {
             ) : (<>
                 <form onSubmit={handleSubmit(edit)}>
 
-                    <Input
-                        label='Nome'
-                        typeInput='text'
-                        placeholder='Preencha seu Nome'
-                        name='nome'
-                        register={register}
-                        validation={{ required: true }}
-                        errors={errors}
-                        apiErros={errosApi.nome}
-                    />
+                    <div className="form-group">
+                        <label>Nome</label><br></br>
+                        <input
+                            type="text"
+                            placeholder="Preencha seu nome..."
+                            {...register("nome", { required: true })}
+                        />
+                        {errosApi.erro?.nome && <ErrosField errosApi={errosApi} field='nome' />}
+                        {errors.nome && MessageValidation('nome', errors.nome.type)}
+                    </div>
 
                     <br />
-                    <button type="submit">Enviar</button>
+                    {
+                        loadingApi ? <h1>Carregando...</h1> : (<>
+
+                            <div className="form-group">
+                                <button type="submit">Enviar</button>
+                                <button type="reset">Cancelar</button>
+                            </div>
+
+                        </>)
+                    }
                 </form>
                 <br />
                 <br />

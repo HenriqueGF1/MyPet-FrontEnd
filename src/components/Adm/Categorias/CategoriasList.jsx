@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 function CategoriasList({
     id_categoria,
@@ -34,5 +35,15 @@ function CategoriasList({
     )
 }
 
+CategoriasList.propTypes = {
+    id_categoria: PropTypes.number.isRequired,
+    descricao: PropTypes.string.isRequired,
+    dt_registro: PropTypes.string.isRequired,
+    dt_inativacao: PropTypes.string,
+    dt_exclusao: PropTypes.string,
+    handleDesativar: PropTypes.func.isRequired,
+    handleAtivar: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+};
 
 export default CategoriasList

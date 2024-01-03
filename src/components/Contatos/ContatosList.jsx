@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
+import formatarNumeroTelefone from '../../helpers/formatarNumeroTelefone'
 
 function ContatosList({
     id_contato,
@@ -13,10 +14,10 @@ function ContatosList({
     return (
         <>
             <ul >
-                <li><b>id_contato:</b> {id_contato}</li>
-                <li><b>DD:</b> {dd}</li>
-                <li><b>Numero:</b> {numero}</li>
-                <li><b>Principal:</b> {principal}</li>
+                {/* <li><b>id_contato:</b> {id_contato}</li> */}
+                {/* <li><b>DD:</b> {dd}</li> */}
+                <li><b>Numero:</b> {formatarNumeroTelefone(dd + numero)}</li>
+                {/* <li><b>Principal:</b> {principal}</li> */}
                 <li>
                     <Link to={`/contatos/editar/${id_contato}`}>EDITAR: - {id_contato}</Link>
                 </li>

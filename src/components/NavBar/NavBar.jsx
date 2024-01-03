@@ -1,11 +1,10 @@
 import { useContext, memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 
-const NavBar = memo(function NavBar() {
+function NavBar() {
 
     const { authenticated } = useContext(Context);
-    const { loadingApi, apiFetch } = useContext(Context);
 
     const [user, setUser] = useState({
         id_usuario: '',
@@ -35,6 +34,9 @@ const NavBar = memo(function NavBar() {
                     <Link to='/loginAdm'>Login ADMIN</Link>
                 </li>
                 <li>
+                    <Link to='/admin/dashBoard'>ADMIN DashBoard</Link>
+                </li>
+                <li>
                     <Link to='/admin/denuncias'>ADMIN Listar Denuncias PENDENTES</Link>
                 </li>
                 <li>
@@ -50,26 +52,26 @@ const NavBar = memo(function NavBar() {
                     <Link to='/admin/portes'>ADMIN Porte</Link>
                 </li>
                 <li>
+                    <Link to='/admin/portes/cadastrar'>ADMIN Porte Cadastrar</Link>
+                </li>
+                <li>
                     <Link to='/admin/denunciasTipos/cadastrar'>ADMIN Tipo Denuncia Cadastrar</Link>
                 </li>
                 <li>
                     <Link to='/admin/denuncias/tipos'>ADMIN Tipos Denuncia</Link>
                 </li>
-                {
-                    authenticated ? "" : <li><Link to='/create'>Criar Conta</Link></li>
-                }
-                {
-                    authenticated ? <li><Link to={`/usuario/editar/${user.id_usuario}`}>Editar Usuário</Link></li> : ""
-                }
+                <li>
+                    <Link to='/create'>Criar Conta</Link>
+                </li>
+                <li>
+                    <Link to={`/usuario/editar/${user.id_usuario}`}>Editar Usuário</Link>
+                </li>
                 <li>
                     <Link to='/animais'>Animais</Link>
                 </li>
                 <li>
-                    <Link to='/animais/cadastrar'>Criar Animais</Link>
+                    <Link to='/animais/cadastrar'>Cadastrar Animal</Link>
                 </li>
-                {/* <li>
-                    <Link to='/animais/editar'>Editar Animais</Link>
-                </li> */}
                 <li>
                     <Link to='/usuario/animais'>Meus Animais</Link>
                 </li>
@@ -83,7 +85,7 @@ const NavBar = memo(function NavBar() {
                     <Link to='/enderecos/cadastrar'>Criar Endereço</Link>
                 </li>
                 <li>
-                    <Link to={`/usuarios/${user.id_usuario}/enderecos`}>Meus Endereços</Link>
+                    <Link to={`/usuarios/enderecos`}>Meus Endereços</Link>
                 </li>
                 <li>
                     <Link to={`/minhas/denuncias`}>Minhas Denuncias</Link>
@@ -91,13 +93,10 @@ const NavBar = memo(function NavBar() {
                 <li>
                     <Link to={`/animais/favoritos`}>Favoritos</Link>
                 </li>
-                <li>
-                    <Link to='/teste'>Teste</Link>
-                </li>
             </ul>
             <br /><br />
         </>
     )
-});
+}
 
 export default NavBar;

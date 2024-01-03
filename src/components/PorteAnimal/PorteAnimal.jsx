@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { Context } from "../../context/apiContext";
+import { Context } from "../../context/Context";
 import Select from "../Form/Select";
 import PropTypes from 'prop-types';
 
@@ -8,7 +8,8 @@ function PorteAnimal({
     name,
     valorDefinido,
     register,
-    erros
+    errors,
+    errosApi,
 }) {
 
     const [porteAnimal, setPorteAnimal] = useState([])
@@ -29,18 +30,20 @@ function PorteAnimal({
         <>
             {
                 loadingApi || porteAnimal.length == 0 ? <h1>Carregando...</h1> :
-                    <Select
-                        label={label}
-                        name={name}
-                        register={register}
-                        arrayValues={porteAnimal}
-                        valueId='id_porte'
-                        valueText='descricao'
-                        apiErros={erros}
-                        valorDefinido={valorDefinido}
-                    />
+                    <div className="form-group">
+                        <Select
+                            label={label}
+                            name={name}
+                            register={register}
+                            arrayValues={porteAnimal}
+                            valueId='id_porte'
+                            valueText='descricao'
+                            errors={errors}
+                            apiErros={errosApi}
+                            valorDefinido={valorDefinido}
+                        />
+                    </div>
             }
-            <br />
         </>
     )
 }
@@ -50,7 +53,8 @@ PorteAnimal.propTypes = {
     name: PropTypes.string.isRequired,
     valorDefinido: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     register: PropTypes.func.isRequired,
-    erros: PropTypes.object,
+    errors: PropTypes.object,
+    errosApi: PropTypes.object,
 };
 
 export default PorteAnimal;
