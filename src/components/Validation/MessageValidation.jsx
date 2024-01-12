@@ -3,7 +3,7 @@ const MessageValidation = (label, type) => {
     required: `Esse campo ${label} e obrigatório`,
   };
 
-  return <p className="error-message">{mensagem[type] || ""}</p>;
+  return <p className="erro-mensagem">{mensagem[type] || ""}</p>;
 };
 
 export default MessageValidation;

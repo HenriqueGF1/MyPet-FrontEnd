@@ -27,6 +27,7 @@ function NavBar() {
                 authenticated ? <p>Usuário Nome: {user.nome} - {user.id_usuario}</p> : ""
             }
             <ul>
+
                 <li>
                     <Link to='/login'>Login</Link>
                 </li>

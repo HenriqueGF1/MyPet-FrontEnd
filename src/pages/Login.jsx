@@ -38,55 +38,69 @@ function Login() {
 
   return (
     <>
-      <h1>Login</h1>
 
-      <NavBar />
+      {/* <NavBar /> */}
 
-      <div className="app-container">
+      <div className="bg-[#F5F5F5] h-screen flex flex-col justify-center items-center">
 
-        <div className="form-group">
-          <label>E-mail</label><br></br>
-          <input
-            type="text"
-            placeholder="Preencha seu e-mail..."
-            value='henrique@gmail.com'
-            {...register("email", { required: true })}
-          />
-          {errosApi.erro?.email && <ErrosField errosApi={errosApi} field='email' />}
-          {errors.email && MessageValidation('email', errors.email.type)}
+        <div className="bg-[#FFFFFF] shadow-lg p-6 w-[100%] rounded flex flex-col justify-center items-center md:w-96 md:h-1/2">
+
+          <div className="w-[100%]">
+
+            <h1 className="text-center mb-10 text-4xl font-extrabold">Login</h1>
+
+            <label className="label-padrao">
+              E-mail
+            </label>
+            <input
+              className="input-padrao"
+              type="text"
+              placeholder="Preencha seu e-mail..."
+              value='henrique@gmail.com'
+              {...register("email", { required: true })}
+            />
+            {errosApi.erro?.email && <ErrosField errosApi={errosApi} field='email' />}
+            {errors.email && MessageValidation('email', errors.email.type)}
+
+            <label className="label-padrao">
+              Senha
+            </label>
+            <input
+              className="input-padrao"
+              type="text"
+              placeholder="Preencha sua senha..."
+              value='123321'
+              {...register("password", { required: true })}
+            />
+            {errosApi.erro?.password && <ErrosField errosApi={errosApi} field='password' />}
+            {errors.password && MessageValidation('senha', errors.password.type)}
+
+            {
+              errosApi.code == 401 ? <p className="erro-mensagem">{errosApi.erro}</p> : ''
+            }
+
+            {
+              loading ? <h1>Carregando...</h1> : (<>
+
+                <button
+                  className="
+                bg-[#18AE58]
+                w-[100%]
+                text-white
+                my-5
+                p-2
+                rounded
+                font-bold
+                tracking-wide
+                "
+                  onClick={() => handleSubmit(login)()}
+                >Login</button>
+
+              </>)
+            }
+          </div>
+
         </div>
-
-        <div className="form-group">
-          <label>Senha</label><br></br>
-          <input
-            type="text"
-            placeholder="Preencha sua senha..."
-            value='123321'
-            {...register("password", { required: true })}
-          />
-          {errosApi.erro?.password && <ErrosField errosApi={errosApi} field='password' />}
-          {errors.password && MessageValidation('senha', errors.password.type)}
-        </div>
-
-        <div className="form-group">
-          {
-            errosApi.code == 401 ? <p className="error-message">{errosApi.erro}</p> : ''
-          }
-        </div>
-
-        <br></br>
-
-        {
-          loading ? <h1>Carregando...</h1> : (<>
-
-            <div className="form-group">
-              <button onClick={() => handleSubmit(login)()}>Login</button>
-              <button type="reset">Cancelar</button>
-              <button onClick={handleLogout}>Sair</button>
-            </div>
-
-          </>)
-        }
 
       </div>
     </>

@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .erro-mensagem {
+    @apply text-center text-red-500 text-sm tracking-wide;
+  }
+  .label-padrao {
+    @apply text-left block text-sm font-bold tracking-wide mb-2 pb-1;
+  }
+  .input-padrao {
+    @apply text-black w-[100%] p-2 mb-5 bg-[#F1F1F1]  rounded focus:outline-none focus:ring-2 ring-[#18AE58] ring-inset;
+  }
+}
