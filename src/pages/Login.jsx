@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Context } from "../context/Context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar/NavBar";
 import MessageValidation from "../components/Validation/MessageValidation";
 import ErrosField from "../components/Validation/errosField";
@@ -39,24 +39,23 @@ function Login() {
   return (
     <>
 
-      {/* <NavBar /> */}
+      <NavBar />
 
-      <div className="bg-[#F5F5F5] h-screen flex flex-col justify-center items-center">
+      <div className="bg-[#F3F3F3] h-screen flex justify-center items-center">
 
-        <div className="bg-[#FFFFFF] shadow-lg p-6 w-[100%] rounded flex flex-col justify-center items-center md:w-96 md:h-1/2">
+        <div className="bg-[#FFFFFF] p-5 w-[90%] lg:w-[500px] h-[50%] rounded shadow-lg flex flex-col justify-evenly">
 
-          <div className="w-[100%]">
+          <h1 className="text-center text-4xl font-bold p-3">Login</h1>
 
-            <h1 className="text-center mb-10 text-4xl font-extrabold">Login</h1>
-
+          <div>
             <label className="label-padrao">
               E-mail
             </label>
             <input
               className="input-padrao"
               type="text"
-              placeholder="Preencha seu e-mail..."
-              value='henrique@gmail.com'
+              placeholder="Preencha seu e-mail"
+              // value='henrique@gmail.com'
               {...register("email", { required: true })}
             />
             {errosApi.erro?.email && <ErrosField errosApi={errosApi} field='email' />}
@@ -68,8 +67,8 @@ function Login() {
             <input
               className="input-padrao"
               type="text"
-              placeholder="Preencha sua senha..."
-              value='123321'
+              placeholder="Preencha sua senha"
+              // value='123321'
               {...register("password", { required: true })}
             />
             {errosApi.erro?.password && <ErrosField errosApi={errosApi} field='password' />}
@@ -79,20 +78,13 @@ function Login() {
               errosApi.code == 401 ? <p className="erro-mensagem">{errosApi.erro}</p> : ''
             }
 
+            <p className="my-3 text-center text-gray-400">Não tem uma conta? <Link to='/create' className="underline">Criar Conta</Link></p>
+
             {
               loading ? <h1>Carregando...</h1> : (<>
 
                 <button
-                  className="
-                bg-[#18AE58]
-                w-[100%]
-                text-white
-                my-5
-                p-2
-                rounded
-                font-bold
-                tracking-wide
-                "
+                  className="botao text-white bg-[--color-principal] hover:bg-[--color-secundaria] hover:text-white w-[100%] my-3"
                   onClick={() => handleSubmit(login)()}
                 >Login</button>
 

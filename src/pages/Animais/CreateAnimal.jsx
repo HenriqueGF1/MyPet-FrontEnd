@@ -32,8 +32,8 @@ function CreateAnimal() {
             toast.success('Cadastrado com sucesso')
             navigate("/usuario/animais");
             return
-        } 
-        
+        }
+
         setErrosApi({
             "code": response.code,
             "erro": response.data.errors,

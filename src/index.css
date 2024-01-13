@@ -2,14 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .erro-mensagem {
-    @apply text-center text-red-500 text-sm tracking-wide;
+@layer base {
+  :root {
+    --color-principal: #18ae58;
+    --color-secundaria: #3A4D39;
   }
+}
+
+@layer components {
+  .botao {
+    @apply px-4 py-2 text-center tracking-wide text-sm font-medium text-sm ;
+  }
+
+  .erro-mensagem {
+    @apply text-red-500 text-sm tracking-wide mb-3;
+  }
+
   .label-padrao {
     @apply text-left block text-sm font-bold tracking-wide mb-2 pb-1;
   }
+
   .input-padrao {
-    @apply text-black w-[100%] p-2 mb-5 bg-[#F1F1F1]  rounded focus:outline-none focus:ring-2 ring-[#18AE58] ring-inset;
+    @apply text-black w-[100%] p-2 mb-3 bg-[#F1F1F1] focus:outline-none focus:ring-2 ring-[#18AE58] ring-inset;
   }
 }
