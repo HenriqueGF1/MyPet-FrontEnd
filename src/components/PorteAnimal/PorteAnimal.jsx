@@ -30,7 +30,6 @@ function PorteAnimal({
         <>
             {
                 loadingApi || porteAnimal.length == 0 ? <h1>Carregando...</h1> :
-                    <div className="form-group">
                         <Select
                             label={label}
                             name={name}
@@ -42,7 +41,6 @@ function PorteAnimal({
                             apiErros={errosApi}
                             valorDefinido={valorDefinido}
                         />
-                    </div>
             }
         </>
     )

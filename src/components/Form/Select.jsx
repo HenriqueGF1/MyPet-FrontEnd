@@ -15,13 +15,15 @@ function Select({
     valorDefinido,
     onChange
 }) {
-    
+
     return (
         <>
-            <label>{label}</label>
-            <br />
+            <label className="label-padrao">
+                {label}
+            </label>
             <select value={valorDefinido} name={name} {...register(name, validation)}
                 onChange={onChange}
+                className="input-padrao"
             >
                 {arrayValues?.map((arrayValue) => {
                     return (
@@ -34,7 +36,6 @@ function Select({
                     )
                 })}
             </select>
-            <br />
             {[apiErros].erro?.[name] && <ErrosField errosApi={apiErros} field={name} />}
             {errors != undefined ? errors[name != undefined ? name : ''] : '' && MessageValidation(label, errors != undefined ? errors[name != undefined ? name : ''] : ''?.type)}
         </>

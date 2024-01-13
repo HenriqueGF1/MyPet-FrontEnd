@@ -41,9 +41,9 @@ function Login() {
 
       <NavBar />
 
-      <div className="bg-[#F3F3F3] h-screen flex justify-center items-center">
+      <div className="bg-[--color-fundo] h-screen flex justify-center items-center">
 
-        <div className="bg-[#FFFFFF] p-5 w-[90%] lg:w-[500px] h-[50%] rounded shadow-lg flex flex-col justify-evenly">
+        <div className="bg-[--color-card] p-5 w-[90%] lg:w-[500px] h-[50%] rounded shadow-lg flex flex-col justify-evenly">
 
           <h1 className="text-center text-4xl font-bold p-3">Login</h1>
 
@@ -55,7 +55,7 @@ function Login() {
               className="input-padrao"
               type="text"
               placeholder="Preencha seu e-mail"
-              // value='henrique@gmail.com'
+              value='henrique@gmail.com'
               {...register("email", { required: true })}
             />
             {errosApi.erro?.email && <ErrosField errosApi={errosApi} field='email' />}
@@ -68,7 +68,7 @@ function Login() {
               className="input-padrao"
               type="text"
               placeholder="Preencha sua senha"
-              // value='123321'
+              value='123321'
               {...register("password", { required: true })}
             />
             {errosApi.erro?.password && <ErrosField errosApi={errosApi} field='password' />}

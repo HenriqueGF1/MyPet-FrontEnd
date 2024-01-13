@@ -106,7 +106,7 @@ function NavBar() {
             <header className="p-3 text-black">
                 <nav className="flex justify-between items-center w-[90%] mx-auto">
                     <div>
-                        <h1 className="w-18 text-2xl">MyPet</h1>
+                        <Link to='/animais' className="w-18 text-2xl">MyPet</Link>
                     </div>
                     <div id="nav-links"
 
@@ -115,6 +115,9 @@ function NavBar() {
                         <ul className="flex lg:flex-row w-[100%] items-center flex-col lg:gap-[4vw] gap-10">
                             <li>
                                 <Link to='/animais/cadastrar'>Cadastrar Animal</Link>
+                            </li>
+                            <li>
+                                <Link to='/usuario/animais'>Meus Animais</Link>
                             </li>
                             <li>
                                 <a className="hover:text-gray-500" href="#">Solution</a>

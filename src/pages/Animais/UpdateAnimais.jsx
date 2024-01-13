@@ -55,99 +55,177 @@ function UpdateAnimais() {
 
     return (
         <>
-            <h1>Editar Animal</h1>
 
             <NavBar />
 
             <form onSubmit={handleSubmit(edit)} id="editAnimal">
 
-                <div className="form-group">
-                    <label>Nome</label><br></br>
-                    <input
-                        type="text"
-                        placeholder="Preencha seu nome..."
-                        {...register("nome", { required: true })}
-                    />
-                    {errosApi.erro?.nome && <ErrosField errosApi={errosApi} field='nome' />}
-                    {errors.nome && MessageValidation('nome', errors.nome.type)}
-                </div>
+                <div className="bg-[--color-fundo] w-[100%] flex flex-col justify-center items-center">
 
-                <div className="form-group">
-                    <label>Descrição</label><br></br>
-                    <input
-                        type="text"
-                        placeholder="Preencha sua Descrição"
-                        {...register("descricao", { required: true })}
-                    />
-                    {errosApi.erro?.descricao && <ErrosField errosApi={errosApi} field='descricao' />}
-                    {errors.descricao && MessageValidation('descricao', errors.descricao.type)}
-                </div>
-
-                <PorteAnimal
-                    label="Porte Animal"
-                    name="id_porte"
-                    register={register}
-                    errors={errosApi.erro?.id_porte}
-                    errosApi={errors.id_porte?.type}
-                />
-
-                <Categorias
-                    label="Categorias"
-                    name="id_categoria"
-                    register={register}
-                />
-
-                <div className="form-group">
-                    <label>Idade</label><br></br>
-                    <input
-                        type="date"
-                        {...register("idade", { required: true })}
-                    />
-                    {errosApi.erro?.idade && <ErrosField errosApi={errosApi} field='idade' />}
-                    {errors.idade && MessageValidation('idade', errors.idade.type)}
-                </div>
-
-                <div className="form-group">
-                    <label>Sexo</label><br></br>
-
-                    <br></br><label>M</label><br></br>
-                    <input
-                        type="radio"
-                        value="M"
-                        {...register("sexo", { required: true })}
-                    />
-                    {errosApi.erro?.sexo && <ErrosField errosApi={errosApi} field='sexo' />}
-                    {errors.sexo && MessageValidation('sexo', errors.sexo.type)}
-
-                    <br></br><label>F</label><br></br>
-                    <input
-                        type="radio"
-                        value="F"
-                        {...register("sexo", { required: true })}
-                    />
-                    {errosApi.erro?.sexo && <ErrosField errosApi={errosApi} field='sexo' />}
-                    {errors.sexo && MessageValidation('sexo', errors.sexo.type)}
-                </div>
-
-                <br />
-
-                {
-                    loadingApi ? <h1>Carregando...</h1> : (<>
-
-                        <div className="form-group">
-                            <button type="submit">Enviar</button>
-                            {/* <button type="reset">Cancelar</button> */}
+                    <div className="bg-[--color-card] w-[95%] lg:w-1/2 my-5 p-3 rounded shadow-2xl">
+                        <div>
+                            <h1 className="text-center text-3xl font-bold p-3 my-5">Editar Animal</h1>
                         </div>
 
-                    </>)
-                }
+                        <div>
+                            <div className="flex items-start">
+                                <div className="p-3">
+
+                                    <label className="label-padrao">
+                                        Nome
+                                    </label>
+                                    <input
+                                        className="input-padrao"
+                                        type="text"
+                                        placeholder="Preencha seu Nome"
+                                        {...register("nome", { required: true })}
+                                    />
+                                    {errosApi.erro?.nome && <ErrosField errosApi={errosApi} field='nome' />}
+                                    {errors.nome && MessageValidation('nome', errors.nome.type)}
+
+                                </div>
+                                <div className="p-3">
+
+                                    <label className="label-padrao">
+                                        Idade
+                                    </label>
+                                    <input
+                                        className="input-padrao"
+                                        type="date"
+                                        {...register("idade", { required: true })}
+                                    />
+                                    {errosApi.erro?.idade && <ErrosField errosApi={errosApi} field='idade' />}
+                                    {errors.idade && MessageValidation('idade', errors.idade.type)}
+
+                                </div>
+
+
+                            </div>
+
+                            <div className="p-3 w-[100%]">
+
+                                <label className="label-padrao">
+                                    Sexo
+                                </label>
+
+                                <div className="flex justify-around">
+
+                                    <div className="w-[50%]">
+                                        <label className="label-padrao">
+                                            M
+                                        </label>
+                                        <input
+                                            type="radio"
+                                            value="M"
+                                            {...register("sexo", { required: true })}
+                                        />
+                                        <br />
+                                        {errosApi.erro?.sexo && <ErrosField errosApi={errosApi} field='sexo' />}
+                                        {errors.sexo && MessageValidation('sexo', errors.sexo.type)}
+                                    </div>
+
+                                    <div className="w-[50%]">
+                                        <label className="label-padrao">
+                                            F
+                                        </label>
+                                        <input
+                                            type="radio"
+                                            value="F"
+                                            {...register("sexo", { required: true })}
+                                        />
+                                        <br />
+                                        {errosApi.erro?.sexo && <ErrosField errosApi={errosApi} field='sexo' />}
+                                        {errors.sexo && MessageValidation('sexo', errors.sexo.type)}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div className="flex items-start">
+
+                                <div className="p-3">
+                                    <PorteAnimal
+                                        label="Porte Animal"
+                                        name="id_porte"
+                                        register={register}
+                                        errors={errosApi.erro?.id_porte}
+                                        errosApi={errors.id_porte?.type}
+                                    />
+                                </div>
+
+                                <div className="p-3">
+                                    <Categorias
+                                        label="Categorias"
+                                        name="id_categoria"
+                                        register={register}
+                                    />
+                                </div>
+
+                            </div>
+
+                            <div className="p-3">
+
+                                <label className="label-padrao">
+                                    Descrição
+                                </label>
+                                <textarea
+                                    className="input-padrao"
+                                    type="text"
+                                    cols='60'
+                                    rows='7'
+                                    placeholder="Preencha sua Descrição"
+                                    {...register("descricao", { required: true })}
+                                />
+                                {errosApi.erro?.descricao && <ErrosField errosApi={errosApi} field='descricao' />}
+                                {errors.descricao && MessageValidation('descricao', errors.descricao.type)}
+
+                            </div>
+
+                            {/* <div className="p-3">
+
+                                <label className="label-padrao">
+                                    Imagens
+                                </label>
+                                <input
+                                    className="input-padrao"
+                                    id='imagens'
+                                    type="file"
+                                    {...register("imagens[]", { required: true })}
+                                    onChange={() => previewFiles()}
+                                />
+                                {errosApi.erro?.imagens && <ErrosField errosApi={errosApi} field='imagens' />}
+                                {errors.imagens && MessageValidation('imagens', errors.imagens.type)}
+
+                                <div id="previews" className="w-[100%]"></div>
+
+                            </div> */}
+
+                            {
+                                loadingApi ? <h1>Carregando...</h1> : (<>
+
+                                    <div className="w-[100%] my-3 flex justify-around">
+                                        <button
+                                            className="botao text-white bg-[--color-principal] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                                            type="submit"
+                                        >Enviar</button>
+
+                                        <button
+                                            className="botao text-white bg-[--color-terciario] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                                            type="submit"
+                                        >Cancelar</button>
+                                    </div>
+
+                                </>)
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
 
             </form>
-
-            <br /><br />
-            <Link to={`/animais/editar/imagens/${id_animal}`}>EDITAR IMAGENS: - {id_animal}</Link>
-
-            <br /><br /><br /><br /><br />
 
         </>
     );

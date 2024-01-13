@@ -4,14 +4,17 @@
 
 @layer base {
   :root {
+    --color-fundo: #f3f3f3;
     --color-principal: #18ae58;
-    --color-secundaria: #3A4D39;
+    --color-secundaria: #3a4d39;
+    --color-terciario: #ff004d;
+    --color-card: #ffffff;
   }
 }
 
 @layer components {
   .botao {
-    @apply px-4 py-2 text-center tracking-wide text-sm font-medium text-sm ;
+    @apply px-4 py-2 text-center tracking-wide text-sm font-medium text-sm;
   }
 
   .erro-mensagem {
