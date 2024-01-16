@@ -76,19 +76,20 @@ function Contatos() {
             {loadingApi ? (
                 <Loading />
             ) : contatos.length > 0 ? (
-                contatos.map((contato) => (
-                    <div key={contato.id_contato}>
-                        <ContatosList
-                            id_contato={contato.id_contato}
-                            dd={contato.dd}
-                            numero={contato.numero}
-                            principal={contato.principal}
-                            handlePrincipal={handlePrincipal}
-                            handleDelete={handleDelete}
-                        />
-                        <h1>-------</h1>
-                    </div>
-                ))
+                <div className="bg-[--color-fundo] w-[100%] h-screen p-3">
+                    {contatos.map((contato) => (
+                        <div key={contato.id_contato}>
+                            <ContatosList
+                                id_contato={contato.id_contato}
+                                dd={contato.dd}
+                                numero={contato.numero}
+                                principal={contato.principal}
+                                handlePrincipal={handlePrincipal}
+                                handleDelete={handleDelete}
+                            />
+                        </div>
+                    ))}
+                </div>
             ) : (
                 <h1>Sem contatos...</h1>
             )}

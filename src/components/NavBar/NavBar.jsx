@@ -120,16 +120,10 @@ function NavBar() {
                                 <Link to='/usuario/animais'>Meus Animais</Link>
                             </li>
                             <li>
-                                <a className="hover:text-gray-500" href="#">Solution</a>
+                                <Link to='/contatos/cadastrar'>Criar Contato</Link>
                             </li>
                             <li>
-                                <a className="hover:text-gray-500" href="#">Resource</a>
-                            </li>
-                            <li>
-                                <a className="hover:text-gray-500" href="#">Developers</a>
-                            </li>
-                            <li>
-                                <a className="hover:text-gray-500" href="#">Pricing</a>
+                                <Link to='/usuarios/contatos'>Meus Contatos</Link>
                             </li>
                         </ul>
                     </div>

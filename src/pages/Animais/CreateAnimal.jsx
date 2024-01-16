@@ -231,7 +231,7 @@ function CreateAnimal() {
 
                                         <button
                                             className="botao text-white bg-[--color-terciario] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
-                                            type="submit"
+                                            type="reset"
                                         >Cancelar</button>
                                     </div>
 
