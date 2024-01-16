@@ -110,7 +110,7 @@ function NavBar() {
                     </div>
                     <div id="nav-links"
 
-                        className={`${hamburgerMenu ? "" : "bg-[#FFFFFF] top-[8%]"} nav-links duration-500 lg:static absolute lg:min-h-fit min-h-[40vh] left-0 top-[-100%] lg:w-auto w-full flex items-center`}
+                        className={`${hamburgerMenu ? "" : "bg-[#FFFFFF] top-[10%] py-10"} nav-links duration-500 lg:static absolute lg:min-h-fit min-h-[40vh] left-0 top-[-100%] lg:w-auto w-full flex items-center`}
                     >
                         <ul className="flex lg:flex-row w-[100%] items-center flex-col lg:gap-[4vw] gap-10">
                             <li>

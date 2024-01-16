@@ -132,27 +132,34 @@ function UsuarioAnimais() {
             {loadingApi ? (
                 <Loading />
             ) : animais.length > 0 ? (
-                animais.map((animal) => (
-                    <div key={animal.id_animal}>
-                        <AnimaisList
-                            id_animal={animal.id_animal}
-                            dt_inativacao={animal.dt_inativacao}
-                            nome={animal.nome}
-                            adotado={animal.adotado}
-                            usuario={animal.usuario}
-                            sexo={animal.sexo}
-                            descricao={animal.descricao}
-                            categoria={animal.categoria.descricao}
-                            idade={animal.idade}
-                            porte={animal.porte.descricao}
-                            fotos={animal.fotos}
-                            handleDelete={handleDelete}
-                            handleAdotado={handleAdotado}
-                            handleDesativar={handleDesativar}
-                            handleAtivar={handleAtivar}
-                        />
+                <>
+                    <div className="bg-[--color-fundo] w-[100%] h-screen p-3">
+
+                        {animais.map((animal) => (
+                            <div key={animal.id_animal}>
+                                <AnimaisList
+                                    id_animal={animal.id_animal}
+                                    dt_inativacao={animal.dt_inativacao}
+                                    nome={animal.nome}
+                                    adotado={animal.adotado}
+                                    usuario={animal.usuario}
+                                    sexo={animal.sexo}
+                                    descricao={animal.descricao}
+                                    categoria={animal.categoria.descricao}
+                                    idade={animal.idade}
+                                    porte={animal.porte.descricao}
+                                    fotos={animal.fotos}
+                                    handleDelete={handleDelete}
+                                    handleAdotado={handleAdotado}
+                                    handleDesativar={handleDesativar}
+                                    handleAtivar={handleAtivar}
+                                />
+                            </div>
+                        ))}
+
                     </div>
-                ))
+                </>
+
             ) : (
                 <h1>Sem Animais</h1>
             )}

@@ -21,7 +21,7 @@ function AnimaisList({
 
     return (
         <>
-            <ul >
+            {/* <ul >
                 <li>{dt_inativacao ? 'DESATIVADO' : ''}</li>
                 <li><b>Nome:</b> {nome}</li>
                 <li><b>Dono:</b> {usuario.nome}</li>
@@ -61,10 +61,83 @@ function AnimaisList({
                 <br />
                 {dt_inativacao ? <li onClick={() => handleAtivar(id_animal)}>ATIVAR: - {id_animal}</li> : ""}
                 <br />
-                {/* <li>
-                    <Link to={`/denuncias/${usuario.id_usuario}/${id_animal}/cadastrar`}>Denunciar</Link>
-                </li> */}
-            </ul>
+            </ul> */}
+
+            {/* <div className="bg-[#86A7FC] w-[100%] h-screen p-3 flex"> */}
+
+            <div className="bg-[#ffffff] w-[100%] rounded shadow-lg m-3 flex flex-col lg:flex-row justify-between p-5">
+
+                <div className="w-[100%] lg:w-[50%] flex flex-col lg:flex-row">
+
+                    {
+                        fotos.length == 0 ? <h1>Sem Imagens</h1> : fotos.map((foto) => {
+                            return (
+                                <img
+                                    className="w-[100%] lg:w-[50%] h-[100%] p-1 object-cover"
+                                    key={foto.nome_arquivo}
+                                    src={`http://localhost:8000/${foto.url}`} alt={foto.nome_arquivo_original}
+                                    width={'100px'}
+                                />
+                            )
+                        })
+                    }
+
+                    <div className="p-3">
+                        <p className="text-lg">{nome}</p>
+                        <p className="text-sm my-1">{idade} Ano{idade > 1 ? 's' : ''}</p>
+                        <div>
+                            <span className="text-sm my-1 mr-1">{sexo == 'M' ? 'Macho' : 'Fêmea'}</span>
+                            <span className="text-sm my-1 mr-1">{categoria}</span>
+                            <span className="text-sm my-1 mr-1">{porte}</span>
+                        </div>
+                        <p className="text-sm my-1">{usuario.nome}</p>
+                        <p className="text-sm my-1">{adotado}</p>
+                        <p className="text-sm my-1 break-all">{descricao}</p>
+                    </div>
+                </div>
+
+                <div className="w-[100%] lg:w-[50%] flex flex-row lg:flex-col flex-wrap lg:flex-nowrap items-start lg:items-end">
+
+                    {dt_inativacao ? "" : <Link
+                        to={`/animais/editar/${id_animal}`}
+                        className="botao m-1 text-black bg-[#FAEF5D] hover:bg-[--color-secundaria] hover:text-black w-[45%]"
+                        type="submit"
+                    >Editar</Link>}
+
+                    <button
+                        onClick={() => handleDelete(id_animal)}
+                        className="botao m-1 text-white bg-[--color-terciario] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                        type="submit"
+                    >Deletar</button>
+
+                    {dt_inativacao ? "" : <button
+                        onClick={() => handleAdotado(id_animal, adotado)}
+                        className="botao m-1 text-white bg-[#864AF9] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                        type="submit"
+                    >{adotado == 0 ? "Adotar" : "Remover Adoção"}</button>
+                    }
+
+                    {dt_inativacao ? "" :
+                        <button
+                            onClick={() => handleDesativar(id_animal)}
+                            className="botao m-1 text-white bg-[#7E2553] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                            type="submit"
+                        >Desativar</button>
+                    }
+
+                    {dt_inativacao ? "" :
+                        <button
+                            onClick={() => handleAtivar(id_animal)}
+                            className="botao m-1 text-white bg-[#FF9800] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                            type="submit"
+                        >Ativar</button>
+                    }
+                </div>
+
+            </div>
+
+            {/* </div> */}
+
         </>
     )
 
