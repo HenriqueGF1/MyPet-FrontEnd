@@ -125,6 +125,12 @@ function NavBar() {
                             <li>
                                 <Link to='/usuarios/contatos'>Meus Contatos</Link>
                             </li>
+                            <li>
+                                <Link to='/enderecos/cadastrar'>Criar Endereço</Link>
+                            </li>
+                            <li>
+                                <Link to={`/usuarios/enderecos`}>Meus Endereços</Link>
+                            </li>
                         </ul>
                     </div>
                     <div className="flex items-center gap-6">

@@ -12,6 +12,7 @@ import buscarCep from "../../../services/buscaCep";
 import InputMask from "react-input-mask/lib/react-input-mask.development";
 import limparNumeros from "../../../helpers/limparNumeros";
 import retornoCep from "../../../helpers/retornoCep";
+import { toast } from "react-toastify";
 
 function UpdateEnderecos() {
 
@@ -49,6 +50,7 @@ function UpdateEnderecos() {
         console.log("🚀 ~ file: UpdateEnderecos.jsx:41 ~ edit ~ response:", response)
 
         if (response.code == 200) {
+            toast.success("Editado com sucesso !!")
             navigate("/usuarios/enderecos");
             return
         }
@@ -64,7 +66,7 @@ function UpdateEnderecos() {
 
         let cepResultado = await retornoCep(cep, bairro, complemento)
 
-        if(cepResultado === undefined) return
+        if (cepResultado === undefined) return
 
         setValue("bairro", cepResultado.neighborhood, {
             shouldValidate: true,
@@ -90,76 +92,123 @@ function UpdateEnderecos() {
 
                 <form onSubmit={handleSubmit(edit)}>
 
-                    <div className="form-group">
-                        <label>Cep</label><br></br>
-                        <InputMask
-                            type="text"
-                            placeholder="Preencha seu cep"
-                            id="cep"
-                            mask="99999-999"
-                            {...register("cep", { required: true })}
-                            onChange={() => {
-                                handleCep('cep', 'bairro', 'complemento')
-                            }
-                            }
-                        />
-                        {errosApi.erro?.cep && <ErrosField errosApi={errosApi} field='cep' />}
-                        {errors.cep && MessageValidation('cep', errors.cep.type)}
-                    </div>
 
-                    <div className="form-group">
-                        <label>Número</label><br></br>
-                        <input
-                            type="text"
-                            placeholder='Preencha seu Número'
-                            {...register("numero_endereco", { required: true })}
-                        />
-                        {errosApi.erro?.numero_endereco && <ErrosField errosApi={errosApi} field='numero_endereco' />}
-                        {errors.numero_endereco && MessageValidation('número', errors.numero_endereco.type)}
-                    </div>
+                    <div className="bg-[--color-fundo] w-[100%] h-screen flex flex-col justify-center items-center">
 
-                    <div className="form-group" >
-                        <label>Bairro</label><br></br>
-                        <input
-                            id="bairro"
-                            type="text"
-                            placeholder="Preencha seu cep"
-                            {...register("bairro", { required: true })}
-                        />
-                        {errosApi.erro?.bairro && <ErrosField errosApi={errosApi} field='bairro' />}
-                        {errors.bairro && MessageValidation('bairro', errors.bairro.type)}
-                    </div>
-
-                    <div className="form-group">
-                        <label>Complemento de Endereço</label><br></br>
-                        <textarea
-                            id="complemento"
-                            type="number"
-                            placeholder="Preencha seu complemento de endereço"
-                            {...register("complemento", { required: true })}
-                            rows='10'
-                            cols='50'
-                        />
-                        {errosApi.erro?.complemento && <ErrosField errosApi={errosApi} field='complemento' />}
-                        {errors.complemento && MessageValidation('complemento', errors.complemento.type)}
-                    </div>
-
-                    <br />
-
-                    {
-                        loadingApi ? <h1>Carregando...</h1> : (<>
-
-                            <div className="form-group">
-                                <button type="submit">Enviar</button>
-                                <button type="reset">Cancelar</button>
+                        <div className="bg-[--color-card] w-[95%] lg:w-1/2 my-5 p-3 rounded shadow-2xl">
+                            <div>
+                                <h1 className="text-center text-3xl font-bold p-3 my-5">Editar Endereço</h1>
                             </div>
 
-                        </>)
-                    }
+                            <div>
+
+                                <div className="flex items-start">
+
+                                    <div className="p-3">
+
+                                        <label className="label-padrao">
+                                            Cep
+                                        </label>
+                                        <InputMask
+                                            className="input-padrao"
+                                            type="text"
+                                            placeholder="Seu cep"
+                                            id="cep"
+                                            mask="99999-999"
+                                            {...register("cep", { required: true })}
+                                            onChange={() => {
+                                                handleCep('cep', 'bairro', 'complemento')
+                                            }
+                                            }
+                                        />
+                                        {errosApi.erro?.cep && <ErrosField errosApi={errosApi} field='cep' />}
+                                        {errors.cep && MessageValidation('cep', errors.cep.type)}
+
+                                    </div>
+
+                                    <div className="p-3">
+
+                                        <label className="label-padrao">
+                                            Bairro
+                                        </label>
+                                        <input
+                                            className="input-padrao"
+                                            id="bairro"
+                                            type="text"
+                                            placeholder="Seu bairro"
+                                            {...register("bairro", { required: true })}
+                                        />
+                                        {errosApi.erro?.bairro && <ErrosField errosApi={errosApi} field='bairro' />}
+                                        {errors.bairro && MessageValidation('bairro', errors.bairro.type)}
+
+                                    </div>
+
+                                    <div className="p-3">
+
+                                        <label className="label-padrao">
+                                            Número
+                                        </label>
+                                        <input
+                                            className="input-padrao"
+                                            type="text"
+                                            placeholder='Seu número'
+                                            {...register("numero_endereco", { required: true })}
+                                        />
+                                        {errosApi.erro?.numero_endereco && <ErrosField errosApi={errosApi} field='numero_endereco' />}
+                                        {errors.numero_endereco && MessageValidation('número', errors.numero_endereco.type)}
+
+                                    </div>
+
+                                </div>
+
+                                <div className="flex items-start">
+
+                                    <div className="p-3">
+
+                                        <label className="label-padrao">
+                                            Complemento de Endereço
+                                        </label>
+                                        <textarea
+                                            className="input-padrao"
+                                            id="complemento"
+                                            type="number"
+                                            placeholder="Seu complemento de endereço"
+                                            {...register("complemento", { required: true })}
+                                            cols='100'
+                                            rows='5'
+                                        />
+                                        {errosApi.erro?.complemento && <ErrosField errosApi={errosApi} field='complemento' />}
+                                        {errors.complemento && MessageValidation('complemento', errors.complemento.type)}
+
+                                    </div>
+
+                                </div>
+
+                                {
+                                    loadingApi ? <h1>Carregando...</h1> : (<>
+
+                                        <div className="w-[100%] my-3 flex justify-around">
+                                            <button
+                                                className="botao text-white bg-[--color-principal] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                                                type="submit"
+                                            >Enviar</button>
+
+                                            <button
+                                                className="botao text-white bg-[--color-terciario] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                                                type="reset"
+                                            >Cancelar</button>
+                                        </div>
+
+                                    </>)
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+
                 </form>
 
-                <br />
-                <br />
             </>)}
         </>
     );

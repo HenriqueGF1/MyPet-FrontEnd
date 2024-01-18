@@ -1,7 +1,7 @@
 const ErrosField = ({ errosApi, field }) => {
     return (
         errosApi.erro?.[field]?.map((message, index) => (
-            <p key={index} className="error-message">
+            <p key={index} className="erro-mensagem">
                 {message}
             </p>
         ))

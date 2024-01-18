@@ -14,31 +14,41 @@ function ContatosList({
 }) {
 
     return (
-        <>
-            <ul >
-                <li><b>id_contato:</b> {id_endereco}</li>
-                {/* <li><b>CEP:</b> {cep}</li> */}
-                <li><b>CEP:</b> {formatarCEP(cep)}</li>
-                <li><b>Bairro:</b> {bairro}</li>
-                <li><b>Complemento:</b> {complemento}</li>
-                <li><b>Numero:</b> {numero}</li>
-                <li><b>Principal:</b> {principal}</li>
-                <li>
-                    <Link to={`/enderecos/editar/${id_endereco}`}>EDITAR: - {id_endereco}</Link>
-                </li>
-                <br />
-                <li onClick={() => handlePrincipal(id_endereco)}>
-                    {principal == 0 ? "COLOCAR COMO PRINCIPAL " : ""}
-                    - {id_endereco}
-                </li>
-                <br />
-                {principal == 0 ? <li onClick={() => handleDelete(id_endereco)}>EXCLUIR: - {id_endereco}</li> : ""}
-                <br />
-            </ul>
-        </>
+        <div className="bg-[#ffffff] w-[100%] rounded shadow-lg m-3 flex flex-col lg:flex-row justify-between p-5">
+
+            <div className="w-[100%] lg:w-[50%] flex flex-col lg:flex-row">
+                <div className="p-3">
+                    <p className="text-sm">{formatarCEP(cep)}</p>
+                    <p className="text-sm">{bairro}</p>
+                    <p className="text-sm">{numero}</p>
+                    <p className="text-sm">{complemento}</p>
+                    <p className="text-sm">Principal: {principal == 1 ? 'Sim' : 'Não'}</p>
+                </div>
+            </div>
+
+            <div className="w-[100%] lg:w-[50%] flex flex-row lg:flex-col flex-wrap lg:flex-nowrap items-start lg:items-end">
+
+                <Link
+                    className="botao m-1 text-white bg-[--color-principal] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                    to={`/enderecos/editar/${id_endereco}`}>Editar</Link>
+
+                {principal == 0 ? <button
+                    onClick={() => handlePrincipal(id_endereco)}
+                    className="botao m-1 text-white bg-[--color-secundaria] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                    type="submit"
+                >Colocar Como Principal</button> : ""}
+
+                {principal == 0 ? <button
+                    onClick={() => handleDelete(id_endereco)}
+                    className="botao m-1 text-white bg-[--color-terciario] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
+                    type="submit"
+                >Excluir</button> : ""}
+
+            </div>
+
+        </div>
     )
 }
-
 
 ContatosList.propTypes = {
     id_endereco: PropTypes.number.isRequired,
@@ -50,6 +60,5 @@ ContatosList.propTypes = {
     handlePrincipal: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired,
 };
-
 
 export default ContatosList;

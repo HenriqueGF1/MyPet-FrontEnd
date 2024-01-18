@@ -70,31 +70,29 @@ function Enderecos() {
 
     return (
         <>
-            <h1>Meus Endereços</h1>
 
-            <br />
             <NavBar />
-            <br />
 
             {loadingApi ? (
                 <Loading />
             ) : (
                 enderecos.length > 0 ? (
-                    enderecos.map((endereco) => (
-                        <div key={endereco.id_endereco}>
-                            <EnderecosList
-                                id_endereco={endereco.id_endereco}
-                                cep={endereco.cep}
-                                bairro={endereco.bairro}
-                                numero={endereco.numero}
-                                complemento={endereco.complemento}
-                                principal={endereco.principal}
-                                handlePrincipal={handlePrincipal}
-                                handleDelete={handleDelete}
-                            />
-                            <h1>-------</h1>
-                        </div>
-                    ))
+                    <div className="bg-[--color-fundo] w-[100%] h-screen p-3">
+                        {enderecos.map((endereco) => (
+                            <div key={endereco.id_endereco}>
+                                <EnderecosList
+                                    id_endereco={endereco.id_endereco}
+                                    cep={endereco.cep}
+                                    bairro={endereco.bairro}
+                                    numero={endereco.numero}
+                                    complemento={endereco.complemento}
+                                    principal={endereco.principal}
+                                    handlePrincipal={handlePrincipal}
+                                    handleDelete={handleDelete}
+                                />
+                            </div>
+                        ))}
+                    </div>
                 ) : (
                     <h1>Sem Endereços...</h1>
                 )
