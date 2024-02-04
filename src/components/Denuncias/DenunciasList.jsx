@@ -1,59 +1,80 @@
-import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
 import AnimalDetalhes from "../Animais/AnimalDetalhes";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 function DenunciasList({
-    id_denuncia,
-    descricao,
-    tipo,
-    usuario,
-    animal,
-    dt_exclusao,
-    handleRetirarDenuncia
+  id_denuncia,
+  descricao,
+  tipo,
+  animal,
+  dt_exclusao,
+  handleRetirarDenuncia,
+  ativarNovamenteDenuncia,
 }) {
+  return (
+    <div className={`bg-[#FFFFFF] w-[80%] p-5 my-3 mx-auto`}>
+      <div
+        className={`w-[100%] flex flex-col lg:flex-row ${
+          dt_exclusao ? "border-l-8 border-[--color-06] line-through" : ""
+        }`}
+      >
+        <div className="p-3">
+          <h1 className="text-base font-bold my-3">Denúncia</h1>
+          <p className="text-sm my-1 mr-1">
+            <b>Descrição: </b>
+            {descricao}
+          </p>
+          <p className="text-sm my-1 mr-1">
+            <b>Tipo:</b> {tipo.descricao}
+          </p>
 
-    return (
-        <>
-            <ul >
-                <li>{dt_exclusao ? '------EXCLUÍDO------' : ''}</li>
-                <h1>Denúncia</h1>
-                <li><b>Descrição:</b> {descricao}</li>
-                <li><b>Tipo:</b> {tipo.descricao}</li>
-                <br />
-                {/* <li><b>Animal Denunciado:</b> {animal.nome}</li> */}
+          <div className="w-[100%]">
+            <AnimalDetalhes animal={animal}></AnimalDetalhes>
+          </div>
 
-                <h1>Animal</h1>
+          {dt_exclusao ? (
+            <button
+              onClick={() => ativarNovamenteDenuncia(id_denuncia)}
+              className="botao btn-group text-white bg-[--color-04] hover:bg-[--color-02] hover:text-black"
+              type="submit"
+            >
+              Ativar Novamente Denuncia
+            </button>
+          ) : (
+            <>
+              <Link
+                to={`/denuncias/editar/${id_denuncia}`}
+                className="botao btn-group text-white bg-[--color-03] hover:bg-[--color-02]"
+                type="submit"
+              >
+                Editar Denúncia
+              </Link>
 
-                <br />
-                <AnimalDetalhes
-                    animal={animal}
-                >
-                </AnimalDetalhes>
-                <br />
-                {dt_exclusao ? "" : <li onClick={() => handleRetirarDenuncia(id_denuncia)}>RETIRAR DENUNCIA: - {id_denuncia}</li>}
-                <br />
-                {dt_exclusao ? "" : <li><Link to={`/denuncias/editar/${id_denuncia}`}>EDITAR DENUNCIA: - {id_denuncia}</Link></li>}
-                <br />
-                <li>
-                </li>
-
-            </ul>
-            <hr />
-            <br />
-        </>
-    )
+              <button
+                onClick={() => handleRetirarDenuncia(id_denuncia)}
+                className="botao btn-group text-white bg-[--color-06] hover:bg-[--color-02] hover:text-black"
+                type="submit"
+              >
+                Retirar Denúncia
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 DenunciasList.propTypes = {
-    id_denuncia: PropTypes.number.isRequired,
+  id_denuncia: PropTypes.number.isRequired,
+  descricao: PropTypes.string.isRequired,
+  dt_exclusao: PropTypes.string,
+  tipo: PropTypes.shape({
     descricao: PropTypes.string.isRequired,
-    tipo: PropTypes.shape({
-        descricao: PropTypes.string.isRequired,
-    }).isRequired,
-    usuario: PropTypes.object.isRequired,
-    animal: PropTypes.object.isRequired,
-    // dt_exclusao: PropTypes.string.isRequired,
-    handleRetirarDenuncia: PropTypes.func.isRequired,
+  }).isRequired,
+  animal: PropTypes.object.isRequired,
+  handleRetirarDenuncia: PropTypes.func.isRequired,
+  ativarNovamenteDenuncia: PropTypes.func.isRequired,
 };
 
 export default DenunciasList;

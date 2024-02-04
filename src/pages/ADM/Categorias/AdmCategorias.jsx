@@ -1,125 +1,141 @@
-import { useState, useEffect, useContext } from "react";
-import { Context } from "../../../context/Context";
-import NavBar from "../../../components/NavBar/NavBar";
-import Loading from '../../../components/Loading/Loading'
-
-import { toast } from 'react-toastify';
 import CategoriasList from "../../../components/Adm/Categorias/CategoriasList";
+import HeaderPages from "../../../components/HeaderPages/HeaderPages";
+import Loading from "../../../components/Loading/Loading";
+import NavBar from "../../../components/NavBar/NavBar";
+import { Context } from "../../../context/Context";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useState, useEffect, useContext } from "react";
 
 function AdmCategorias() {
+  const [categorias, setCategorias] = useState([]);
+  const { loadingApi, apiFetch } = useContext(Context);
 
-    const [categorias, setCategorias] = useState([]);
-    const [erros, setErros] = useState([]);
-    const { loadingApi, apiFetch } = useContext(Context);
-
-    useEffect(() => {
-
-        async function getCategorias() {
-            let response = await apiFetch("admin/categoriasAnimal", "get")
-            if (response.data != undefined) {
-                setCategorias(response.data);
-            }
-        }
-
-        getCategorias();
-
-    }, []);
-
-    const handleDelete = async (id_categoria) => {
-
-        let response = await apiFetch(`admin/categoriasAnimal/${id_categoria}`, "delete")
-
-        if (response.data.code == 400) {
-            alert(response.data.message)
-        }
-
-        if (response.data === 1) {
-            alert('Excluído com Sucesso !!')
-            setCategorias((prev) => prev.filter((animal) => animal.id_categoria != id_categoria))
-        }
-
+  useEffect(() => {
+    async function getCategorias() {
+      let response = await apiFetch("admin/categoriasAnimal", "get");
+      if (response.data != undefined) {
+        setCategorias(response.data);
+      }
     }
 
-    const handleDesativar = async (id_categoria) => {
+    getCategorias();
+  }, []);
 
-        let response = await apiFetch(`admin/categoriasAnimal/desativar/${id_categoria}`, "patch")
+  const handleDelete = async (id_categoria) => {
+    let response = await apiFetch(
+      `admin/categoriasAnimal/${id_categoria}`,
+      "delete"
+    );
 
-        if (response.data.code == 400) {
-            alert(response.data.message)
-        }
+    if (response.data.code == 400) {
+      toast.warning(response.data.message);
+      return;
+    }
+    if (response.code === 200) {
+      const categoria = categorias.map((categoria) =>
+        
+        categoria.id_categoria === id_categoria
+          ? { ...categoria, dt_exclusao: response.data.dt_exclusao }
+          : categoria
+      );
 
-        if (response.code === 200) {
+      setCategorias((prev) => categoria);
 
-            const categoria = categorias.map(categoria =>
-                categoria.id_categoria === id_categoria
-                    ? { ...categoria, dt_inativacao: response.data.data.dt_inativacao }
-                    : categoria
-            );
+      toast.success("Excluído com Sucesso !!");
+    }
+  };
 
-            setCategorias(
-                prev => categoria
-            );
+  const handleDesativar = async (id_categoria) => {
+    let response = await apiFetch(
+      `admin/categoriasAnimal/desativar/${id_categoria}`,
+      "patch"
+    );
 
-            toast.success("Desativado com Sucesso !!");
-        }
-
+    if (response.data.code == 400) {
+      toast.warning(response.data.message);
+      return;
     }
 
-    const handleAtivar = async (id_categoria) => {
+    if (response.code === 200) {
+      const categoria = categorias.map((categoria) =>
+        categoria.id_categoria === id_categoria
+          ? { ...categoria, dt_inativacao: response.data.data.dt_inativacao }
+          : categoria
+      );
 
-        let response = await apiFetch(`admin/categoriasAnimal/ativar/${id_categoria}`, "patch")
+      setCategorias((prev) => categoria);
 
-        if (response.data.code == 400) {
-            toast.warning(response.data.message);
-        }
+      toast.success("Desativado com Sucesso !!");
+    }
+  };
 
-        if (response.code === 200) {
+  const handleAtivar = async (id_categoria) => {
+    let response = await apiFetch(
+      `admin/categoriasAnimal/ativar/${id_categoria}`,
+      "patch"
+    );
 
-            const categoria = categorias.map(categoria =>
-                categoria.id_categoria === id_categoria
-                    ? { ...categoria, dt_inativacao: response.data.data.dt_inativacao }
-                    : categoria
-            );
-
-            setCategorias(
-                prev => categoria
-            );
-
-            toast.success("Ativado com Sucesso !!");
-        }
-
+    if (response.data.code == 400) {
+      toast.warning(response.data.message);
+      return;
     }
 
-    return (
-        <>
-            <h1>Minhas Categorias</h1>
+    if (response.code === 200) {
+      const categoria = categorias.map((categoria) =>
+        categoria.id_categoria === id_categoria
+          ? { ...categoria, dt_inativacao: response.data.data.dt_inativacao }
+          : categoria
+      );
 
-            <NavBar />
+      setCategorias((prev) => categoria);
 
-            {loadingApi ? (
-                <Loading />
-            ) : categorias.length > 0 ? (
-                categorias.map((categoria) => (
-                    <div key={categoria.id_categoria}>
-                        <CategoriasList
-                            id_categoria={categoria.id_categoria}
-                            descricao={categoria.descricao}
-                            dt_registro={categoria.dt_registro}
-                            dt_inativacao={categoria.dt_inativacao}
-                            dt_exclusao={categoria.dt_exclusao}
-                            handleDesativar={handleDesativar}
-                            handleAtivar={handleAtivar}
-                            handleDelete={handleDelete}
-                        />
-                    </div>
-                ))
-            ) : (
-                <h1>Sem Categorias</h1>
-            )}
-        </>
-    )
+      toast.success("Ativado com Sucesso !!");
+    }
+  };
 
+  return (
+    <>
+      <NavBar />
 
+      <HeaderPages tituloPagina="Categorias" />
+
+      {loadingApi ? (
+        <Loading />
+      ) : categorias.length > 0 ? (
+        <div className="w-[100%] p-3">
+          <div className="w-[100%] mb-3 flex justify-end">
+            <Link
+              to={`/admin/categorias/cadastrar`}
+              className="botao btn-group text-white bg-[--color-03] hover:bg-[--color-02]"
+              type="submit"
+            >
+              Cadastrar Categorias
+            </Link>
+          </div>
+
+          {categorias.map((categoria) => (
+            <div key={categoria.id_categoria}>
+              <CategoriasList
+                id_categoria={categoria.id_categoria}
+                descricao={categoria.descricao}
+                dt_registro={categoria.dt_registro}
+                dt_inativacao={categoria.dt_inativacao}
+                dt_exclusao={categoria.dt_exclusao}
+                handleDesativar={handleDesativar}
+                handleAtivar={handleAtivar}
+                handleDelete={handleDelete}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex w-[100%] h-screen justify-center items-center">
+          <h1 className="text-lg font-bold p-3 my-5">Sem Categorias</h1>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default AdmCategorias;

@@ -12,37 +12,40 @@ function ContatosList({
 }) {
 
     return (
-        
-        <div className="bg-[#ffffff] w-[100%] rounded shadow-lg m-3 flex flex-col lg:flex-row justify-between p-5">
+
+        <div className={`bg-[#ffffff] w-[100%] shadow-lg m-3 p-5 ${principal ? 'border-l-8 border-[--color-principal]' : ''}
+        w-[90%] p-3 my-3 mx-auto shadow-md`}>
+
 
             <div className="w-[100%] lg:w-[50%] flex flex-col lg:flex-row">
                 <div className="p-3">
-                    <p className="text-lg">{formatarNumeroTelefone(dd + numero)}</p>
-                    <p className="text-sm">Principal: {principal == 1 ? 'Sim' : 'Não'}</p>
+                    <p className="text-sm my-1 mr-1"><b>Número Telefone: </b>{formatarNumeroTelefone(dd + numero)}</p>
+                    {/* <p className="text-sm my-1 mr-1">Principal: {principal == 1 ? 'Sim' : 'Não'}</p> */}
                 </div>
             </div>
 
-            <div className="w-[100%] lg:w-[50%] flex flex-row lg:flex-col flex-wrap lg:flex-nowrap items-start lg:items-end">
+            <Link
+                to={`/contatos/editar/${id_contato}`}
+                className="botao btn-group text-white bg-[--color-03] hover:bg-[--color-02]"
+                type="submit"
+            >Editar</Link>
 
-                <Link
-                    className="botao m-1 text-white bg-[--color-principal] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
-                    to={`/contatos/editar/${id_contato}`}>Editar</Link>
+            {principal == 0 ?
 
+                <>
+                    <button
+                        onClick={() => handlePrincipal(id_contato)}
+                        className="botao btn-group text-black bg-[--color-07] hover:bg-[--color-02]"
+                        type="submit"
+                    >Colocar Como Principal</button>
 
-
-                {principal == 0 ? <button
-                    onClick={() => handlePrincipal(id_contato)}
-                    className="botao m-1 text-white bg-[--color-secundaria] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
-                    type="submit"
-                >Colocar Como Principal</button> : ""}
-
-                {principal == 0 ? <button
-                    onClick={() => handleDelete(id_contato)}
-                    className="botao m-1 text-white bg-[--color-terciario] hover:bg-[--color-secundaria] hover:text-white w-[45%]"
-                    type="submit"
-                >Excluir</button> : ""}
-
-            </div>
+                    <button
+                        onClick={() => handleDelete(id_contato)}
+                        className="botao btn-group text-white bg-[--color-06] hover:bg-[--color-02] hover:text-black"
+                        type="submit"
+                    >Excluir</button>
+                </>
+                : ""}
 
         </div>
     )

@@ -3,7 +3,10 @@ import './Loading.css'
 
 const Loading = () => {
     return (
-        <span className="loader"></span>
+        <div className="flex w-[100%] h-screen justify-center items-center">
+            <span className="loader w-[100%] h-screen"></span>
+        </div>
+
     )
 
 }

@@ -2,6 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { Context } from "../../../context/Context";
 import NavBar from "../../../components/NavBar/NavBar";
 import Loading from "../../../components/Loading/Loading";
+import Chart from "react-google-charts";
+import Footer from "../../../components/Footer/Footer";
+import HeaderPages from "../../../components/HeaderPages/HeaderPages";
 
 function DashBoard() {
 
@@ -12,7 +15,6 @@ function DashBoard() {
 
         async function getDados() {
             let response = await apiFetch("admin/dashBoard", "get")
-            console.log("🚀 ~ file: DashBoard.jsx:17 ~ getDados ~ response:", response.data)
             if (response.data != undefined) {
                 setDados(response.data);
             }
@@ -22,13 +24,45 @@ function DashBoard() {
 
     }, []);
 
+    const data = [
+        ["", ""],
+        ["Quantidade de Usuários", dados.usuario],
+        ["Quantidade de Animais", dados.animal],
+        ["Quantidade de Animais Denunciados", dados.animaisQtdDenuncias],
+        ["Quantidade de Animais Não Adotados", dados.animaisNaoAdotados],
+        ["Quantidade de Animais Machos", dados.animaisMasculinos],
+        ["Quantidade de Animais Fêmeas", dados.animaisFemininos],
+    ];
+
+    const options = {
+        title: "Animais",
+        is3D: true,
+    };
+
     return (
         <>
-            <h1>ADM DashBoard</h1>
 
             <NavBar />
 
-            {loadingApi ? <Loading /> : (
+            <HeaderPages tituloPagina="Administrador DashBoard"/>
+
+            <div className="w-[100%] h-screen flex justify-center items-start">
+
+                {/* {loadingApi ? <Loading /> : ( */}
+
+                <Chart
+                    chartType="PieChart"
+                    data={data}
+                    options={options}
+                    width={"100%"}
+                    height={"700px"}
+                />
+
+                {/* )} */}
+
+            </div>
+
+            {/* {loadingApi ? <Loading /> : (
                 <>
                     <p>Quantidade de Usuários: {dados.usuario}</p>
                     <p>Quantidade de Animais {dados.animal}</p>
@@ -38,8 +72,9 @@ function DashBoard() {
                     <p>Quantidade de Animais Masculinos: {dados.animaisMasculinos}</p>
                     <p>Quantidade de Animais Femininos: {dados.animaisFemininos}</p>
                 </>
-            )}
+            )} */}
 
+            <Footer/>
 
         </>
     )

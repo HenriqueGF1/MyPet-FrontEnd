@@ -1,46 +1,37 @@
+import AnimalDetalhes from "../Animais/AnimalDetalhes";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
 
-function FavoritosList({
-    id_favorito,
-    animal,
-    handleFavorito
-}) {
-    return (
-        <>
-            <p>
-                {animal.fotos.map((foto) => {
-                    return (
-                        <img
-                            key={foto.nome_arquivo}
-                            src={`http://localhost:8000/${foto.url}`} alt={foto.nome_arquivo_original}
-                            width={'100px'}
-                        />
-                    )
-                })}
-            </p>
-            <p><b>Nome:</b> {animal.nome}</p>
-            <p><b>Descricao:</b> {animal.descricao}</p>
-            <p><b>Categoria:</b> {animal.categoria.descricao}</p>
-            <p><b>Porte:</b> {animal.porte.descricao}</p>
-            <br />
-            <ul>
-                <li onClick={() => handleFavorito(id_favorito)}>REMOVER FAVORITO: - {id_favorito}</li>
-            </ul>
-            <br />
-            <p>
-                <Link to={`/animais/${animal.id_animal}`}>Ver Detalhes...</Link>
-            </p>
-            <br />
-            <hr />
-        </>
-    )
+function FavoritosList({ id_favorito, animal, handleFavorito }) {
+  return (
+    <>
+      <div className="w-[100%]">
+        <AnimalDetalhes animal={animal}></AnimalDetalhes>
+      </div>
+
+      <div className="w-[100%] my-3 p-3 flex justify-between">
+        <Link
+          className="botao btn-group text-white bg-[--color-principal] hover:bg-[--color-02] hover:text-black w-[100%]"
+          to={`/animais/${animal.id_animal}`}
+        >
+          Ver Detalhes...
+        </Link>
+        <button
+          onClick={() => handleFavorito(id_favorito)}
+          className="botao btn-group text-white bg-[--color-06] hover:bg-[--color-02] hover:text-black w-[100%]"
+          type="reset"
+        >
+          Remover dos Favoritos
+        </button>
+      </div>
+    </>
+  );
 }
 
 FavoritosList.propTypes = {
-    id_favorito: PropTypes.number.isRequired,
-    animal: PropTypes.object.isRequired, 
-    handleFavorito: PropTypes.func.isRequired,
+  id_favorito: PropTypes.number.isRequired,
+  animal: PropTypes.object.isRequired,
+  handleFavorito: PropTypes.func.isRequired,
 };
 
-export default FavoritosList
+export default FavoritosList;

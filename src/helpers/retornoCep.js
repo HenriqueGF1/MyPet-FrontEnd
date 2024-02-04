@@ -2,28 +2,28 @@ import buscarCep from "../services/buscaCep";
 import limparNumeros from "./limparNumeros";
 
 const retornoCep = async (cep, bairro, complemento) => {
-    
-console.log("🚀 ~ file: retornoCep.js:5 ~ retornoCep ~ cep, bairro, complemento:", cep, bairro, complemento)
+  let cepCampo = document.querySelector(`#${cep}`);
+  let bairroCampo = document.querySelector(`#${bairro}`);
+  let complementoCampo = document.querySelector(`#${complemento}`);
 
-    let cepCampo = document.querySelector(`#${cep}`).value;
-    let bairroCampo = document.querySelector(`#${bairro}`)
-    let complementoCampo = document.querySelector(`#${complemento}`)
+  let cepValor = limparNumeros(cepCampo.value);
 
-    let cepValor = limparNumeros(cepCampo)
+  if (cepValor.length < 8) {
+    return;
+  }
 
-    bairroCampo.value = '';
-    complementoCampo.value = '';
+  bairroCampo.value = "Carregando...";
+  complementoCampo.value = "Carregando...";
 
-    if (cepValor.length < 8) {
-        return
-    }
+  let cepResultado = await buscarCep(cepCampo.value);
 
-    bairroCampo.value = 'Carregando...'
-    complementoCampo.value = 'Carregando...'
+  if (cepResultado === undefined) {
+    cepCampo.value = null;
+    bairroCampo.value = "";
+    complementoCampo.value = "";
+  }
 
-    let cepResultado = await buscarCep(cepCampo);
+  return cepResultado;
+};
 
-    return cepResultado;
-}
-
-export default retornoCep
+export default retornoCep;

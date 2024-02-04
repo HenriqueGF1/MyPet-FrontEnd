@@ -1,49 +1,111 @@
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import PropTypes from 'prop-types';
 
 function CategoriasList({
-    id_categoria,
-    descricao,
-    dt_registro,
-    dt_inativacao,
-    dt_exclusao,
-    handleDesativar,
-    handleAtivar,
-    handleDelete
+  id_categoria,
+  descricao,
+  dt_registro,
+  dt_inativacao,
+  dt_exclusao,
+  handleDesativar,
+  handleAtivar,
+  handleDelete,
 }) {
-    return (
-        <>
-            <ul >
-                <li>{dt_inativacao ? 'DESATIVADO' : ''}</li>
-                <li><b>Descrição:</b> {descricao}</li>
-                <li><b>Data Registro:</b> {dt_registro}</li>
-                <li><b>Data Inativação:</b> {dt_inativacao}</li>
-                <li><b>Data Exclusão:</b> {dt_exclusao}</li>
-                <br />
-                <li>
-                    {dt_inativacao ? "" : <Link to={`/admin/categorias/editar/${id_categoria}`}>EDITAR: - {id_categoria}</Link>}
-                </li>
-                <br />
-                <li onClick={() => handleDelete(id_categoria)}>DELETAR: - {id_categoria}</li>
-                <br />
-                {dt_inativacao ? "" : <li onClick={() => handleDesativar(id_categoria)}>DESATIVAR: - {id_categoria}</li>}
-                <br />
-                {dt_inativacao ? <li onClick={() => handleAtivar(id_categoria)}>ATIVAR: - {id_categoria}</li> : ""}
-                <br />
-            </ul>
-        </>
-    )
+  return (
+    <>
+      <div
+        className={`bg-[#ffffff] w-[100%] shadow-lg m-3 p-5 ${
+          dt_inativacao || dt_exclusao
+            ? "border-l-8 border-[--color-06] line-through"
+            : ""
+        }
+                w-[90%] p-3 my-3 mx-auto shadow-md`}
+      >
+        <div className="w-[100%] lg:w-[50%] flex flex-col lg:flex-row">
+          <div className="p-3">
+            <p className="text-sm my-1 mr-1">
+              <b>Descrição:</b> {descricao}
+            </p>
+            <p className="text-sm my-1 mr-1">
+              <b>Data Registro:</b> {dt_registro}
+            </p>
+            {dt_exclusao ? (
+              <p className="text-sm my-1 mr-1">
+                <b>Data Exclusão:</b> {dt_exclusao}
+              </p>
+            ) : (
+              ""
+            )}
+            {dt_inativacao ? (
+              <p className="text-sm my-1 mr-1">
+                <b>Data Inativação:</b> {dt_inativacao}
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+
+        {!dt_exclusao ? (
+          <>
+            {!dt_inativacao ? (
+              <>
+                <Link
+                  className="botao btn-group text-white bg-[--color-03] hover:bg-[--color-02] hover:text-black"
+                  to={`/admin/categorias/editar/${id_categoria}`}
+                >
+                  Editar
+                </Link>
+
+                <button
+                  onClick={() => handleDesativar(id_categoria)}
+                  className="botao btn-group text-black bg-[--color-07] hover:bg-[--color-02]"
+                  type="submit"
+                >
+                  Desativar
+                </button>
+
+                <button
+                  onClick={() => handleDelete(id_categoria)}
+                  className="botao btn-group text-white bg-[--color-06] hover:bg-[--color-02] hover:text-black"
+                  type="submit"
+                >
+                  Excluir
+                </button>
+              </>
+            ) : (
+              ""
+            )}
+
+            {dt_inativacao ? (
+              <button
+                onClick={() => handleAtivar(id_categoria)}
+                className="botao btn-group text-white bg-[--color-04] hover:bg-[--color-02]"
+                type="submit"
+              >
+                Ativar
+              </button>
+            ) : (
+              ""
+            )}
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+    </>
+  );
 }
 
 CategoriasList.propTypes = {
-    id_categoria: PropTypes.number.isRequired,
-    descricao: PropTypes.string.isRequired,
-    dt_registro: PropTypes.string.isRequired,
-    dt_inativacao: PropTypes.string,
-    dt_exclusao: PropTypes.string,
-    handleDesativar: PropTypes.func.isRequired,
-    handleAtivar: PropTypes.func.isRequired,
-    handleDelete: PropTypes.func.isRequired,
+  id_categoria: PropTypes.number.isRequired,
+  descricao: PropTypes.string.isRequired,
+  dt_registro: PropTypes.string.isRequired,
+  dt_inativacao: PropTypes.string,
+  dt_exclusao: PropTypes.string,
+  handleDesativar: PropTypes.func.isRequired,
+  handleAtivar: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
 };
 
-export default CategoriasList
+export default CategoriasList;

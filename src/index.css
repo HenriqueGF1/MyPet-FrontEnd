@@ -4,28 +4,58 @@
 
 @layer base {
   :root {
-    --color-fundo: #f3f3f3;
-    --color-principal: #18ae58;
-    --color-secundaria: #3a4d39;
-    --color-terciario: #ff004d;
-    --color-card: #ffffff;
+    --color-fundo: #f5f5f5;
+    --color-principal: #27915c;
+    --color-02: #d2fae0;
+    --color-03: #ffa900;
+    --color-04: #0c4b8e;
+    --color-05: #b47014;
+    --color-06: #ff3757;
+    --color-07: #30e3ca;
+    /* --color-fundo-input: #e5e7eb; */
+    --color-fundo-input: #f1f1f1;
   }
 }
 
 @layer components {
   .botao {
-    @apply px-4 py-2 text-center tracking-wide text-sm font-medium text-sm;
+    @apply px-3 py-2 text-xs font-medium text-center focus:ring-4 focus:outline-none transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-100 duration-100 rounded;
   }
-
-  .erro-mensagem {
-    @apply text-red-500 text-sm tracking-wide mb-3;
+  .btn-group {
+    @apply mr-1 my-1;
   }
 
   .label-padrao {
-    @apply text-left block text-sm font-bold tracking-wide mb-2 pb-1;
+    @apply block mt-4 mb-2 text-sm text-black font-medium;
   }
 
+  /* Inputs */
+
   .input-padrao {
-    @apply text-black w-[100%] p-2 mb-3 bg-[#F1F1F1] focus:outline-none focus:ring-2 ring-[#18AE58] ring-inset;
+    @apply block w-full p-2 bg-[--color-fundo-input] text-xs focus:outline-none font-medium rounded;
   }
+
+  /* Inputs Erro */
+
+  .erro-mensagem {
+    @apply mt-2 text-sm text-[--color-06];
+  }
+
+  .label-erro {
+    @apply block mt-4 mb-2 text-sm text-black font-medium text-[--color-06];
+  }
+
+  .input-erro {
+    @apply block w-full p-2.5 bg-[--color-06] border border-[--color-06] text-[--color-06] placeholder-[--color-06] text-sm rounded-lg focus:ring-red-500 dark:bg-red-100;
+  }
+
+  /* Outros */
+
+  .inativo {
+    @apply line-through;
+  }
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }

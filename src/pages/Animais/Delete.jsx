@@ -18,7 +18,7 @@ const Delete = async (idAnimal) => {
         .then(function (response) {
 
             // if (response.status == 201) {
-            //     navigate("/animais");
+            //     navigate("/");
             // } else {
             //     setErros(response.data.errors);
             // }

@@ -27,7 +27,11 @@ function Categorias({
     return (
         <>
             {
-                loadingApi || categorias.length == 0 ? <h1>Carregando...</h1> :
+                loadingApi || categorias.length == 0 ? (
+                    <div className="w-[100%] font-semibold my-5 flex justify-center items-center">
+                        <h1>Carregando...</h1>
+                    </div>
+                ) :
                     <Select
                         label={label}
                         name={name}
