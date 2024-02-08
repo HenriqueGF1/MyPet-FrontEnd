@@ -20,7 +20,6 @@ function AnimalShow() {
   useEffect(() => {
     async function getAnimais() {
       let response = await apiFetch(`animais/${id_animal}`, "get");
-      console.log("🚀 ~ getAnimais ~ response:", response)
       if (response.data != undefined) {
         setAnimal(response.data);
       }

@@ -128,7 +128,7 @@ function AnimalDetalhes({ animal, children }) {
 
 AnimalDetalhes.propTypes = {
   animal: PropTypes.shape({
-    idade: PropTypes.number.isRequired,
+    idade: PropTypes.string.isRequired,
     sexo: PropTypes.string.isRequired,
     nome: PropTypes.string.isRequired,
     descricao: PropTypes.string.isRequired,

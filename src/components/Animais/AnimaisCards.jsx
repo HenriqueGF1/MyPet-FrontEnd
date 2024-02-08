@@ -24,9 +24,7 @@ function AnimaisCards({ animal }) {
           <span className="text-sm my-1 mr-1 opacity-75">
             {animal.sexo == "M" ? "Macho" : "Fêmea"}
           </span>
-          <p className="text-sm my-1 mr-1 opacity-75">
-            {animal.idade > 1 ? animal.idade + " Anos" : "Recém Nascido"}
-          </p>
+          <p className="text-sm my-1 mr-1 opacity-75">{animal.idade}</p>
           <p className="mt-3">
             <Link
               to={`/animais/${animal.id_animal}`}
@@ -52,7 +50,7 @@ AnimaisCards.propTypes = {
         nome_arquivo_original: PropTypes.string,
       })
     ).isRequired,
-    idade: PropTypes.number.isRequired,
+    idade: PropTypes.string.isRequired,
     nome: PropTypes.string.isRequired,
     sexo: PropTypes.string.isRequired,
     descricao: PropTypes.string.isRequired,

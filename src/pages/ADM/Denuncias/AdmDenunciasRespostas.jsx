@@ -75,7 +75,9 @@ function AdmDenunciasRespostas() {
           </div>
         </>
       ) : (
-        "Sem Respostas"
+        <div className="flex w-[100%] h-screen justify-center items-center">
+          <h1 className="text-lg font-bold p-3 my-5">Sem Respostas</h1>
+        </div>
       )}
 
       <Footer />

@@ -14,7 +14,6 @@ function UsuarioAnimais() {
   useEffect(() => {
     async function getAnimais() {
       let response = await apiFetch("usuario/animais", "get");
-      console.log("🚀 ~ getAnimais ~ response:", response)
       if (response.data != undefined) {
         setAnimais(response.data);
       }

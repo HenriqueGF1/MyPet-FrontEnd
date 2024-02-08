@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import { previewFiles } from "../../services/previewImagem";
+import { previewFiles } from "../../helpers/previewImagem";
 
 function CreateAnimal() {
   let navigate = useNavigate();
@@ -23,7 +23,6 @@ function CreateAnimal() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log("🚀 ~ CreateAnimal ~ errors:", errors);
 
   const create = async (data) => {
     let animalData = new FormData(document.getElementById("createAnimal"));
@@ -42,7 +41,7 @@ function CreateAnimal() {
     });
   };
 
-  const currentDate = new Date().toISOString().split("T")[0]; 
+  const currentDate = new Date().toISOString().split("T")[0];
 
   return (
     <>
@@ -241,7 +240,7 @@ function CreateAnimal() {
                 {errors.imagens &&
                   MessageValidation("imagens", errors.imagens.type)}
 
-                <div id="previews" className="w-[100%]"></div>
+                <div id="previews" className="my-5 w-[100%]"></div>
               </div>
 
               {loadingApi ? (

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-import { previewFiles } from "../../services/previewImagem";
+import { previewFiles } from "../../helpers/previewImagem";
 
 function AnimaisImagens() {
   let { id_animal } = useParams();

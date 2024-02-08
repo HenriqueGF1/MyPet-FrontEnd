@@ -13,7 +13,6 @@ function AnimaisList({
   handleAtivar,
   respostaDenuncia,
 }) {
-  console.log("🚀 ~ animal:", animal);
   const carouselImages = useMemo(() => {
     return animal.fotos.map((foto) => (
       <img
@@ -143,6 +142,34 @@ function AnimaisList({
   );
 }
 
-
+AnimaisList.propTypes = {
+  animal: PropTypes.shape({
+    fotos: PropTypes.arrayOf(
+      PropTypes.shape({
+        nome_arquivo: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+        nome_arquivo_original: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    dt_inativacao: PropTypes.string,
+    adotado: PropTypes.number.isRequired,
+    nome: PropTypes.string.isRequired,
+    idade: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+    sexo: PropTypes.string.isRequired,
+    categoria: PropTypes.shape({
+      descricao: PropTypes.string.isRequired,
+    }).isRequired,
+    porte: PropTypes.shape({
+      descricao: PropTypes.string.isRequired,
+    }).isRequired,
+    descricao: PropTypes.string.isRequired,
+    id_animal: PropTypes.number.isRequired,
+  }).isRequired,
+  handleDelete: PropTypes.func.isRequired,
+  handleAdotado: PropTypes.func.isRequired,
+  handleDesativar: PropTypes.func.isRequired,
+  handleAtivar: PropTypes.func.isRequired,
+  respostaDenuncia: PropTypes.array.isRequired,
+};
 
 export default AnimaisList;
