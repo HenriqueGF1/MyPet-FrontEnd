@@ -110,6 +110,20 @@ React Toastify é uma biblioteca para exibir notificações (como mensagens de s
 
 [CEP Api](https://brasilapi.com.br/docs?utm_source=pocket_saves#tag/CEP)
 
+
+<h1>Outros</h2>
+
+O sistema conta com a autenticação do usuário através do JWT aplicado no Laravel, ver na parte de Back-End [MyPet-BackEnd](https://github.com/HenriqueGF1/MyPet-BackEnd.git)
+
+<h3>Validação</h3>
+
+O sistema conta com a validação do [React Hook Form](https://react-hook-form.com/) e da Api do 
+[Api Laravel MyPet-BackEnd](https://documenter.getpostman.com/view/11959429/2s9Yyy7dc6)
+
+![nome da imagem](Prints%20do%20Sistema/Validacao%20exemplo/exemplo%20de%20validacao.png)
+
+O sistema conta com a validação do CEP pela Api [CEP Api](https://brasilapi.com.br/docs?utm_source=pocket_saves#tag/CEP)
+
 <h1>Páginas e Funcionalidades</h2>
 
 <h2>Páginas Públicas</h2>
