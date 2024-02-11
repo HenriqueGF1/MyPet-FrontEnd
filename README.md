@@ -1,4 +1,10 @@
 
+
+![nome da imagem](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![nome da imagem](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![nome da imagem](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
+![nome da imagem](https://img.shields.io/badge/axios-671ddf?&style=for-the-badge&logo=axios&logoColor=white)
+
 <h1>MyPet</h1>
 
 O sistema MyPet é uma plataforma online projetada para ajudar os usuários a encontrar animais para adoção. Com o MyPet, a adoção de animais de estimação se torna mais acessível e conveniente para os usuários, ao mesmo tempo, em que ajuda a encontrar lares amorosos para animais necessitados.
