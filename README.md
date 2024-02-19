@@ -48,13 +48,13 @@ Após a instalação das dependências, você pode iniciar o servidor de desenvo
 
 
 ``
-npm start
+npm run dev
 ``
 
 Isso iniciará o servidor de desenvolvimento e abrirá automaticamente uma janela do navegador com o sistema em execução. O servidor geralmente é iniciado em 
 
 ``
-http://localhost:3000.
+http://localhost:5173/
 ``
 
 <h1>Tecnologias Utilizadas</h2>
