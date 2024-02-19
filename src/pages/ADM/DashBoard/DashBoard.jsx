@@ -7,79 +7,73 @@ import Footer from "../../../components/Footer/Footer";
 import HeaderPages from "../../../components/HeaderPages/HeaderPages";
 
 function DashBoard() {
+  const { loadingApi, apiFetch } = useContext(Context);
+  const [dados, setDados] = useState([]);
 
-    const { loadingApi, apiFetch } = useContext(Context);
-    const [dados, setDados] = useState([]);
+  useEffect(() => {
+    async function getDados() {
+      let response = await apiFetch("admin/dashBoard", "get");
+      if (response.data != undefined) {
+        setDados(response.data);
+      }
+    }
 
-    useEffect(() => {
+    getDados();
+  }, []);
 
-        async function getDados() {
-            let response = await apiFetch("admin/dashBoard", "get")
-            if (response.data != undefined) {
-                setDados(response.data);
-            }
-        }
+  const dataSexo = [
+    ["", ""],
+    ["Porcentagem de Animais Machos", dados.animaisMasculinos],
+    ["Porcentagem de Animais Fêmeas", dados.animaisFemininos],
+  ];
 
-        getDados();
+  const options = {
+    title: "Animais",
+    is3D: true,
+  };
 
-    }, []);
+  return (
+    <>
+      <NavBar />
 
-    const data = [
-        ["", ""],
-        ["Quantidade de Usuários", dados.usuario],
-        ["Quantidade de Animais", dados.animal],
-        ["Quantidade de Animais Denunciados", dados.animaisQtdDenuncias],
-        ["Quantidade de Animais Não Adotados", dados.animaisNaoAdotados],
-        ["Quantidade de Animais Machos", dados.animaisMasculinos],
-        ["Quantidade de Animais Fêmeas", dados.animaisFemininos],
-    ];
+      <HeaderPages tituloPagina="Administrador DashBoard" />
 
-    const options = {
-        title: "Animais",
-        is3D: true,
-    };
+      <div className="w-[100%] h-screen flex flex-col sm:flex-row justify-center items-center">
+        <div className="w-[50%]">
+          <>
+            <p>
+              <b>Quantidade de Usuários:</b> {dados.usuario}
+            </p>
+            <p>
+              <b>Quantidade de Animais</b> {dados.animal}
+            </p>
+            <p>
+              <b>Quantidade de Animais Denunciados:</b>{" "}
+              {dados.animaisQtdDenuncias}
+            </p>
+            <p>
+              <b>Quantidade de Animais Adotados:</b> {dados.animaisAdotados}
+            </p>
+            <p>
+              <b>Quantidade de Animais Não Adotados:</b>{" "}
+              {dados.animaisNaoAdotados}
+            </p>
+          </>
+        </div>
 
-    return (
-        <>
-
-            <NavBar />
-
-            <HeaderPages tituloPagina="Administrador DashBoard"/>
-
-            <div className="w-[100%] h-screen flex justify-center items-start">
-
-                {/* {loadingApi ? <Loading /> : ( */}
-
-                <Chart
-                    chartType="PieChart"
-                    data={data}
-                    options={options}
-                    width={"100%"}
-                    height={"700px"}
-                />
-
-                {/* )} */}
-
-            </div>
-
-            {/* {loadingApi ? <Loading /> : (
-                <>
-                    <p>Quantidade de Usuários: {dados.usuario}</p>
-                    <p>Quantidade de Animais {dados.animal}</p>
-                    <p>Quantidade de Animais Denunciados: {dados.animaisQtdDenuncias}</p>
-                    <p>Quantidade de Animais Adotados: {dados.animaisAdotados}</p>
-                    <p>Quantidade de Animais Não Adotados: {dados.animaisNaoAdotados}</p>
-                    <p>Quantidade de Animais Masculinos: {dados.animaisMasculinos}</p>
-                    <p>Quantidade de Animais Femininos: {dados.animaisFemininos}</p>
-                </>
-            )} */}
-
-            <Footer/>
-
-        </>
-    )
-
-
+        <div className="w-[40%]">
+          <Chart
+            chartType="PieChart"
+            data={dataSexo}
+            options={options}
+            width={"100%"}
+            height={"700px"}
+          />
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 }
 
 export default DashBoard;

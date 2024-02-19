@@ -245,6 +245,10 @@ Caso o usuário retire a denuncia ele pode ativar novamente a denuncia feita,
 
 <h2>Páginas Do Administrador</h2>
 
+
+<b>Login</b> /loginAdm
+Realizar o login na plataforma
+![nome da imagem](Prints%20do%20Sistema/ADMIN/login.png)
 <b>DashBoard</b>
 o administrador terá a visualização dos dados da plataforma em formato de gráfico
 ![nome da imagem](Prints%20do%20Sistema/ADMIN/dashboard.png)
